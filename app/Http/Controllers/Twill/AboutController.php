@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers\Twill;
+
+use A17\Twill\Models\Contracts\TwillModelContract;
+use A17\Twill\Services\Forms\Fieldset;
+use A17\Twill\Services\Forms\Fields\Input;
+use A17\Twill\Services\Forms\Fields\BlockEditor;
+use A17\Twill\Services\Forms\Fields\Wysiwyg;
+use A17\Twill\Services\Forms\Form;
+use A17\Twill\Http\Controllers\Admin\SingletonModuleController as BaseModuleController;
+
+class AboutController extends BaseModuleController
+{
+    protected $moduleName = 'abouts';
+    /**
+     * This method can be used to enable/disable defaults. See setUpController in the docs for available options.
+     */
+    protected function setUpController(): void
+    {
+        $this->disablePermalink();
+    }
+
+    /**
+     * See the table builder docs for more information. If you remove this method you can use the blade files.
+     * When using twill:module:make you can specify --bladeForm to use a blade form instead.
+     */
+    public function getForm(TwillModelContract $model): Form
+    {
+        return parent::getForm($model)
+            ->addFieldset(
+                Fieldset::make()->title('Content')->fields([
+                    Input::make()->name('page_tagline')->label('Page tagline')->maxlength(255),
+                    Wysiwyg::make()->name('page_text')->label('Page text')->limitHeight(),
+                    BlockEditor::make()
+                        ->label('추가 콘텐츠')
+                        ->blocks(['quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid']),
+                ])
+            );
+    }
+}
