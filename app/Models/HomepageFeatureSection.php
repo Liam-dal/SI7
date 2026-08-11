@@ -10,5 +10,5 @@ class HomepageFeatureSection extends Model implements Sortable
 {
 use HasPosition;
 
-    protected $fillable = ['published', 'section_key', 'title', 'description', 'position'];
+    protected $fillable = ['published', 'section_key', 'title', 'description', 'layout_style', 'position'];
 }
