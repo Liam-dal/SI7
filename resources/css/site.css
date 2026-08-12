@@ -216,7 +216,7 @@ button { font: inherit; }
 .prose ul, .prose ol { margin:0 0 24px; padding-left:1.4em; }
 .prose ul { list-style:disc; }
 .prose ol { list-style:decimal; }
-.prose li { margin:0 0 8px; line-height:var(--prose-leading); }
+.prose li { margin:0 0 4px; line-height:var(--prose-leading); }
 .prose li::marker { color:var(--muted); }
 .prose h4 { margin:40px 0 12px; font-size:1.35rem; line-height:1.25; font-weight:600; }
 .prose a { text-decoration:underline; text-underline-offset:3px; }
