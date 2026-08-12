@@ -212,6 +212,14 @@ button { font: inherit; }
 .page-head__lead { font-size:var(--page-lead-size); }
 .page-head--stack .page-head__title { font-size:var(--page-title-stack-size); }
 .block-heading-desc__body p { line-height:var(--prose-leading); }
+/* Wysiwyg 본문(prose) 리스트·제목 렌더 */
+.prose ul, .prose ol { margin:0 0 24px; padding-left:1.4em; }
+.prose ul { list-style:disc; }
+.prose ol { list-style:decimal; }
+.prose li { margin:0 0 8px; line-height:var(--prose-leading); }
+.prose li::marker { color:var(--muted); }
+.prose h4 { margin:40px 0 12px; font-size:1.35rem; line-height:1.25; font-weight:600; }
+.prose a { text-decoration:underline; text-underline-offset:3px; }
 .component-person .person-top { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); column-gap:var(--space-5); row-gap:var(--space-9); align-items:start; }
 .component-person .person-name { margin:0; font-size:var(--heading-regular); font-weight:500; line-height:1.1; letter-spacing:var(--page-title-tracking); }
 .component-person .person-office { margin:0; font-size:var(--heading-regular); font-weight:500; line-height:1.1; letter-spacing:var(--page-title-tracking); color:var(--muted); }

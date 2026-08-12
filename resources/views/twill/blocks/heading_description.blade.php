@@ -11,7 +11,17 @@
 <x-twill::wysiwyg
     name="description"
     label="Description"
-    :toolbar-options="['bold', 'italic', 'link']"
+    :toolbar-options="[
+        ['header' => [2, 3, 4]],
+        'bold',
+        'italic',
+        'underline',
+        ['list' => 'bullet'],
+        ['list' => 'ordered'],
+        'blockquote',
+        'link',
+        'clean',
+    ]"
     :browser="false"
     limit-height
 />
