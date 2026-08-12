@@ -7,11 +7,12 @@
         ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact')],
     ];
 
-    // 로고 미디어를 크롭과 무관하게 직접 찾아 원본 URL을 사용 (SVG는 크롭이 없어 hasImage/image로는 안 잡힘).
+    // 로고: 관리자에 이미지가 붙어 있으면 그걸, 없으면 리포에 번들된 SVG를 사용.
+    // (Twill은 SVG를 이미지 필드에 저장하지 못해 관리자 업로드가 안 붙으므로 기본 로고를 코드로 보장)
     $logoMedia = $siteSettings?->medias?->firstWhere('pivot.role', 'logo');
     $logoUrl = $logoMedia
         ? \A17\Twill\Services\MediaLibrary\ImageService::getRawUrl($logoMedia->uuid)
-        : null;
+        : asset('img/logo.svg');
     $logoAlt = $siteSettings?->logo_text ?: 'SI7';
 @endphp
 
