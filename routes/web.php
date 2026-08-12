@@ -1,58 +1,122 @@
 <?php
 
+use App\Models\About;
 use App\Models\Contact;
 use App\Models\Category;
 use App\Models\Download;
+use App\Models\Guide;
 use App\Models\HomepageFeatureSection;
 use App\Models\Homepage;
+use App\Models\Person;
 use App\Models\Project;
+use App\Models\Sector;
+use App\Models\SiteSetting;
 use App\Models\HomepageFeature;
+use App\Models\Office;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/site.css', function () {
+    return response()->file(resource_path('css/site.css'), ['Content-Type' => 'text/css; charset=UTF-8']);
+})->name('site.css');
 
 Route::get('/', function () {
     $homepage = Homepage::query()->first();
     $asFeature = fn ($project) => (object) ['project' => $project, 'title' => null, 'description' => null];
-    $selectedFeatures = fn (string $browserName) => ($homepage?->getRelated($browserName) ?? collect())
-        ->filter(fn (Project $project) => $project->published)
-        ->map($asFeature)
+
+    // 홈 Featured 섹션은 Homepage 블록 에디터로 관리됩니다.
+    // 각 'featured_section' 블록이 제목·설명·표시 스타일과 연결된 프로젝트를 가집니다.
+    $featureBands = ($homepage
+            ? $homepage->blocks()->where('type', 'featured_section')->orderBy('position')->get()
+            : collect())
+        ->map(function ($block) use ($asFeature) {
+            $features = $block->getRelated('projects')
+                ->filter(fn (Project $project) => $project->published)
+                ->map($asFeature)
+                ->values();
+
+            return [
+                'features' => $features,
+                'section' => (object) [
+                    'title' => $block->input('title'),
+                    'description' => $block->input('description'),
+                    'layout_style' => $block->input('layout_style') ?: 'carousel',
+                ],
+                'key' => 'sec-'.$block->id,
+            ];
+        })
+        ->filter(fn ($band) => $band['features']->isNotEmpty())
         ->values();
 
-    $mainFeatures = $selectedFeatures('main_features');
-    $secondaryFeatures = $selectedFeatures('secondary_features');
-    $additionalFeatures = $selectedFeatures('additional_features');
-
-    // 이전 Homepage 피처 데이터가 남아 있는 경우, 한 번만 보여주는 안전한 호환 처리입니다.
-    if ($mainFeatures->isEmpty() && $secondaryFeatures->isEmpty() && $additionalFeatures->isEmpty()) {
-        $features = HomepageFeature::query()->with('project')->where('published', true)->orderBy('position')->get()
-            ->filter(fn (HomepageFeature $feature) => $feature->project?->published);
-        $mainFeatures = $features->where('section', 'main')->values();
-        $secondaryFeatures = $features->where('section', 'secondary')->values();
-        $additionalFeatures = $features->where('section', 'additional')->values();
+    // 인터랙티브 히어로("We design [Discipline] for [Sector]") — 관리자 > Homepage에서 켜면
+    // 태그 기반으로 선택 조합에 맞는 공개 프로젝트를 배경 슬라이드쇼로 노출합니다.
+    $heroBuilder = null;
+    if ($homepage?->hero_builder) {
+        $heroBuilder = [
+            'categories' => Category::query()->where('published', true)->orderBy('position')->get(),
+            'sectors' => Sector::query()->where('published', true)->orderBy('position')->get(),
+            'projects' => Project::query()->where('published', true)
+                ->with(['categories:id', 'sectors:id'])
+                ->orderBy('position')->get(),
+            'defaultCategoryId' => $homepage->hero_default_category_id,
+            'defaultSectorId' => $homepage->hero_default_sector_id,
+        ];
     }
 
-    $featuredIds = $mainFeatures->merge($secondaryFeatures)->merge($additionalFeatures)->pluck('project.id')->unique();
-    $regularProjects = Project::query()
-        ->where('published', true)
-        ->whereNotIn('id', $featuredIds)
-        ->orderBy('position')
-        ->get();
-    $featureSections = HomepageFeatureSection::query()
-        ->where('published', true)
-        ->get()
-        ->keyBy('section_key');
-
     return view('site.home', [
-        'mainFeatures' => $mainFeatures,
-        'secondaryFeatures' => $secondaryFeatures,
-        'additionalFeatures' => $additionalFeatures,
-        'regularProjects' => $regularProjects,
-        'featureSections' => $featureSections,
+        'featureBands' => $featureBands,
+        'heroBuilder' => $heroBuilder,
     ]);
 })->name('home');
+
+Route::get('/about', function () {
+    return view('site.about', [
+        'about' => About::query()->first(),
+        'people' => Person::query()->where('published', true)->orderBy('position')->orderBy('title')->get(),
+    ]);
+})->name('about');
+
+Route::get('/people/{identifier}', function (string $identifier) {
+    // 슬러그 우선 조회 후 숫자 ID로 폴백 — 숫자형 슬러그도 안전하게 처리.
+    $item = Person::query()->forSlug($identifier)->where('published', true)->first();
+
+    if (! $item && ctype_digit($identifier)) {
+        $item = Person::query()->whereKey($identifier)->where('published', true)->first();
+    }
+
+    abort_if(! $item, 404);
+
+    $relatedProjects = $item->projects()->where('published', true)->get();
+
+    return view('site.person', compact('item', 'relatedProjects'));
+})->name('people.show');
+
+Route::get('/guides', function () {
+    return view('site.guides', [
+        'guides' => Guide::query()->where('published', true)
+            ->orderByDesc('publication_date')->orderBy('position')->get(),
+    ]);
+})->name('guides');
+
+Route::get('/guides/{identifier}', function (string $identifier) {
+    // 슬러그 우선 조회 후 숫자 ID로 폴백 — 한글 제목이 "7" 같은 숫자형 슬러그가 되는 경우도 안전하게 처리.
+    $item = Guide::query()->forSlug($identifier)->where('published', true)->first();
+
+    if (! $item && ctype_digit($identifier)) {
+        $item = Guide::query()->whereKey($identifier)->where('published', true)->first();
+    }
+
+    abort_if(! $item, 404);
+
+    $relatedGuides = Guide::query()->where('published', true)->whereKeyNot($item->id)
+        ->orderByDesc('publication_date')->orderBy('position')->take(3)->get();
+
+    return view('site.guide', compact('item', 'relatedGuides'));
+})->name('guides.show');
 
 Route::get('/contact', function () {
     return view('site.contact', [
         'contact' => Contact::query()->first(),
+        'offices' => Office::query()->where('published', true)->orderBy('position')->orderBy('title')->get(),
     ]);
 })->name('contact');
 
@@ -68,7 +132,7 @@ Route::get('/projects', function (\Illuminate\Http\Request $request) {
     return view('site.projects', [
         'projects' => Project::query()
             ->where('published', true)
-            ->when($selectedCategoryId, fn ($query) => $query->whereHas('categories', fn ($categoryQuery) => $categoryQuery->whereKey($selectedCategoryId)))
+            ->orderByDesc('project_completed_at')
             ->orderBy('position')
             ->get(),
         'categories' => Category::query()->where('published', true)->orderBy('position')->get(),
@@ -77,9 +141,15 @@ Route::get('/projects', function (\Illuminate\Http\Request $request) {
 })->name('projects');
 
 Route::get('/projects/{identifier}', function (string $identifier) {
-    $item = ctype_digit($identifier)
-        ? Project::query()->whereKey($identifier)->where('published', true)->firstOrFail()
-        : Project::query()->forSlug($identifier)->where('published', true)->firstOrFail();
+    // 슬러그 우선 조회 후 숫자 ID로 폴백 — 숫자형 슬러그도 안전하게 처리.
+    $item = Project::query()->forSlug($identifier)->where('published', true)->first();
+
+    if (! $item && ctype_digit($identifier)) {
+        $item = Project::query()->whereKey($identifier)->where('published', true)->first();
+    }
+
+    abort_if(! $item, 404);
+
     $categoryIds = $item->categories()->pluck('categories.id');
 
     $relatedProjects = Project::query()

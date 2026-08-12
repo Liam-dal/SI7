@@ -1,6 +1,6 @@
-<section style="margin: 1.5rem 0; line-height: 1.75;">
+<section class="block-text">
     @if($block->translatedInput('title'))
-        <h3 style="margin: 0 0 .75rem; font-size: 1.25rem;">
+        <h3>
             {{ $block->translatedInput('title') }}
         </h3>
     @endif
