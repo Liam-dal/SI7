@@ -6,16 +6,23 @@
         ['label' => 'Downloads', 'url' => route('downloads'), 'active' => request()->routeIs('downloads')],
         ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact')],
     ];
+
+    // 로고 미디어를 크롭과 무관하게 직접 찾아 원본 URL을 사용 (SVG는 크롭이 없어 hasImage/image로는 안 잡힘).
+    $logoMedia = $siteSettings?->medias?->firstWhere('pivot.role', 'logo');
+    $logoUrl = $logoMedia
+        ? \A17\Twill\Services\MediaLibrary\ImageService::getRawUrl($logoMedia->uuid)
+        : null;
+    $logoAlt = $siteSettings?->logo_text ?: 'SI7';
 @endphp
 
 <a class="skip-link" href="#content">본문으로 건너뛰기</a>
 
 <header class="site-header">
     <a class="site-logo" href="{{ route('home') }}" aria-label="홈">
-        @if($siteSettings?->hasImage('logo'))
-            <img src="{{ $siteSettings->image('logo') }}" alt="{{ $siteSettings->logo_text ?: 'SI7' }}">
+        @if($logoUrl)
+            <img src="{{ $logoUrl }}" alt="{{ $logoAlt }}">
         @else
-            {{ $siteSettings?->logo_text ?: 'SI7' }}
+            {{ $logoAlt }}
         @endif
     </a>
     <nav class="site-nav" aria-label="주요 메뉴">
@@ -28,7 +35,13 @@
 
 <div class="nav-overlay" id="mobile-nav" data-open="false" aria-hidden="true">
     <header>
-        <span class="site-logo">{{ $siteSettings?->logo_text ?: 'SI7' }}</span>
+        <span class="site-logo">
+            @if($logoUrl)
+                <img src="{{ $logoUrl }}" alt="{{ $logoAlt }}">
+            @else
+                {{ $logoAlt }}
+            @endif
+        </span>
         <button class="nav-toggle" type="button" data-nav-close>Close</button>
     </header>
     <nav aria-label="모바일 메뉴">
