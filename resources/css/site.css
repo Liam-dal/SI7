@@ -267,6 +267,8 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .guide-article__body > .block-full-image,
 .guide-article__body > .block-gallery,
 .guide-article__body > .block-flex-gallery { grid-column:1 / -1; }
+/* heading+desc 블록은 아티클 좁은 컬럼에선 2단이 찌그러지므로 단일 컬럼으로 쌓음 */
+.guide-article__body > .block-heading-desc { grid-template-columns:1fr; gap:var(--space-3); }
 .guide-article__related { margin-top:var(--space-13); }
 /* Reusable article card — cover, category above, title below. */
 .article-card { display:block; min-width:0; color:var(--text); text-decoration:none; }
