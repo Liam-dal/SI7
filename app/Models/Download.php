@@ -17,6 +17,7 @@ class Download extends Model implements Sortable
     protected $fillable = [
         'published',
         'title',
+        'tag',
         'description',
         'position',
     ];

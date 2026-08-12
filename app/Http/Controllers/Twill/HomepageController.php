@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Twill;
 
 use A17\Twill\Http\Controllers\Admin\SingletonModuleController as BaseModuleController;
 use A17\Twill\Models\Contracts\TwillModelContract;
-use A17\Twill\Services\Forms\Fields\Browser;
+use A17\Twill\Services\Forms\Fields\BlockEditor;
+use A17\Twill\Services\Forms\Fields\Checkbox;
+use A17\Twill\Services\Forms\Fields\Select;
+use A17\Twill\Services\Forms\Fieldset;
 use A17\Twill\Services\Forms\Form;
-use App\Models\Project;
+use A17\Twill\Services\Forms\Options;
 
 class HomepageController extends BaseModuleController
 {
@@ -20,32 +23,23 @@ class HomepageController extends BaseModuleController
     public function getForm(TwillModelContract $model): Form
     {
         return parent::getForm($model)
-            ->add(
-                Browser::make()
-                    ->name('main_features')
-                    ->label('메인 피처 프로젝트')
-                    ->modules([Project::class])
-                    ->max(5)
-                    ->wide()
-                    ->browserNote('홈 상단에 크게 보여줄 프로젝트입니다. 드래그하여 순서를 바꿀 수 있습니다.')
+            ->addFieldset(
+                Fieldset::make()->title('인터랙티브 히어로')->fields([
+                    Checkbox::make()->name('hero_builder')->label('인터랙티브 히어로 사용 (We design [Discipline] for [Sector])')
+                        ->note('켜면 홈 최상단이 "We design ___ for ___" 문장 빌더 + 배경 슬라이드쇼로 바뀝니다. 끄면 기본 히어로가 표시됩니다.'),
+                    Select::make()->name('hero_default_category_id')->label('기본 Discipline (We design ___ )')->placeholder('미선택 — 전체(everything)')->clearable()->options(
+                        fn () => Options::fromArray(\App\Models\Category::query()->where('published', true)->orderBy('position')->pluck('title', 'id')->all())
+                    ),
+                    Select::make()->name('hero_default_sector_id')->label('기본 Sector ( for ___ )')->placeholder('미선택 — 전체(everyone)')->clearable()->options(
+                        fn () => Options::fromArray(\App\Models\Sector::query()->where('published', true)->orderBy('position')->pluck('title', 'id')->all())
+                    ),
+                ])
             )
             ->add(
-                Browser::make()
-                    ->name('secondary_features')
-                    ->label('보조 피처 프로젝트')
-                    ->modules([Project::class])
-                    ->max(12)
-                    ->wide()
-                    ->browserNote('메인 피처 다음에 그리드로 보여줄 프로젝트입니다. 드래그하여 순서를 바꿀 수 있습니다.')
-            )
-            ->add(
-                Browser::make()
-                    ->name('additional_features')
-                    ->label('추가 피처 프로젝트')
-                    ->modules([Project::class])
-                    ->max(24)
-                    ->wide()
-                    ->browserNote('추가로 보여줄 피처 프로젝트입니다. 프로젝트를 선택하고 드래그하여 순서를 바꿀 수 있습니다.')
+                BlockEditor::make()
+                    ->name('default')
+                    ->label('홈 Featured 섹션')
+                    ->blocks(['featured_section'])
             );
     }
 }

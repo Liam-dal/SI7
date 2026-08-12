@@ -10,11 +10,12 @@ class SiteSetting extends Model
 {
     use HasMedias, HasRevisions;
 
-    public array $mediasParams = ['logo'];
+    public array $mediasParams = ['logo', 'favicon', 'og_image'];
 
     protected $fillable = [
         'published',
         'title',
+        'site_name',
         'logo_text',
         'footer_text',
         'copyright_text',
@@ -25,9 +26,15 @@ class SiteSetting extends Model
         'seo_title_suffix',
         'seo_description_prefix',
         'seo_description_suffix',
+        'homepage_eyebrow',
         'homepage_title',
         'homepage_description',
         'homepage_regular_grid',
+        'home_hero_builder',
+        'home_hero_default_category_id',
+        'home_hero_default_sector_id',
+        'projects_page_title',
+        'projects_page_description',
         'projects_sectors_title',
         'projects_sectors_description',
         'projects_disciplines_title',
@@ -42,6 +49,8 @@ class SiteSetting extends Model
         'contact_page_description',
         'downloads_page_title',
         'downloads_page_description',
+        'guide_page_title',
+        'guide_page_description',
         'background_color',
         'text_color',
         'muted_text_color',

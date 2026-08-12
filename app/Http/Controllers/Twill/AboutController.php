@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Twill;
 
 use A17\Twill\Models\Contracts\TwillModelContract;
 use A17\Twill\Services\Forms\Fieldset;
-use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Fields\BlockEditor;
-use A17\Twill\Services\Forms\Fields\Wysiwyg;
 use A17\Twill\Services\Forms\Form;
 use A17\Twill\Http\Controllers\Admin\SingletonModuleController as BaseModuleController;
 
@@ -30,11 +28,9 @@ class AboutController extends BaseModuleController
         return parent::getForm($model)
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
-                    Input::make()->name('page_tagline')->label('Page tagline')->maxlength(255),
-                    Wysiwyg::make()->name('page_text')->label('Page text')->limitHeight(),
                     BlockEditor::make()
                         ->label('추가 콘텐츠')
-                        ->blocks(['quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid']),
+                        ->blocks(['heading_description', 'quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid']),
                 ])
             );
     }

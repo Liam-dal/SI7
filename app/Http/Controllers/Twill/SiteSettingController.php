@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Twill;
 use A17\Twill\Models\Contracts\TwillModelContract;
 use A17\Twill\Services\Listings\Columns\Text;
 use A17\Twill\Services\Listings\TableColumns;
+use A17\Twill\Services\Forms\Fields\Checkbox;
 use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Fields\Medias;
 use A17\Twill\Services\Forms\Fields\Select;
@@ -33,6 +34,13 @@ class SiteSettingController extends BaseModuleController
     {
         return parent::getForm($model)
             ->addFieldset(
+                Fieldset::make()->title('사이트 · 브라우저 · 소셜')->fields([
+                    Input::make()->name('site_name')->label('사이트명 (브라우저 탭)')->note('브라우저 탭 제목에 표시됩니다. 하위 페이지는 "페이지명 — 사이트명"으로 표시됩니다.'),
+                    Medias::make()->name('favicon')->label('파비콘')->max(1)->note('브라우저 탭 아이콘. 정사각형 PNG 권장 (예: 512×512).'),
+                    Medias::make()->name('og_image')->label('OG 이미지 (소셜 공유)')->max(1)->note('링크 공유 시 표시되는 대표 이미지. 1200×630 권장.'),
+                ])
+            )
+            ->addFieldset(
                 Fieldset::make()->title('Global SEO')->fields([
                     Input::make()->name('seo_title_prefix')->label('Global title prefix'),
                     Input::make()->name('seo_title_suffix')->label('Global title suffix'),
@@ -42,8 +50,9 @@ class SiteSettingController extends BaseModuleController
             )
             ->addFieldset(
                 Fieldset::make()->title('Homepage')->fields([
-                    Input::make()->name('homepage_title')->label('Homepage title'),
-                    Wysiwyg::make()->name('homepage_description')->label('Homepage description')->limitHeight(),
+                    Input::make()->name('homepage_eyebrow')->label('Main hero eyebrow'),
+                    Input::make()->name('homepage_title')->label('Main hero title'),
+                    Wysiwyg::make()->name('homepage_description')->label('Main hero description')->limitHeight(),
                     Select::make()->name('homepage_regular_grid')->label('일반 프로젝트 목록 레이아웃')->options(
                         Options::fromArray([
                             'editorial' => '에디토리얼 — 첫 카드 크게, 나머지 2단',
@@ -54,6 +63,8 @@ class SiteSettingController extends BaseModuleController
             )
             ->addFieldset(
                 Fieldset::make()->title('Projects')->fields([
+                    Input::make()->name('projects_page_title')->label('Work page title'),
+                    Wysiwyg::make()->name('projects_page_description')->label('Work page description')->limitHeight(),
                     Input::make()->name('projects_sectors_title')->label('Projects by sectors title'),
                     Wysiwyg::make()->name('projects_sectors_description')->label('Projects by sectors description')->limitHeight(),
                     Input::make()->name('projects_disciplines_title')->label('Projects by disciplines title'),
@@ -68,6 +79,12 @@ class SiteSettingController extends BaseModuleController
                 Fieldset::make()->title('About')->fields([
                     Input::make()->name('about_page_title')->label('About title'),
                     Wysiwyg::make()->name('about_page_description')->label('About description')->limitHeight(),
+                ])
+            )
+            ->addFieldset(
+                Fieldset::make()->title('Guide')->fields([
+                    Input::make()->name('guide_page_title')->label('Guide title'),
+                    Wysiwyg::make()->name('guide_page_description')->label('Guide description')->limitHeight(),
                 ])
             )
             ->addFieldset(

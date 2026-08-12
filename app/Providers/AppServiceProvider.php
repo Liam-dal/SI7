@@ -56,7 +56,6 @@ class AppServiceProvider extends ServiceProvider
                 ->title('Homepage')
                 ->setChildren([
                     NavigationLink::make()->forSingleton('homepage')->title('Feature projects'),
-                    NavigationLink::make()->forModule('homepageFeatureSections')->title('Feature settings'),
                 ])
                 ->doNotAddSelfAsFirstChild()
         );
@@ -81,6 +80,7 @@ class AppServiceProvider extends ServiceProvider
                 ])
                 ->doNotAddSelfAsFirstChild()
         );
+        TwillNavigation::addLink(NavigationLink::make()->forModule('guides')->title('Guide'));
         TwillNavigation::addLink(
             NavigationLink::make()
                 ->forSingleton('contact')

@@ -61,6 +61,24 @@ class Project extends Model implements Sortable
                     'ratio' => 1,
                 ],
             ],
+            'square' => [
+                [
+                    'name' => 'square',
+                    'ratio' => 1,
+                ],
+            ],
+            'wide' => [
+                [
+                    'name' => 'wide',
+                    'ratio' => 1.72,
+                ],
+            ],
+            'hero' => [
+                [
+                    'name' => 'hero',
+                    'ratio' => 1.85,
+                ],
+            ],
         ],
         'gallery' => [
             'default' => [

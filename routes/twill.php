@@ -17,3 +17,5 @@ TwillRoutes::singleton('about');
 TwillRoutes::singleton('contact');
 TwillRoutes::module('downloads');
 TwillRoutes::singleton('siteSetting');
+
+TwillRoutes::module('guides');

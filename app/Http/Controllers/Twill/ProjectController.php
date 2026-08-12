@@ -44,6 +44,8 @@ class ProjectController extends BaseModuleController
         return parent::getForm($model)
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
+                    Input::make()->name('subtitle')->label('Subtitle')->note('홈 피처와 프로젝트 카드에 표시되는 짧은 문구입니다.'),
+                    Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(4)->maxlength(500)->note('프로젝트 상세 상단과 카드에 표시되는 요약입니다.'),
                     Wysiwyg::make()->name('case_study_text')->label('Case study text')->limitHeight(),
                     Medias::make()->name('cover')->label('Cover')->max(1),
                     Input::make()->name('video_url')->label('Youtube or Vimeo video URL')->type('url'),
