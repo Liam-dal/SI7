@@ -30,7 +30,7 @@ class DownloadController extends BaseModuleController
         return parent::getForm($model)
             ->add(Input::make()->name('tag')->label('태그 (선택)')->maxlength(80)->note('예: Company, Certificate, Press kit'))
             ->add(Input::make()->name('description')->label('파일 설명 (선택)')->maxlength(500))
-            ->add(Files::make()->name('document')->label('다운로드 파일')->filesizeMax(250)->note('사업자등록증, 회사 소개서, PDF 등 한 파일을 올리세요.'));
+            ->add(Files::make()->name('document')->label('다운로드 파일')->filesizeMax(512)->note('사업자등록증, 회사 소개서, PDF, 영상(mp4) 등 한 파일을 올리세요. 최대 512MB.'));
     }
 
     /**
