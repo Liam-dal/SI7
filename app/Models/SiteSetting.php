@@ -10,7 +10,26 @@ class SiteSetting extends Model
 {
     use HasMedias, HasRevisions;
 
-    public array $mediasParams = ['logo', 'favicon', 'og_image'];
+    public array $mediasParams = [
+        'logo' => [
+            'default' => [[
+                'name' => 'default',
+                'ratio' => 0,
+            ]],
+        ],
+        'favicon' => [
+            'default' => [[
+                'name' => 'default',
+                'ratio' => 1,
+            ]],
+        ],
+        'og_image' => [
+            'default' => [[
+                'name' => 'default',
+                'ratio' => 0,
+            ]],
+        ],
+    ];
 
     protected $fillable = [
         'published',
