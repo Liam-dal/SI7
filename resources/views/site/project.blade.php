@@ -17,7 +17,9 @@
 
     <div class="project-about__row">
         <div class="project-about__main">
-            @if($item->hasImage('cover'))
+            @if($item->video_url)
+                <x-site.video :url="$item->video_url" :autoplay="(bool) $item->video_autoplay" :loop="(bool) $item->video_autoloop" :title="$item->title" />
+            @elseif($item->hasImage('cover'))
                 @include('site.partials.responsive-image', ['model' => $item, 'role' => 'cover', 'crop' => 'hero', 'class' => 'project-cover', 'sizes' => '100vw', 'loading' => 'eager'])
             @endif
 
