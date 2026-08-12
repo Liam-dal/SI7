@@ -206,7 +206,7 @@ button { font: inherit; }
 .cards--3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .cards > .card .media--wide { aspect-ratio:1.65; }
 .block-heading-desc { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-5); margin:0; }
-.block-heading-desc__heading { margin:0; font-size:var(--heading-1); font-weight:600; line-height:1.15; letter-spacing:var(--page-title-tracking); text-wrap:balance; }
+.block-heading-desc__heading { margin:0; font-size:var(--heading-large); font-weight:600; line-height:1.15; letter-spacing:var(--page-title-tracking); text-wrap:balance; }
 .block-heading-desc__body { max-width:var(--measure); }
 .block-heading-desc__body :first-child { margin-top:0; }
 .page-head__lead { font-size:var(--page-lead-size); }
