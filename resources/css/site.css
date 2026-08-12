@@ -278,6 +278,7 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .guide-article__body > .block-flex-gallery { grid-column:1 / -1; }
 /* heading+desc 블록은 아티클 좁은 컬럼에선 2단이 찌그러지므로 단일 컬럼으로 쌓음 */
 .guide-article__body > .block-heading-desc { grid-template-columns:1fr; gap:var(--space-3); }
+.guide-article__body .block-heading-desc__body { max-width:none; }
 /* 가이드 본문 텍스트는 살짝 작게 (읽기 좋은 아티클 크기) */
 .guide-article__body .prose p, .guide-article__body .prose li { font-size:var(--body-medium-size); line-height:var(--prose-leading-loose); }
 .guide-article__related { margin-top:var(--space-13); }
