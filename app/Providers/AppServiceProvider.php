@@ -96,5 +96,22 @@ class AppServiceProvider extends ServiceProvider
         View::composer('site.*', function ($view) {
             $view->with('siteSettings', SiteSetting::query()->first());
         });
+
+        // 번역 블록 값 정규화: 번역 기능 전 저장된 문자열과, 이후 저장된
+        // 배열(['ko'=>.., 'en'=>..]) 형태를 모두 안전하게 처리한다.
+        // (translatedInput()은 배열을 가정해 문자열이면 array_filter에서 터짐)
+        View::share('blockValue', function ($block, string $name) {
+            $value = $block->input($name);
+
+            if (is_array($value)) {
+                $locale = app()->getLocale();
+                $fallback = config('translatable.fallback_locale', 'ko');
+                $nonEmpty = array_values(array_filter($value, fn ($v) => $v !== null && $v !== ''));
+
+                return $value[$locale] ?? $value[$fallback] ?? ($nonEmpty[0] ?? '');
+            }
+
+            return $value ?? '';
+        });
     }
 }

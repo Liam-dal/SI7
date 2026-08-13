@@ -1,6 +1,6 @@
 <blockquote class="block-quote">
-    {!! $block->translatedInput('quote') !!}
-    @if($block->translatedInput('attribution'))
-        <footer>— {{ $block->translatedInput('attribution') }}</footer>
+    {!! $blockValue($block, 'quote') !!}
+    @if($blockValue($block, 'attribution'))
+        <footer>— {{ $blockValue($block, 'attribution') }}</footer>
     @endif
 </blockquote>

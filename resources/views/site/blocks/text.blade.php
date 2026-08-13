@@ -1,8 +1,8 @@
 <section class="block-text">
-    @if($block->translatedInput('title'))
+    @if($blockValue($block, 'title'))
         <h3>
-            {{ $block->translatedInput('title') }}
+            {{ $blockValue($block, 'title') }}
         </h3>
     @endif
-    {!! $block->translatedInput('text') !!}
+    {!! $blockValue($block, 'text') !!}
 </section>
