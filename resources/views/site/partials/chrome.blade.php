@@ -2,7 +2,6 @@
     $menu = [
         ['label' => 'Projects', 'url' => route('projects'), 'active' => request()->routeIs('projects*')],
         ['label' => 'About', 'url' => route('about'), 'active' => request()->routeIs('about') || request()->routeIs('people.show')],
-        ['label' => 'Guide', 'url' => route('guides'), 'active' => request()->routeIs('guides*')],
         ['label' => 'Downloads', 'url' => route('downloads'), 'active' => request()->routeIs('downloads')],
         ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact')],
     ];

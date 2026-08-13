@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- 검색엔진 색인 차단 (사이트 전체). robots.txt 와 함께 이중으로 차단. --}}
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
     @php
         $siteName = $siteSettings?->site_name ?: ($siteSettings?->logo_text ?: 'SI7');
         $ogImage = $siteSettings?->hasImage('og_image') ? $siteSettings->image('og_image') : null;
