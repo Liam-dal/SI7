@@ -109,7 +109,8 @@ button { font: inherit; }
 .block-flex-gallery--cols-2 img, .block-flex-gallery--cols-3 img { flex:none; width:100%; max-width:none; }
 @media (max-width:767px) { .block-flex-gallery--cols-2, .block-flex-gallery--cols-3 { grid-template-columns:1fr; } }
 /* Fit 모드: 박스(비율)에 이미지 전체가 들어가고 여백은 배경색으로. crop 규칙 뒤에 와서 우선함. */
-.block-gallery--fit img, .block-flex-gallery--fit img { object-fit:contain; }
+.block-gallery--fit img, .block-flex-gallery--fit img { object-fit:contain; box-sizing:border-box; padding:20px; }
+@media (max-width:767px) { .block-gallery--fit img, .block-flex-gallery--fit img { padding:8px; } }
 /* 클릭해 큰 이미지 보기 */
 .gallery-img { cursor:zoom-in; }
 .lightbox { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.88); padding:24px; cursor:zoom-out; }
