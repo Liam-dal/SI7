@@ -141,7 +141,7 @@ Route::match(['get', 'post'], '/download/{download}/file', function (Download $d
         }
     }
 
-    $disk = config('file_library.disk');
+    $disk = config('twill.file_library.disk', 'twill_file_library');
     abort_unless(\Illuminate\Support\Facades\Storage::disk($disk)->exists($file->uuid), 404);
 
     return \Illuminate\Support\Facades\Storage::disk($disk)->download($file->uuid, $file->filename);
