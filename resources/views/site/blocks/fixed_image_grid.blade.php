@@ -11,7 +11,10 @@
     $fit = $block->input('fit_mode') === 'fit' ? 'fit' : 'crop';
     $bg = $block->input('bg_color');
 
-    $display = $block->images('images', $crop, ['w' => 900]);
+    // Fit: 원본(비크롭)을 박스에 contain → 세로 긴 것도 전체가 보이고 여백은 배경색.
+    // Crop: 비율 크롭으로 박스를 꽉 채움.
+    $imgCrop = $fit === 'fit' ? 'default' : $crop;
+    $display = $block->images('images', $imgCrop, ['w' => 900]);
     $full = $block->images('images', 'default', ['w' => 2000]); // 라이트박스용 큰 버전(원본 비율)
 @endphp
 @if($block->hasImage('images', 'default'))
