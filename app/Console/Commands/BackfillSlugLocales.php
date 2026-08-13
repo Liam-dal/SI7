@@ -48,7 +48,8 @@ class BackfillSlugLocales extends Command
                         continue;
                     }
 
-                    $model->slugs()->create([
+                    // slug 모델의 $fillable 제약을 우회(forceCreate) — slug/locale/active 직접 저장.
+                    $model->slugs()->forceCreate([
                         'slug' => $canonical,
                         'locale' => $locale,
                         'active' => true,
