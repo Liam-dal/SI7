@@ -68,6 +68,15 @@ class AppServiceProvider extends ServiceProvider
             ],
         ]);
 
+        // 프론트 이미지 출력 포맷을 webp로 (같은 화질에 용량 30~40%↓).
+        // 원본은 그대로 두고 Glide가 표시용으로만 변환한다. 화질(q)·fit 유지.
+        // OG/소셜 이미지는 호환성 위해 jpg 유지(social_default_params 건드리지 않음).
+        config()->set('twill.glide.default_params', [
+            'fm' => 'webp',
+            'q' => '80',
+            'fit' => 'max',
+        ]);
+
         TwillNavigation::addLink(
             NavigationLink::make()
                 ->forSingleton('homepage')
