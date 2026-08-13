@@ -10,18 +10,23 @@ use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
 /**
- * Twill 미디어 라이브러리(이미지) 업로드를 가로채, 긴 변이 MAX_EDGE 를 넘는
- * 초대형 원본을 저장 전에 축소한다.
+ * Twill 미디어 라이브러리(이미지) 업로드를 가로채, 지나치게 큰 원본을 저장 전에 축소한다.
  *
- * 이유: 웹 표시는 최대 ~2400px면 충분한데, 5296×10770 같은 초대형 원본은
- * Glide 첫 변환 때 GD가 전체를 메모리에 펼치느라(수백 MB) 1GB 서버에서
- * 느려지거나 메모리 한도를 넘겨 깨진다. 업로드 시 한 번만 줄여두면
- * 이후 모든 변환이 가볍고 빨라진다. (표시 화질 손실 없음)
+ * 이유: 웹 표시는 가로 ~2400px면 충분한데, 5296×10770 같은 큰 원본은 Glide 변환 때
+ * GD가 전체를 메모리에 펼치느라(수백 MB) 1GB 서버에서 느려지거나 깨진다.
+ *
+ * 정책: 메모리를 좌우하는 건 "긴 변"이 아니라 "총 넓이(픽셀)"다. 세로로 긴 얇은
+ * 이미지는 넓이가 작아 부담이 없으므로 건드리지 않는다. → **가로만 MAX_WIDTH 로
+ * 제한**하고, 세로는 넉넉한 MAX_HEIGHT(극단적 초고height 방어용) 까지 허용한다.
+ * 그래서 긴 스크린샷의 가로가 짜부되지 않는다.
  */
 class ResizeUploadedImages
 {
-    /** 긴 변 최대 픽셀 (이 값 이하이면 손대지 않음) */
-    private const MAX_EDGE = 2560;
+    /** 가로 최대 (레티나 풀와이드 기준 충분). 이보다 넓으면 이 폭으로 축소. */
+    private const MAX_WIDTH = 2560;
+
+    /** 세로 최대 (거의 안 걸리는 안전장치 — 총 넓이를 변환 가능 범위로 묶는 용도). */
+    private const MAX_HEIGHT = 12000;
 
     /** 축소 대상 래스터 포맷만. SVG(벡터)·GIF(애니메이션)는 제외. */
     private const RESIZABLE_MIMES = ['image/jpeg', 'image/png', 'image/webp'];
@@ -53,8 +58,8 @@ class ResizeUploadedImages
 
             [$w, $h] = $size;
 
-            if ($w <= self::MAX_EDGE && $h <= self::MAX_EDGE) {
-                return $next($request); // 이미 충분히 작음
+            if ($w <= self::MAX_WIDTH && $h <= self::MAX_HEIGHT) {
+                return $next($request); // 가로도 넉넉하고 세로도 한도 내 — 손대지 않음
             }
 
             // 대형 원본 디코딩에 메모리가 필요하므로 이 요청에 한해 상향(단, 물리 RAM 1GB라 과하지 않게).
@@ -71,7 +76,7 @@ class ResizeUploadedImages
 
             try {
                 $image = (new ImageManager(new Driver()))->read($file->getPathname());
-                $image->scaleDown(self::MAX_EDGE, self::MAX_EDGE);
+                $image->scaleDown(self::MAX_WIDTH, self::MAX_HEIGHT);
 
                 $ext = strtolower($file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'jpg');
                 $tmp = tempnam(sys_get_temp_dir(), 'twill_rz_') . '.' . $ext;
