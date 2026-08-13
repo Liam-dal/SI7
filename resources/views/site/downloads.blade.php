@@ -54,7 +54,7 @@
                                     <button type="submit" class="download-lock__btn">🔒 Download ↓</button>
                                 </form>
                             @else
-                                <x-site.button variant="outline" :href="route('download.file', $download)" download>Download ↓</x-site.button>
+                                <x-site.button variant="outline" :href="$download->file('document')" download>Download ↓</x-site.button>
                             @endif
                         </x-slot:actions>
                     </x-site.disclosure>
