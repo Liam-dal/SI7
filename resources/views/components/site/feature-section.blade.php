@@ -13,7 +13,7 @@
     $sectionTitle = $section?->title ?: $fallbackTitle;
 
     $featureTitle = fn ($feature) => $feature->title ?: $feature->project->title;
-    $featureMeta = fn ($feature) => $feature->description ?: $feature->project->description ?: $feature->project->client;
+    $featureMeta = fn ($feature) => $feature->description ?: $feature->project->subtitle;
 @endphp
 
 @if($features->isNotEmpty())

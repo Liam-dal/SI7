@@ -56,7 +56,7 @@
                 @foreach($relatedProjects as $project)
                     <x-site.card
                         :project="$project"
-                        :meta="$project->client"
+                        :meta="$project->subtitle"
                         sizes="(max-width: 767px) 100vw, 33vw"
                     />
                 @endforeach

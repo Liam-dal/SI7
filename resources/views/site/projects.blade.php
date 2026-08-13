@@ -18,7 +18,7 @@
     @else
         <x-site.media-grid layout="3" data-project-grid>
             @foreach($projects as $project)
-                <x-site.card :project="$project" :meta="$project->client" :eager="$loop->index < 2" heading="h2" :data-categories="implode(',', $project->category_ids ?? [])" />
+                <x-site.card :project="$project" :meta="$project->subtitle" :eager="$loop->index < 2" heading="h2" :data-categories="implode(',', $project->category_ids ?? [])" />
             @endforeach
         </x-site.media-grid>
         <p class="empty filter-empty" hidden>이 카테고리에 공개된 프로젝트가 아직 없습니다.</p>

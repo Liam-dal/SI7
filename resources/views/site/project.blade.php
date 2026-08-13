@@ -62,7 +62,7 @@
             <x-site.section-head title="Up next" title-case="normal" action="View all work ↗" :action-href="route('projects')" />
             <x-site.media-grid layout="3">
                 @foreach($relatedProjects as $relatedProject)
-                    <x-site.card :project="$relatedProject" :meta="$relatedProject->client" sizes="(max-width: 767px) 100vw, 33vw" />
+                    <x-site.card :project="$relatedProject" :meta="$relatedProject->subtitle" sizes="(max-width: 767px) 100vw, 33vw" />
                 @endforeach
             </x-site.media-grid>
         </section>
