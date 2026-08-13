@@ -19,6 +19,8 @@ class About extends Model
         'description',
         'profession',
         'resume_url',
+        'use_neat',
+        'neat_config',
     ];
     
 }

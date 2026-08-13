@@ -2,8 +2,18 @@
 
 @section('title', $siteSettings?->about_page_title ?: 'About')
 
+@php
+    $neatOn = $about && $about->use_neat && trim((string) $about->neat_config) !== '';
+@endphp
+
 @section('content')
 <div class="page page--standard">
+    @if($neatOn)
+        <div class="about-hero">
+            <canvas class="about-hero__canvas" data-neat></canvas>
+        </div>
+    @endif
+
     <x-site.page-head
         align="stack"
         :title="$siteSettings?->about_page_title ?: 'About'"
@@ -27,3 +37,21 @@
     </section>
 </div>
 @endsection
+
+@if($neatOn)
+@push('scripts')
+<script type="module">
+    import { NeatGradient } from "https://esm.sh/@firecms/neat";
+    const el = document.querySelector('[data-neat]');
+    if (el) {
+        try {
+            const config = {!! $about->neat_config !!};
+            new NeatGradient(Object.assign({}, config, { ref: el }));
+        } catch (e) {
+            console.warn('Neat gradient init failed:', e);
+            el.closest('.about-hero')?.remove();
+        }
+    }
+</script>
+@endpush
+@endif

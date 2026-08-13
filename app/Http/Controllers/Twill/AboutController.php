@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Twill;
 use A17\Twill\Models\Contracts\TwillModelContract;
 use A17\Twill\Services\Forms\Fieldset;
 use A17\Twill\Services\Forms\Fields\BlockEditor;
+use A17\Twill\Services\Forms\Fields\Checkbox;
+use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Form;
 use A17\Twill\Http\Controllers\Admin\SingletonModuleController as BaseModuleController;
 
@@ -26,6 +28,13 @@ class AboutController extends BaseModuleController
     public function getForm(TwillModelContract $model): Form
     {
         return parent::getForm($model)
+            ->addFieldset(
+                Fieldset::make()->title('상단 그라디언트 (Neat)')->fields([
+                    Checkbox::make()->name('use_neat')->label('애니메이션 그라디언트 사용')->note('켜면 About 상단에 커버 대신 Neat 애니메이션 그라디언트가 표시됩니다.'),
+                    Input::make()->name('neat_config')->label('Neat 설정 (JSON)')->type('textarea')->rows(12)
+                        ->note('neat.firecms.co에서 그라디언트 디자인 → Export → config(JSON)만 붙여넣으세요. 예: {"colors":[{"color":"#FF5373","enabled":true}, ...], "speed":4, ...}'),
+                ])
+            )
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
                     BlockEditor::make()
