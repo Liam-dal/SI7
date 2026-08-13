@@ -38,7 +38,7 @@ class GuideController extends BaseModuleController
                     DatePicker::make()->name('publication_date')->label('Publication date')->withoutTime(),
                     BlockEditor::make()
                         ->label('본문')
-                        ->blocks(['heading_description', 'quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid']),
+                        ->blocks(['heading_description', 'quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid', 'neat_gradient']),
                 ])
             );
     }

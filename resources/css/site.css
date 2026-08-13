@@ -264,9 +264,9 @@ button { font: inherit; }
 @media (max-width:767px) { .design-hero { margin-top:0; } .design-hero__sentence { padding:.5em .7em; } }
 main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 /* Guide detail — editorial article (AREA17 ideas style). */
-/* About 상단 Neat 그라디언트 히어로 */
-.about-hero { position:relative; width:100%; height:clamp(280px, 50vh, 560px); margin-bottom:var(--space-10); overflow:hidden; border-radius:var(--card-radius); background:var(--image-bg); }
-.about-hero__canvas { position:absolute; inset:0; display:block; width:100%; height:100%; }
+/* Neat 애니메이션 그라디언트 블록 */
+.neat-block { position:relative; width:100%; height:clamp(280px, 50vh, 560px); margin:var(--space-9) 0; overflow:hidden; border-radius:var(--card-radius); background:var(--image-bg); }
+.neat-block__canvas { position:absolute; inset:0; display:block; width:100%; height:100%; }
 .guide-article { --guide-col:clamp(320px, 58vw, 880px); }
 .guide-article__header { max-width:var(--guide-col); margin:0 auto; }
 .guide-article__eyebrow { margin:0 0 var(--space-6); color:var(--muted); font-size:var(--body-small-size); line-height:1.3; letter-spacing:var(--menu-tracking); }
@@ -279,7 +279,8 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .guide-article__body > * { grid-column:2; min-width:0; }
 .guide-article__body > .block-full-image,
 .guide-article__body > .block-gallery,
-.guide-article__body > .block-flex-gallery { grid-column:1 / -1; }
+.guide-article__body > .block-flex-gallery,
+.guide-article__body > .neat-block { grid-column:1 / -1; }
 /* heading+desc 블록은 아티클 좁은 컬럼에선 2단이 찌그러지므로 단일 컬럼으로 쌓음 */
 .guide-article__body > .block-heading-desc { grid-template-columns:1fr; gap:var(--space-3); }
 .guide-article__body .block-heading-desc__body { max-width:none; }
