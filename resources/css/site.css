@@ -115,6 +115,8 @@ button { font: inherit; }
 .gallery-img { cursor:zoom-in; }
 .lightbox { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.88); padding:24px; cursor:zoom-out; }
 .lightbox[hidden] { display:none; }
+/* 라이트박스 열리면 뒤 페이지 스크롤 잠금 */
+.lightbox-open { overflow:hidden; }
 .lightbox img { max-width:100%; max-height:100%; object-fit:contain; cursor:zoom-in; }
 /* 한 번 더 클릭하면 원본 크기로 확대 → 화면보다 크면 스크롤로 이동 */
 .lightbox.is-zoomed { display:block; overflow:auto; padding:0; cursor:zoom-out; }

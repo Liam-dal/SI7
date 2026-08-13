@@ -10,13 +10,14 @@
     var lb = document.getElementById('site-lightbox');
     if (!lb) return;
     var img = lb.querySelector('img');
-    function close() { lb.hidden = true; lb.classList.remove('is-zoomed'); img.removeAttribute('src'); }
+    function close() { lb.hidden = true; lb.classList.remove('is-zoomed'); img.removeAttribute('src'); document.documentElement.classList.remove('lightbox-open'); }
     document.addEventListener('click', function (e) {
         var trigger = e.target.closest('[data-lightbox-src]');
         if (trigger) {
             img.src = trigger.getAttribute('data-lightbox-src');
             lb.classList.remove('is-zoomed');
             lb.hidden = false;
+            document.documentElement.classList.add('lightbox-open');
             return;
         }
         // 라이트박스 이미지를 클릭하면 원본 크기로 한 번 더 확대(토글).
