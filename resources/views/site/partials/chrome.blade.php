@@ -30,6 +30,10 @@
         @foreach($menu as $link)
             <a href="{{ $link['url'] }}" @if($link['active']) aria-current="page" @endif>{{ $link['label'] }}</a>
         @endforeach
+        <span class="lang-switch" aria-label="언어">
+            <a href="{{ route('locale.switch', 'ko') }}" @if(app()->getLocale() === 'ko') class="is-on" aria-current="true" @endif>KO</a>
+            <a href="{{ route('locale.switch', 'en') }}" @if(app()->getLocale() === 'en') class="is-on" aria-current="true" @endif>EN</a>
+        </span>
     </nav>
     <button class="nav-toggle" type="button" data-nav-open aria-expanded="false" aria-controls="mobile-nav">Menu</button>
 </header>
@@ -49,6 +53,10 @@
         @foreach($menu as $link)
             <a href="{{ $link['url'] }}" @if($link['active']) aria-current="page" @endif>{{ $link['label'] }}</a>
         @endforeach
+        <span class="lang-switch lang-switch--mobile" aria-label="언어">
+            <a href="{{ route('locale.switch', 'ko') }}" @if(app()->getLocale() === 'ko') class="is-on" @endif>KO</a>
+            <a href="{{ route('locale.switch', 'en') }}" @if(app()->getLocale() === 'en') class="is-on" @endif>EN</a>
+        </span>
     </nav>
 </div>
 

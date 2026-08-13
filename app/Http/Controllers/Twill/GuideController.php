@@ -33,6 +33,7 @@ class GuideController extends BaseModuleController
                     Input::make()->name('category')->label('Category')->maxlength(60)
                         ->note('예: Ideas, News, Report, Clients — 목록에서 타이틀 위에 표시됩니다.'),
                     Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(3)->maxlength(500)
+                        ->translatable()
                         ->note('목록과 상세 상단에 표시되는 요약입니다.'),
                     Medias::make()->name('cover')->label('Cover')->max(1),
                     DatePicker::make()->name('publication_date')->label('Publication date')->withoutTime(),

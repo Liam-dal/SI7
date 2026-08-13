@@ -19,6 +19,15 @@ Route::get('/site.css', function () {
     return response()->file(resource_path('css/site.css'), ['Content-Type' => 'text/css; charset=UTF-8']);
 })->name('site.css');
 
+// 언어 전환 (세션에 저장 → SetLocale 미들웨어가 적용)
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['ko', 'en'], true)) {
+        session(['locale' => $locale]);
+    }
+
+    return redirect()->back();
+})->name('locale.switch');
+
 Route::get('/', function () {
     $homepage = Homepage::query()->first();
     $asFeature = fn ($project) => (object) ['project' => $project, 'title' => null, 'description' => null];

@@ -7,12 +7,13 @@ use A17\Twill\Models\Behaviors\HasSlug;
 use A17\Twill\Models\Behaviors\HasMedias;
 use A17\Twill\Models\Behaviors\HasRevisions;
 use A17\Twill\Models\Behaviors\HasPosition;
+use A17\Twill\Models\Behaviors\HasTranslation;
 use A17\Twill\Models\Behaviors\Sortable;
 use A17\Twill\Models\Model;
 
 class Guide extends Model implements Sortable
 {
-    use HasBlocks, HasSlug, HasMedias, HasRevisions, HasPosition;
+    use HasBlocks, HasSlug, HasMedias, HasRevisions, HasPosition, HasTranslation;
 
     protected $fillable = [
         'published',
@@ -21,6 +22,11 @@ class Guide extends Model implements Sortable
         'description',
         'publication_date',
         'position',
+    ];
+
+    public $translatedAttributes = [
+        'title',
+        'description',
     ];
 
     protected $casts = [
