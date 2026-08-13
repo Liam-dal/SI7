@@ -287,6 +287,8 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 /* 본문 인라인 제목은 블록 대제목보다 작게 (계층 정리) */
 .guide-article__body .prose h2 { font-size:var(--heading-small); margin:36px 0 12px; }
 .guide-article__body .prose h3 { font-size:var(--heading-xsmall); margin:28px 0 10px; }
+.guide-article__body .prose h4 { margin-bottom:16px; }
+.guide-article__body .prose p { margin-bottom:16px; }
 /* 가이드 본문 텍스트는 살짝 작게 (읽기 좋은 아티클 크기) */
 .guide-article__body .prose p, .guide-article__body .prose li { font-size:var(--body-medium-size); line-height:var(--prose-leading-loose); }
 .guide-article__related { margin-top:var(--space-13); }
