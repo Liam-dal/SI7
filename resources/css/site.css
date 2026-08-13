@@ -108,6 +108,14 @@ button { font: inherit; }
 .block-flex-gallery--cols-3 { grid-template-columns:repeat(3, minmax(0,1fr)); }
 .block-flex-gallery--cols-2 img, .block-flex-gallery--cols-3 img { flex:none; width:100%; max-width:none; }
 @media (max-width:767px) { .block-flex-gallery--cols-2, .block-flex-gallery--cols-3 { grid-template-columns:1fr; } }
+/* Fit 모드: 박스(비율)에 이미지 전체가 들어가고 여백은 배경색으로. crop 규칙 뒤에 와서 우선함. */
+.block-gallery--fit img, .block-flex-gallery--fit img { object-fit:contain; }
+/* 클릭해 큰 이미지 보기 */
+.gallery-img { cursor:zoom-in; }
+.lightbox { position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.88); padding:24px; cursor:zoom-out; }
+.lightbox[hidden] { display:none; }
+.lightbox img { max-width:100%; max-height:100%; object-fit:contain; }
+.lightbox__close { position:absolute; top:14px; right:20px; background:none; border:0; color:#fff; font-size:2.2rem; line-height:1; cursor:pointer; }
 
 /* Client-side category filtering uses the native hidden attribute. */
 .card[hidden] { display:none !important; }

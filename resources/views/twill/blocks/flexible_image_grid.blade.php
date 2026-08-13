@@ -27,6 +27,22 @@
     note="원본 비율(유연)이면 각 이미지 원래 비율을 유지합니다. 특정 비율을 고르면 이미지 크롭 탭에서 같은 비율로 잘라주세요."
 />
 
+<x-twill::select
+    name="fit_mode"
+    label="이미지 표시"
+    default="crop"
+    :options="[
+        ['value' => 'crop', 'label' => 'Crop (박스를 꽉 채움)'],
+        ['value' => 'fit', 'label' => 'Fit (전체가 보이게 축소)'],
+    ]"
+    note="Fit은 세로로 긴 이미지도 잘리지 않고 전체가 보이게 넣고, 남는 여백은 아래 배경색으로 채웁니다. (비율을 고른 경우에 효과가 있어요)"
+/>
+
+<x-twill::color
+    name="bg_color"
+    label="배경색 (Fit일 때 여백)"
+/>
+
 <x-twill::medias
     name="images"
     label="Images"

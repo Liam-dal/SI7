@@ -25,6 +25,22 @@
     note="아래 이미지들의 크롭 탭에서 같은 비율로 잘라주세요. 그리드는 여기서 고른 비율로 통일됩니다."
 />
 
+<x-twill::select
+    name="fit_mode"
+    label="이미지 표시"
+    default="crop"
+    :options="[
+        ['value' => 'crop', 'label' => 'Crop (박스를 꽉 채움)'],
+        ['value' => 'fit', 'label' => 'Fit (전체가 보이게 축소)'],
+    ]"
+    note="Fit은 세로로 긴 이미지도 잘리지 않고 전체가 보이게 넣고, 남는 여백은 아래 배경색으로 채웁니다."
+/>
+
+<x-twill::color
+    name="bg_color"
+    label="배경색 (Fit일 때 여백)"
+/>
+
 <x-twill::medias
     name="images"
     label="Images"
