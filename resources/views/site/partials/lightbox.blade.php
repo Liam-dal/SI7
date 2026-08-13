@@ -14,10 +14,24 @@
     document.addEventListener('click', function (e) {
         var trigger = e.target.closest('[data-lightbox-src]');
         if (trigger) {
-            img.src = trigger.getAttribute('data-lightbox-src');
-            lb.classList.remove('is-zoomed');
+            var small = trigger.currentSrc || trigger.getAttribute('src');
+            var full = trigger.getAttribute('data-lightbox-src');
+            // 이미 로드된 작은 이미지를 즉시 표시 → 빈 화면 없이 바로 열림.
+            img.src = small || full;
+            lb.classList.remove('is-zoomed', 'is-loading');
             lb.hidden = false;
             document.documentElement.classList.add('lightbox-open');
+            // 큰 버전은 뒤에서 받아 준비되면 교체(선명해짐).
+            if (full && full !== small) {
+                lb.classList.add('is-loading');
+                var pre = new Image();
+                pre.onload = function () {
+                    if (!lb.hidden && img.src.indexOf(small) !== -1) { img.src = full; }
+                    lb.classList.remove('is-loading');
+                };
+                pre.onerror = function () { lb.classList.remove('is-loading'); };
+                pre.src = full;
+            }
             return;
         }
         // 라이트박스 이미지를 클릭하면 원본 크기로 한 번 더 확대(토글).

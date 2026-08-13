@@ -122,6 +122,9 @@ button { font: inherit; }
 .lightbox.is-zoomed { display:block; overflow:auto; padding:0; cursor:zoom-out; }
 .lightbox.is-zoomed img { width:80vw; max-width:none; max-height:none; height:auto; display:block; margin:auto; cursor:zoom-out; }
 .lightbox__close { position:fixed; top:14px; right:20px; z-index:1; background:none; border:0; color:#fff; font-size:2.2rem; line-height:1; cursor:pointer; }
+/* 고화질 로딩 중 스피너 (작은 이미지는 이미 보이는 상태) */
+.lightbox.is-loading::after { content:''; position:fixed; bottom:20px; left:50%; width:22px; height:22px; margin-left:-11px; border:2px solid rgba(255,255,255,.35); border-top-color:#fff; border-radius:50%; animation:lb-spin .7s linear infinite; }
+@keyframes lb-spin { to { transform:rotate(360deg); } }
 
 /* Client-side category filtering uses the native hidden attribute. */
 .card[hidden] { display:none !important; }
