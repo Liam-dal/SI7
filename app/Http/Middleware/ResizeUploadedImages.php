@@ -57,16 +57,38 @@ class ResizeUploadedImages
                 return $next($request); // 이미 충분히 작음
             }
 
-            // 초대형 원본 디코딩에 메모리가 필요하므로 이 요청에 한해 상향.
-            @ini_set('memory_limit', '1536M');
+            // 대형 원본 디코딩에 메모리가 필요하므로 이 요청에 한해 상향(단, 물리 RAM 1GB라 과하지 않게).
+            @ini_set('memory_limit', '512M');
             @set_time_limit(300);
 
-            $image = (new ImageManager(new Driver()))->read($file->getPathname());
-            $image->scaleDown(self::MAX_EDGE, self::MAX_EDGE);
+            // 여러 장을 동시에 올려도 리사이즈는 서버에서 "한 번에 하나씩"만.
+            // (병렬 대형 디코딩이 겹치면 1GB RAM이 OOM → 502. flock 으로 직렬화)
+            $lockHandle = @fopen(storage_path('app/.image-resize.lock'), 'c');
 
-            $ext = strtolower($file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'jpg');
-            $tmp = tempnam(sys_get_temp_dir(), 'twill_rz_') . '.' . $ext;
-            $image->save($tmp, quality: 90);
+            if ($lockHandle) {
+                @flock($lockHandle, LOCK_EX); // 앞선 리사이즈가 끝날 때까지 대기
+            }
+
+            try {
+                $image = (new ImageManager(new Driver()))->read($file->getPathname());
+                $image->scaleDown(self::MAX_EDGE, self::MAX_EDGE);
+
+                $ext = strtolower($file->getClientOriginalExtension() ?: $file->guessExtension() ?: 'jpg');
+                $tmp = tempnam(sys_get_temp_dir(), 'twill_rz_') . '.' . $ext;
+                $image->save($tmp, quality: 90);
+
+                $newW = $image->width();
+                $newH = $image->height();
+
+                // GD 리소스를 즉시 해제해 다음 리사이즈로 메모리를 넘겨줌.
+                unset($image);
+                gc_collect_cycles();
+            } finally {
+                if ($lockHandle) {
+                    @flock($lockHandle, LOCK_UN);
+                    @fclose($lockHandle);
+                }
+            }
 
             $resized = new UploadedFile(
                 $tmp,
@@ -79,8 +101,8 @@ class ResizeUploadedImages
             // 컨트롤러는 클라이언트가 보낸 width/height(원본값)를 우선 사용하므로 새 치수로 덮어씀.
             $request->files->set('qqfile', $resized);
             $request->merge([
-                'width' => $image->width(),
-                'height' => $image->height(),
+                'width' => $newW,
+                'height' => $newH,
             ]);
         } catch (\Throwable $e) {
             // 실패해도 업로드는 막지 않고 원본 그대로 진행.
