@@ -6,11 +6,13 @@
     name="heading"
     label="Heading"
     :maxlength="150"
+    :translated="true"
 />
 
 <x-twill::wysiwyg
     name="description"
     label="Description"
+    :translated="true"
     :toolbar-options="[
         ['header' => [2, 3, 4]],
         'bold',

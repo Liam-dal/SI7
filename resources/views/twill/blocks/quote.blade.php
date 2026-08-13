@@ -5,6 +5,7 @@
 <x-twill::wysiwyg
     name="quote"
     label="Quote"
+    :translated="true"
     :toolbar-options="['bold', 'italic', 'link', 'clean']"
 />
-<x-twill::input name="attribution" label="Attribution (optional)" />
+<x-twill::input name="attribution" label="Attribution (optional)" :translated="true" />
