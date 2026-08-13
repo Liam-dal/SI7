@@ -102,6 +102,12 @@ button { font: inherit; }
 .block-flex-gallery--portrait img { aspect-ratio:3/4; object-fit:cover; }
 /* 원본 비율(default)일 때는 각 이미지 고유 비율 유지 (강제 crop 없음). */
 .block-gallery--default img { width:100%; height:auto; aspect-ratio:auto; object-fit:fill; }
+/* flexible 그리드 칼럼: '자동'은 flex 흐름 유지, 2/3은 균일 그리드로. */
+.block-flex-gallery--cols-2, .block-flex-gallery--cols-3 { display:grid; gap:1rem; }
+.block-flex-gallery--cols-2 { grid-template-columns:repeat(2, minmax(0,1fr)); }
+.block-flex-gallery--cols-3 { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.block-flex-gallery--cols-2 img, .block-flex-gallery--cols-3 img { flex:none; width:100%; max-width:none; }
+@media (max-width:767px) { .block-flex-gallery--cols-2, .block-flex-gallery--cols-3 { grid-template-columns:1fr; } }
 
 /* Client-side category filtering uses the native hidden attribute. */
 .card[hidden] { display:none !important; }

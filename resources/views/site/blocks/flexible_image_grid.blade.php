@@ -6,9 +6,11 @@
     }
     // 기존(크롭 없이 올린) 이미지는 해당 크롭 레코드가 없을 수 있으니 default 로 폴백.
     $crop = ($ratio !== 'default' && $block->hasImage('images', $ratio)) ? $ratio : 'default';
+
+    $columns = in_array((string) $block->input('columns'), ['2', '3'], true) ? (int) $block->input('columns') : 'auto';
 @endphp
 @if($block->hasImage('images', 'default'))
-    <div class="block-flex-gallery block-flex-gallery--{{ $ratio }}">
+    <div class="block-flex-gallery block-flex-gallery--{{ $ratio }} block-flex-gallery--cols-{{ $columns }}">
         @foreach($block->images('images', $crop, ['w' => 900]) as $image)
             <img src="{{ $image }}" alt="{{ $block->imageAltText('images') }}" loading="lazy">
         @endforeach

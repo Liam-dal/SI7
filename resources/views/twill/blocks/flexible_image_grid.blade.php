@@ -3,6 +3,18 @@
 @twillBlockGroup('프로젝트 본문')
 
 <x-twill::select
+    name="columns"
+    label="칼럼"
+    default="auto"
+    :options="[
+        ['value' => 'auto', 'label' => '자동 (너비에 맞춰 흐름)'],
+        ['value' => '2', 'label' => '2 columns'],
+        ['value' => '3', 'label' => '3 columns'],
+    ]"
+    note="'자동'은 이미지 크기에 맞춰 유연하게 배열합니다."
+/>
+
+<x-twill::select
     name="ratio"
     label="비율"
     default="default"
