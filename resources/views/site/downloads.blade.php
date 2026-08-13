@@ -13,6 +13,10 @@
     <div class="download-layout">
         <div aria-hidden="true"></div>
         <div>
+        @if(session('download_error'))
+            <p class="download-error">{{ session('download_error') }}</p>
+        @endif
+
         @if($downloads->isEmpty())
             <p class="empty">공개된 다운로드 파일이 아직 없습니다.</p>
         @else
@@ -43,7 +47,15 @@
                         @endif
 
                         <x-slot:actions>
-                            <x-site.button variant="outline" :href="$download->file('document')" download>Download ↓</x-site.button>
+                            @if($download->require_password && filled($download->download_password))
+                                <form method="POST" action="{{ route('download.file', $download) }}" class="download-lock">
+                                    @csrf
+                                    <input type="password" name="password" class="download-lock__input" placeholder="비밀번호" autocomplete="off" required>
+                                    <button type="submit" class="download-lock__btn">🔒 Download ↓</button>
+                                </form>
+                            @else
+                                <x-site.button variant="outline" :href="route('download.file', $download)" download>Download ↓</x-site.button>
+                            @endif
                         </x-slot:actions>
                     </x-site.disclosure>
                 @endif

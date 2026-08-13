@@ -19,6 +19,8 @@ class Download extends Model implements Sortable
         'title',
         'tag',
         'description',
+        'require_password',
+        'download_password',
         'position',
     ];
     

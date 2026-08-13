@@ -126,6 +126,27 @@ Route::get('/download', function () {
     ]);
 })->name('downloads');
 
+// 파일은 항상 컨트롤러를 거쳐 스트리밍 → 직접 /storage URL이 노출되지 않음.
+// 비밀번호가 설정된 항목은 올바른 비번(POST)일 때만 내려줌.
+Route::match(['get', 'post'], '/download/{download}/file', function (Download $download, \Illuminate\Http\Request $request) {
+    abort_unless($download->published, 404);
+
+    $file = $download->fileObject('document');
+    abort_unless($file, 404);
+
+    if ($download->require_password && filled($download->download_password)) {
+        $given = (string) $request->input('password', '');
+        if (! $request->isMethod('post') || ! hash_equals((string) $download->download_password, $given)) {
+            return back()->with('download_error', '비밀번호가 올바르지 않습니다. 다시 시도해 주세요.');
+        }
+    }
+
+    $disk = config('file_library.disk');
+    abort_unless(\Illuminate\Support\Facades\Storage::disk($disk)->exists($file->uuid), 404);
+
+    return \Illuminate\Support\Facades\Storage::disk($disk)->download($file->uuid, $file->filename);
+})->name('download.file');
+
 Route::get('/projects', function (\Illuminate\Http\Request $request) {
     $selectedCategoryId = $request->integer('category') ?: null;
 

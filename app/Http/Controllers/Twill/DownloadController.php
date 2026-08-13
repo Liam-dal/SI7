@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Twill;
 use A17\Twill\Models\Contracts\TwillModelContract;
 use A17\Twill\Services\Listings\Columns\Text;
 use A17\Twill\Services\Listings\TableColumns;
+use A17\Twill\Services\Forms\Fields\Checkbox;
 use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Fields\Files;
 use A17\Twill\Services\Forms\Form;
@@ -30,7 +31,9 @@ class DownloadController extends BaseModuleController
         return parent::getForm($model)
             ->add(Input::make()->name('tag')->label('태그 (선택)')->maxlength(80)->note('예: Company, Certificate, Press kit'))
             ->add(Input::make()->name('description')->label('파일 설명 (선택)')->maxlength(500))
-            ->add(Files::make()->name('document')->label('다운로드 파일')->filesizeMax(512)->note('사업자등록증, 회사 소개서, PDF, 영상(mp4) 등 한 파일을 올리세요. 최대 512MB.'));
+            ->add(Files::make()->name('document')->label('다운로드 파일')->filesizeMax(512)->note('사업자등록증, 회사 소개서, PDF, 영상(mp4) 등 한 파일을 올리세요. 최대 512MB.'))
+            ->add(Checkbox::make()->name('require_password')->label('비밀번호 요구')->note('켜면 이 파일은 비밀번호를 입력해야 다운로드됩니다.'))
+            ->add(Input::make()->name('download_password')->label('다운로드 비밀번호')->note('위 "비밀번호 요구"를 켠 경우에만 사용돼요. 방문자에게 공유할 비밀번호를 입력하세요.'));
     }
 
     /**
