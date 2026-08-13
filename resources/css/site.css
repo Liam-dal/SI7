@@ -118,7 +118,7 @@ button { font: inherit; }
 .lightbox img { max-width:100%; max-height:100%; object-fit:contain; cursor:zoom-in; }
 /* 한 번 더 클릭하면 원본 크기로 확대 → 화면보다 크면 스크롤로 이동 */
 .lightbox.is-zoomed { display:block; overflow:auto; padding:0; cursor:zoom-out; }
-.lightbox.is-zoomed img { max-width:none; max-height:none; width:auto; display:block; margin:auto; cursor:zoom-out; }
+.lightbox.is-zoomed img { width:80vw; max-width:none; max-height:none; height:auto; display:block; margin:auto; cursor:zoom-out; }
 .lightbox__close { position:fixed; top:14px; right:20px; z-index:1; background:none; border:0; color:#fff; font-size:2.2rem; line-height:1; cursor:pointer; }
 
 /* Client-side category filtering uses the native hidden attribute. */
