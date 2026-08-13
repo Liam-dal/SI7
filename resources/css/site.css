@@ -261,7 +261,7 @@ button { font: inherit; }
 .design-hero__dot { width:8px; height:8px; padding:0; border:0; border-radius:50%; background:rgba(255,255,255,.55); box-shadow:0 0 6px rgba(0,0,0,.35); cursor:pointer; }
 .design-hero__dot.is-on { background:#fff; }
 .design-hero.is-empty .design-hero__media { opacity:.3; }
-@media (max-width:767px) { .design-hero { margin-top:0; } .design-hero__sentence { padding:.5em .7em; font-size:var(--body-size); } }
+@media (max-width:767px) { .design-hero { margin-top:0; aspect-ratio:auto; height:clamp(340px, 58vh, 460px); } .design-hero__sentence { padding:.5em .7em; font-size:var(--body-size); } }
 main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 /* Guide detail — editorial article (AREA17 ideas style). */
 /* Neat 애니메이션 그라디언트 블록 */
