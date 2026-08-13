@@ -34,13 +34,31 @@ class AppServiceProvider extends ServiceProvider
         // 본문 이미지 블록은 원본 비율(default) 하나만 사용합니다.
         // 사이트 상세, 전체 에디터, Preview에서 같은 crop을 참조하도록 통일합니다.
         config()->set('twill.block_editor.crops', [
+            // 본문 단일 이미지 블록: 비율 프리셋 탭(원본/정사각/와이드/히어로).
+            // 블록의 '비율' 선택값과 crop 이름이 1:1로 매칭되어 프론트에서 해당 크롭을 출력한다.
             'image' => [
                 'default' => [[
                     'name' => 'default',
                     'ratio' => 0,
                     'minValues' => ['width' => 100, 'height' => 100],
                 ]],
+                'square' => [[
+                    'name' => 'square',
+                    'ratio' => 1,
+                    'minValues' => ['width' => 100, 'height' => 100],
+                ]],
+                'wide' => [[
+                    'name' => 'wide',
+                    'ratio' => 1.72,
+                    'minValues' => ['width' => 100, 'height' => 100],
+                ]],
+                'hero' => [[
+                    'name' => 'hero',
+                    'ratio' => 1.85,
+                    'minValues' => ['width' => 100, 'height' => 100],
+                ]],
             ],
+            // 그리드 이미지(여러 장)는 레이아웃이 자체 비율을 잡으므로 원본 하나만 유지.
             'images' => [
                 'default' => [[
                     'name' => 'default',
