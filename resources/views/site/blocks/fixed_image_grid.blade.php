@@ -15,7 +15,7 @@
     // Crop: 비율 크롭으로 박스를 꽉 채움.
     $imgCrop = $fit === 'fit' ? 'default' : $crop;
     $display = $block->images('images', $imgCrop, ['w' => 900]);
-    $full = $block->images('images', 'default', ['w' => 2000]); // 라이트박스용 큰 버전(원본 비율)
+    $full = $block->images('images', 'default', ['w' => 2560]); // 라이트박스용 큰 버전(원본 비율)
 @endphp
 @if($block->hasImage('images', 'default'))
     <div class="block-gallery block-gallery--{{ $columns }} block-gallery--{{ $ratio }} block-gallery--{{ $fit }}">
