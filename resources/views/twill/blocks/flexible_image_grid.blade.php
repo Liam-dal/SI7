@@ -2,6 +2,19 @@
 @twillBlockIcon('image')
 @twillBlockGroup('프로젝트 본문')
 
+<x-twill::select
+    name="ratio"
+    label="비율"
+    default="default"
+    :options="[
+        ['value' => 'default', 'label' => '원본 비율 (유연)'],
+        ['value' => 'square', 'label' => '정사각 (1:1)'],
+        ['value' => 'landscape', 'label' => '가로 (3:2)'],
+        ['value' => 'portrait', 'label' => '세로 (3:4)'],
+    ]"
+    note="원본 비율(유연)이면 각 이미지 원래 비율을 유지합니다. 특정 비율을 고르면 이미지 크롭 탭에서 같은 비율로 잘라주세요."
+/>
+
 <x-twill::medias
     name="images"
     label="Images"

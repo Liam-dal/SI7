@@ -58,11 +58,27 @@ class AppServiceProvider extends ServiceProvider
                     'minValues' => ['width' => 100, 'height' => 100],
                 ]],
             ],
-            // 그리드 이미지(여러 장)는 레이아웃이 자체 비율을 잡으므로 원본 하나만 유지.
+            // 그리드 이미지(여러 장): 블록의 '비율' 선택값과 매칭되는 크롭 탭.
+            // 한 그리드 안의 이미지들을 같은 비율로 통일해 정돈된 그리드를 만든다.
             'images' => [
                 'default' => [[
                     'name' => 'default',
                     'ratio' => 0,
+                    'minValues' => ['width' => 100, 'height' => 100],
+                ]],
+                'square' => [[
+                    'name' => 'square',
+                    'ratio' => 1,
+                    'minValues' => ['width' => 100, 'height' => 100],
+                ]],
+                'landscape' => [[
+                    'name' => 'landscape',
+                    'ratio' => 1.5, // 3:2
+                    'minValues' => ['width' => 100, 'height' => 100],
+                ]],
+                'portrait' => [[
+                    'name' => 'portrait',
+                    'ratio' => 0.75, // 3:4
                     'minValues' => ['width' => 100, 'height' => 100],
                 ]],
             ],

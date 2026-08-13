@@ -92,13 +92,16 @@ button { font: inherit; }
 .component-project .project-content > :is(.block-full-image,.block-gallery,.block-flex-gallery) { width:100%; max-width:none; }
 .component-project .project-content > .block-full-image figcaption { max-width:var(--measure); margin-top:12px; }
 
-/* A fixed grid owns one shared frame; flexible grids keep each source image's ratio. */
-.component-project .block-gallery--2 img,
-.component-project .block-gallery--3 img {
-    width:100%;
-    aspect-ratio:1.65;
-    object-fit:cover;
-}
+/* 그리드 이미지 비율: 블록의 '비율' 선택값(square/landscape/portrait)에 맞춰 통일.
+   Glide가 실제 픽셀을 잘라주고, 여기 aspect-ratio 로 셀 모양까지 균일하게 보강한다. */
+.block-gallery--square img { width:100%; aspect-ratio:1/1; object-fit:cover; }
+.block-gallery--landscape img { width:100%; aspect-ratio:3/2; object-fit:cover; }
+.block-gallery--portrait img { width:100%; aspect-ratio:3/4; object-fit:cover; }
+.block-flex-gallery--square img { aspect-ratio:1/1; object-fit:cover; }
+.block-flex-gallery--landscape img { aspect-ratio:3/2; object-fit:cover; }
+.block-flex-gallery--portrait img { aspect-ratio:3/4; object-fit:cover; }
+/* 원본 비율(default)일 때는 각 이미지 고유 비율 유지 (강제 crop 없음). */
+.block-gallery--default img { width:100%; height:auto; aspect-ratio:auto; object-fit:fill; }
 
 /* Client-side category filtering uses the native hidden attribute. */
 .card[hidden] { display:none !important; }
