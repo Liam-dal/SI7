@@ -30,6 +30,9 @@ class GuideController extends BaseModuleController
         return parent::getForm($model)
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
+                    Input::make()->name('headline')->label('제목 (표시용)')->maxlength(200)
+                        ->translatable()
+                        ->note('사이트 목록·상세에 실제로 보이는 제목입니다 (한/영 전환 가능). 상단의 Title 칸은 URL(permalink) 전용이니 영문으로 입력하세요.'),
                     Input::make()->name('category')->label('Category')->maxlength(60)
                         ->note('예: Ideas, News, Report, Clients — 목록에서 타이틀 위에 표시됩니다.'),
                     Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(3)->maxlength(500)
@@ -55,7 +58,7 @@ class GuideController extends BaseModuleController
                 ->mediaParams(['w' => 80, 'h' => 80, 'fit' => 'crop'])
         );
 
-        $table->add(Text::make()->field('title')->title('제목')->linkToEdit()->sortable());
+        $table->add(Text::make()->field('headline')->title('제목')->linkToEdit()->sortable());
 
         $table->add(
             Text::make()->field('publication_date')->title('발행일')->sortable()

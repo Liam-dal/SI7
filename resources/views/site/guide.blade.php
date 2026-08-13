@@ -1,6 +1,6 @@
 @extends('site.layouts.app')
 
-@section('title', $item->title)
+@section('title', $item->headline)
 @section('description', $item->description)
 
 @section('content')
@@ -10,7 +10,7 @@
             <p class="guide-article__eyebrow">{{ $item->category }}</p>
         @endif
 
-        <h1 class="guide-article__title">{{ $item->title }}</h1>
+        <h1 class="guide-article__title">{{ $item->headline }}</h1>
 
         @if($item->publication_date)
             <p class="guide-article__meta">
@@ -31,7 +31,7 @@
                 ratio="wide"
                 :eager="true"
                 sizes="100vw"
-                :alt="$item->title"
+                :alt="$item->headline"
             />
         </figure>
     @endif
@@ -47,7 +47,7 @@
                         :href="route('guides.show', $guide->slug ?: $guide->id)"
                         :media="$guide"
                         :category="$guide->category"
-                        :title="$guide->title"
+                        :title="$guide->headline"
                     />
                 @endforeach
             </x-site.media-grid>

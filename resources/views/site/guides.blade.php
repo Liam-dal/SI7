@@ -17,7 +17,7 @@
         @php
             $items = $guides->map(fn ($g) => [
                 'category' => $g->category,
-                'title' => $g->title,
+                'title' => $g->headline,
                 'href' => route('guides.show', $g->slug ?: $g->id),
                 'cover' => $g->hasImage('cover') ? $g : null,
             ]);
