@@ -23,7 +23,9 @@
             <section class="download-list">
             @foreach($downloads as $download)
                 @php
-                    $file = $download->fileObject('document');
+                    // 파일은 로케일별로 저장되나(업로드 시 로케일) 다운로드는 언어 무관이어야 하므로,
+                    // 현재 로케일에 없으면 역할이 맞는 아무 파일이나 사용.
+                    $file = $download->fileObject('document') ?: $download->files->firstWhere('pivot.role', 'document');
                     $extension = strtoupper(pathinfo($file?->filename ?? '', PATHINFO_EXTENSION));
                     $bytes = is_numeric($file?->size) ? (int) $file->size : null;
                     $size = $bytes

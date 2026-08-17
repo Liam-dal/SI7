@@ -140,7 +140,8 @@ Route::get('/download', function () {
 Route::match(['get', 'post'], '/download/{download}/file', function (Download $download, \Illuminate\Http\Request $request) {
     abort_unless($download->published, 404);
 
-    $file = $download->fileObject('document');
+    // 파일은 로케일별로 저장되나 다운로드는 언어 무관이어야 하므로 로케일 무관하게 조회.
+    $file = $download->fileObject('document') ?: $download->files->firstWhere('pivot.role', 'document');
     abort_unless($file, 404);
 
     if ($download->require_password && filled($download->download_password)) {
