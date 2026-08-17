@@ -36,9 +36,11 @@
     note="Fit은 세로로 긴 이미지도 잘리지 않고 전체가 보이게 넣고, 남는 여백은 아래 배경색으로 채웁니다."
 />
 
-<x-twill::color
+<x-twill::input
     name="bg_color"
     label="배경색 (Fit일 때 여백)"
+    placeholder="#F2F0EB"
+    note="헥사코드로 입력하세요 (예: #FFFFFF, #000000). 비우면 여백은 투명."
 />
 
 <x-twill::medias
