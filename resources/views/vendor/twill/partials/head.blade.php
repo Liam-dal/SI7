@@ -27,9 +27,9 @@
     !function(e){var i=window.A17||{},n=e.documentElement,l=window;i.browserSpec="html5",i.touch=!!("ontouchstart"in l||l.documentTouch&&e instanceof DocumentTouch),i.objectFit="objectFit"in n.style,window.A17=i,n.className=n.className.replace(/\bno-js\b/," js "+i.browserSpec+(i.touch?" touch":" no-touch")+(i.objectFit?" objectFit":" no-objectFit"))}(document);
 </script>
 
-{{-- SI7 관리자 커스텀 CSS: 블록 선택 UI를 1칼럼(세로)로 --}}
+{{-- SI7 관리자 커스텀 CSS: 블록 선택 버튼을 1칼럼 전체폭으로 (기본은 width:calc(50%-5px) 2칼럼) --}}
 <style>
-    .editorSidebar__blocks { display: grid !important; grid-template-columns: 1fr !important; }
+    .editorSidebar__blocks .editorSidebar__button { width: 100% !important; }
 </style>
 
 @stack('extra_css')
