@@ -6,7 +6,7 @@
         --rule: var(--text);
         --page-pad: {{ $siteSettings?->page_gutter ?? 16 }}px;
         --section-space: {{ $siteSettings?->section_spacing ?? 96 }}px;
-        --page-head-gap: var(--space-13);
+        --page-head-gap: var(--space-12);
         --card-radius: {{ $siteSettings?->card_radius ?? 0 }}px;
         --page-title-size: {{ $siteSettings?->page_title_size ?? 140 }}px;
         --page-title-leading: 1.25;
