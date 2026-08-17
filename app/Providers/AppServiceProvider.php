@@ -130,6 +130,7 @@ class AppServiceProvider extends ServiceProvider
                 ->title('Contact')
                 ->setChildren([
                     NavigationLink::make()->forModule('offices')->title('Offices'),
+                    NavigationLink::make()->forSingleton('contact')->title('Overview'),
                 ])
                 ->doNotAddSelfAsFirstChild()
         );

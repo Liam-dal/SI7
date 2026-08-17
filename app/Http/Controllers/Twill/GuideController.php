@@ -47,11 +47,11 @@ class GuideController extends BaseModuleController
             );
     }
 
-    protected function additionalIndexTableColumns(): TableColumns
+    // 컬럼 전체를 직접 정의(중복 방지). 기본 title/publish 컬럼을 안 쓰고,
+    // 커버를 맨 앞으로, 제목은 headline 하나만 둔다.
+    protected function getIndexTableColumns(): TableColumns
     {
         $table = TableColumns::make();
-
-        $table->add(PublishStatus::make()->title('공개')->optional());
 
         $table->add(
             Image::make()->field('cover')->title('커버')->role('cover')->crop('default')
@@ -66,6 +66,8 @@ class GuideController extends BaseModuleController
                     ? $guide->publication_date->format('Y-m-d')
                     : '—')
         );
+
+        $table->add(PublishStatus::make()->title('공개')->optional());
 
         return $table;
     }
