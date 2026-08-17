@@ -65,7 +65,7 @@
         --measure: 720px;
         --radius: var(--card-radius);
     }
-    @media (max-width: 767px) { :root { --page-head-gap: var(--space-11); } }
+    @media (max-width: 767px) { :root { --page-head-gap: var(--space-9); } }
     @font-face { font-family: 'SI7'; src: url('/fonts/si7-regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'SI7'; src: url('/fonts/si7-medium.woff') format('woff'); font-weight: 500 800; font-style: normal; font-display: swap; }
     @if(($siteSettings?->link_hover_style ?? 'underline') === 'fade')
