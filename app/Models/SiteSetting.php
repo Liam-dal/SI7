@@ -4,11 +4,29 @@ namespace App\Models;
 
 use A17\Twill\Models\Behaviors\HasRevisions;
 use A17\Twill\Models\Behaviors\HasMedias;
+use A17\Twill\Models\Behaviors\HasTranslation;
 use A17\Twill\Models\Model;
 
-class SiteSetting extends Model 
+class SiteSetting extends Model
 {
-    use HasMedias, HasRevisions;
+    use HasMedias, HasRevisions, HasTranslation;
+
+    // 사용자에게 보이는 텍스트(페이지 제목·설명·히어로·SEO 문구·푸터)는 한/영 번역.
+    // URL·색상·크기 토큰·site_name·logo_text 등은 번역하지 않음.
+    public $translatedAttributes = [
+        'seo_title_prefix', 'seo_title_suffix', 'seo_description_prefix', 'seo_description_suffix',
+        'homepage_eyebrow', 'homepage_title', 'homepage_description',
+        'projects_page_title', 'projects_page_description',
+        'projects_sectors_title', 'projects_sectors_description',
+        'projects_disciplines_title', 'projects_disciplines_description',
+        'projects_all_title', 'projects_all_description',
+        'projects_alphabetical_title', 'projects_alphabetical_description',
+        'about_page_title', 'about_page_description',
+        'guide_page_title', 'guide_page_description',
+        'contact_page_title', 'contact_page_description',
+        'downloads_page_title', 'downloads_page_description',
+        'footer_text', 'copyright_text',
+    ];
 
     public array $mediasParams = [
         'logo' => [
