@@ -21,8 +21,8 @@
     <div class="feature-band__inner">
         <x-site.section-head :title="$sectionTitle" :description="$section?->description">
             @if($isCarousel)
-                <button class="btn-icon" type="button" data-carousel="{{ $carouselKey }}" data-direction="previous" aria-label="이전">←</button>
-                <button class="btn-icon" type="button" data-carousel="{{ $carouselKey }}" data-direction="next" aria-label="다음">→</button>
+                <x-site.carousel-button direction="previous" :carousel="$carouselKey" />
+                <x-site.carousel-button direction="next" :carousel="$carouselKey" />
             @endif
         </x-site.section-head>
 
