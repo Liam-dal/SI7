@@ -17,7 +17,7 @@
         --heading-regular: clamp(26px, 2.8vw, 32px);
         --heading-small: clamp(24px, 2.4vw, 28px);
         --heading-xsmall: clamp(20px, 2vw, 24px);
-        --page-title-stack-size: clamp(2.2rem, 5vw, var(--page-title-2-size));
+        --page-title-stack-size: clamp(2.8rem, 5vw, var(--page-title-2-size));
         --page-lead-size: var(--body-size);
         --prose-leading: 1.5;
         --prose-leading-loose: 1.75;
