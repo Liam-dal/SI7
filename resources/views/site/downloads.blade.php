@@ -1,11 +1,11 @@
 @extends('site.layouts.app')
 
 @php
-    $pageTitle = $siteSettings?->downloads_page_title ?: 'Downloads';
+    $pageTitle = $siteSettings?->downloads_page_title;
     $pageDescription = $siteSettings?->downloads_page_description;
 @endphp
 
-@section('title', $pageTitle)
+@section('title', $pageTitle ?: 'Downloads')
 
 @section('content')
 <div class="page page--standard component-downloads">

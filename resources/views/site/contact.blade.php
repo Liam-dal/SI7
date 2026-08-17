@@ -1,11 +1,11 @@
 @extends('site.layouts.app')
 
 @php
-    $pageTitle = $siteSettings?->contact_page_title ?: $contact?->title ?: 'Contact';
+    $pageTitle = $siteSettings?->contact_page_title ?: $contact?->title;
     $pageDescription = $siteSettings?->contact_page_description ?: $contact?->description;
 @endphp
 
-@section('title', $pageTitle)
+@section('title', $pageTitle ?: 'Contact')
 
 @section('content')
 <div class="page page--standard component-contact" id="contact">

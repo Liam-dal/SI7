@@ -1,11 +1,11 @@
 @extends('site.layouts.app')
 
 @php
-    $pageTitle = $siteSettings?->projects_page_title ?: 'Work';
+    $pageTitle = $siteSettings?->projects_page_title;
     $pageDescription = $siteSettings?->projects_page_description;
 @endphp
 
-@section('title', $pageTitle)
+@section('title', $pageTitle ?: 'Work')
 
 @section('content')
 <div class="page page--standard page--projects">

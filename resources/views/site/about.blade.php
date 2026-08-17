@@ -6,7 +6,7 @@
 <div class="page page--standard">
     <x-site.page-head
         align="stack"
-        :title="$siteSettings?->about_page_title ?: 'About'"
+        :title="$siteSettings?->about_page_title"
         :description="$siteSettings?->about_page_description"
     />
 

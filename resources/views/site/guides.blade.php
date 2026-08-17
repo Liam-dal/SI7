@@ -1,11 +1,11 @@
 @extends('site.layouts.app')
 
 @php
-    $pageTitle = $siteSettings?->guide_page_title ?: 'Guide';
+    $pageTitle = $siteSettings?->guide_page_title;
     $pageDescription = $siteSettings?->guide_page_description;
 @endphp
 
-@section('title', $pageTitle)
+@section('title', $pageTitle ?: 'Guide')
 
 @section('content')
 <div class="page page--standard component-guides">
