@@ -220,7 +220,7 @@ blockquote.block-quote { border-left:0; padding-left:0; }
 .section-top .label--normal { text-transform:none; }
 .disclosure__label::-webkit-details-marker { display:none; }
 .disclosure[open] > .disclosure__label { color:var(--text); }
-.disclosure__mark { display:grid; place-items:center; flex:0 0 auto; width:36px; height:36px; border:0; background:color-mix(in srgb, var(--text) 10%, transparent); }
+.disclosure__mark { display:grid; place-items:center; flex:0 0 auto; width:36px; height:36px; border:0; background:transparent; }
 .disclosure__mark svg { display:block; width:20px; height:20px; transition:transform .2s ease; }
 .disclosure[open] .disclosure__mark svg { transform:rotate(45deg); }
 .disclosure__panel { display:block; }
