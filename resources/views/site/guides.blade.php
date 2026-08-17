@@ -2,7 +2,7 @@
 
 @php
     $pageTitle = $siteSettings?->guide_page_title ?: 'Guide';
-    $pageDescription = $siteSettings?->guide_page_description ?: '스튜디오의 생각과 과정을 담은 글.';
+    $pageDescription = $siteSettings?->guide_page_description;
 @endphp
 
 @section('title', $pageTitle)

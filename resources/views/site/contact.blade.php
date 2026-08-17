@@ -2,7 +2,7 @@
 
 @php
     $pageTitle = $siteSettings?->contact_page_title ?: $contact?->title ?: 'Contact';
-    $pageDescription = $siteSettings?->contact_page_description ?: $contact?->description ?: 'Let’s chat about how we can support you on your journey.';
+    $pageDescription = $siteSettings?->contact_page_description ?: $contact?->description;
 @endphp
 
 @section('title', $pageTitle)

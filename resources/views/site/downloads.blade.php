@@ -2,7 +2,7 @@
 
 @php
     $pageTitle = $siteSettings?->downloads_page_title ?: 'Downloads';
-    $pageDescription = $siteSettings?->downloads_page_description ?: '회사 및 프로젝트 관련 문서를 다운로드할 수 있습니다.';
+    $pageDescription = $siteSettings?->downloads_page_description;
 @endphp
 
 @section('title', $pageTitle)
