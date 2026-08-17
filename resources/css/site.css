@@ -89,6 +89,12 @@ button { font: inherit; }
 /* Project prose remains readable while visual blocks use the full page canvas. */
 .component-project .project-content { width:100%; max-width:none; }
 .component-project .project-content > :is(.block-text,.block-title,.block-quote) { max-width:var(--measure); }
+/* Quote 블록: 왼쪽 세로 라인 제거 + 2칼럼 좌/우 배치 (뒤에 와서 .prose blockquote 보더를 덮음) */
+blockquote.block-quote { border-left:0; padding-left:0; }
+.block-quote--left, .block-quote--right { display:grid; grid-template-columns:1fr 1fr; gap:var(--gutter); }
+.block-quote--left > * { grid-column:1; }
+.block-quote--right > * { grid-column:2; }
+@media (max-width:767px) { .block-quote--left, .block-quote--right { grid-template-columns:1fr; } .block-quote--left > *, .block-quote--right > * { grid-column:1; } }
 .component-project .project-content > :is(.block-full-image,.block-gallery,.block-flex-gallery) { width:100%; max-width:none; }
 .component-project .project-content > .block-full-image figcaption { max-width:var(--measure); margin-top:12px; }
 
