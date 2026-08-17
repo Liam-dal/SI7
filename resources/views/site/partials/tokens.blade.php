@@ -21,7 +21,7 @@
         --page-lead-size: var(--body-size);
         --prose-leading: 1.5;
         --prose-leading-loose: 1.75;
-        --menu-size: 18px;
+        --menu-size: 16px;
         --menu-leading: 1.25;
         --menu-tracking: {{ $siteSettings?->menu_tracking ?? 0 }}em;
         --hero-size: {{ $siteSettings?->hero_title_size ?? 168 }}px;
