@@ -45,7 +45,7 @@
                         :meta="$featureMeta($feature)"
                         :ratio="$cardRatio"
                         :eager="$loop->first"
-                        sizes="(max-width: 767px) 86vw, min(86vw, 980px)"
+                        sizes="(max-width: 767px) 60vw, 380px"
                     />
                 @endforeach
             </div>
