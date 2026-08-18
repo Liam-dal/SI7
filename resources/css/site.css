@@ -241,7 +241,7 @@ blockquote.block-quote { border-left:0; padding-left:0; }
 .section-top .label--normal { text-transform:none; }
 .section-top h2.label { font-size:var(--heading-regular); line-height:1.5; font-weight:500; }
 .section-top a.label { font-size:var(--menu-size); line-height:var(--menu-leading); }
-.section-description { margin-top:6px !important; color:var(--muted); font-size:14px; line-height:1.5; }
+.section-description { margin-top:6px !important; color:var(--muted); font-size:var(--body-medium-size); line-height:1.5; }
 .cards { display:grid; gap:52px var(--gutter); }
 .cards--2 { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .cards--3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
