@@ -2,18 +2,16 @@
 
 @section('content')
 @php
-    $heroTitle = $siteSettings?->homepage_title ?: "Work with ideas,\nmade visible.";
+    $heroEyebrow = $siteSettings?->homepage_eyebrow;
+    $heroTitle = $siteSettings?->homepage_title;
+    $heroDescription = $siteSettings?->homepage_description;
 @endphp
 
 <div class="page page--home">
     @if($heroBuilder ?? null)
         <x-site.design-hero :data="$heroBuilder" />
-    @else
-        <x-site.main-hero
-            :eyebrow="$siteSettings?->homepage_eyebrow ?: 'Independent creative practice'"
-            :title="$heroTitle"
-            :description="$siteSettings?->homepage_description"
-        />
+    @elseif(filled($heroEyebrow) || filled($heroTitle) || filled($heroDescription))
+        <x-site.main-hero :eyebrow="$heroEyebrow" :title="$heroTitle" :description="$heroDescription" />
     @endif
 
     @foreach($featureBands as $band)
