@@ -29,6 +29,32 @@
     default="carousel"
 />
 
+<x-twill::select
+    name="card_ratio"
+    label="카드 이미지 비율"
+    default="wide"
+    :options="[
+        ['value' => 'wide', 'label' => '와이드 (1.65:1)'],
+        ['value' => 'square', 'label' => '정사각 (1:1)'],
+        ['value' => 'tall', 'label' => '세로 (4:5)'],
+    ]"
+/>
+
+<x-twill::input
+    name="bg_color"
+    label="배경색 (다크 스타일, 선택)"
+    placeholder="#000000"
+    note="다크 캐러셀에서 검정 대신 쓸 배경색(헥사). 비우면 검정. 아래 Neat를 넣으면 Neat가 우선."
+/>
+
+<x-twill::input
+    name="neat_config"
+    label="Neat 그라디언트 설정 (JSON, 선택)"
+    type="textarea"
+    :rows="6"
+    note="neat.firecms.co의 설정 객체 { ... }를 붙여넣으면 다크 캐러셀 배경에 애니메이션 그라디언트가 깔립니다."
+/>
+
 <x-twill::browser
     name="projects"
     module-name="projects"

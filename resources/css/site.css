@@ -159,6 +159,9 @@ blockquote.block-quote { border-left:0; padding-left:0; }
 .feature-band--dark .section-top { margin-bottom: var(--space-8); }
 .feature-band--dark .card:hover .media img { opacity: .82; }
 @media (max-width:767px) { .feature-band--dark { padding: var(--space-10) var(--space-5); } }
+.feature-band { position:relative; }
+.feature-band__neat { position:absolute; inset:0; width:100%; height:100%; z-index:0; display:block; }
+.feature-band .feature-band__inner { position:relative; z-index:1; }
 
 /* Homepage main hero. */
 .main-hero { margin:0 0 var(--section-space); }

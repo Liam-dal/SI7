@@ -49,6 +49,9 @@ Route::get('/', function () {
                     'title' => $block->input('title'),
                     'description' => $block->input('description'),
                     'layout_style' => $block->input('layout_style') ?: 'carousel',
+                    'card_ratio' => $block->input('card_ratio') ?: 'wide',
+                    'bg_color' => $block->input('bg_color'),
+                    'neat_config' => trim((string) $block->input('neat_config')),
                 ],
                 'key' => 'sec-'.$block->id,
             ];

@@ -14,10 +14,20 @@
 
     $featureTitle = fn ($feature) => $feature->title ?: $feature->project->title;
     $featureMeta = fn ($feature) => $feature->description ?: $feature->project->subtitle;
+
+    // 카드 비율(와이드/정사각/세로), 배경(다크일 때만): Neat > 배경색 > 검정
+    $cardRatio = in_array($section?->card_ratio, ['wide', 'square', 'tall'], true) ? $section->card_ratio : 'wide';
+    $neatConfig = $isDark ? trim((string) ($section?->neat_config ?? '')) : '';
+    $bgColor = $isDark ? ($section?->bg_color ?: null) : null;
+    $hasNeat = $neatConfig !== '';
+    $neatId = 'feat-neat-' . $carouselKey;
 @endphp
 
 @if($features->isNotEmpty())
-<section @class(['section', 'feature-band', 'feature-band--dark' => $isDark])>
+<section @class(['section', 'feature-band', 'feature-band--dark' => $isDark])@if($bgColor && ! $hasNeat) style="background: {{ $bgColor }}"@endif>
+    @if($hasNeat)
+        <canvas class="feature-band__neat" id="{{ $neatId }}" aria-hidden="true"></canvas>
+    @endif
     <div class="feature-band__inner">
         <x-site.section-head :title="$sectionTitle" :description="$section?->description">
             @if($isCarousel)
@@ -33,7 +43,7 @@
                         :project="$feature->project"
                         :title="$featureTitle($feature)"
                         :meta="$featureMeta($feature)"
-                        ratio="wide"
+                        :ratio="$cardRatio"
                         :eager="$loop->first"
                         sizes="(max-width: 767px) 86vw, min(86vw, 980px)"
                     />
@@ -46,6 +56,7 @@
                         :project="$feature->project"
                         :title="$featureTitle($feature)"
                         :meta="$featureMeta($feature)"
+                        :ratio="$cardRatio"
                         :sizes="$gridLayout === 'editorial' ? '(max-width: 767px) 100vw, 50vw' : '(max-width: 767px) 100vw, 33vw'"
                     />
                 @endforeach
@@ -53,4 +64,20 @@
         @endif
     </div>
 </section>
+
+@if($hasNeat)
+@push('scripts')
+<script type="module">
+    import { NeatGradient } from "https://esm.sh/@firecms/neat";
+    (() => {
+        const el = document.getElementById(@json($neatId));
+        if (!el) return;
+        try {
+            const config = {!! $neatConfig !!};
+            new NeatGradient(Object.assign({}, config, { ref: el }));
+        } catch (e) { console.warn('Neat feature bg failed:', e); el.remove(); }
+    })();
+</script>
+@endpush
+@endif
 @endif
