@@ -50,6 +50,7 @@ Route::get('/', function () {
                     'description' => $block->input('description'),
                     'layout_style' => $block->input('layout_style') ?: 'carousel',
                     'card_ratio' => $block->input('card_ratio') ?: 'wide',
+                    'cards_per_view' => $block->input('cards_per_view') ?: '4',
                     'bg_color' => $block->input('bg_color'),
                     'neat_config' => trim((string) $block->input('neat_config')),
                 ],

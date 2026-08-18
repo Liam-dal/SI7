@@ -30,6 +30,18 @@
 />
 
 <x-twill::select
+    name="cards_per_view"
+    label="한 화면에 보이는 카드 수 (캐러셀)"
+    default="4"
+    :options="[
+        ['value' => '2', 'label' => '2개'],
+        ['value' => '3', 'label' => '3개'],
+        ['value' => '4', 'label' => '4개'],
+        ['value' => 'slide', 'label' => '슬라이드 (1개 + 다음 살짝)'],
+    ]"
+/>
+
+<x-twill::select
     name="card_ratio"
     label="카드 이미지 비율"
     default="wide"

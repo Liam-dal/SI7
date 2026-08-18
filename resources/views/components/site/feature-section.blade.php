@@ -17,6 +17,7 @@
 
     // 카드 비율(와이드/정사각/세로), 배경(다크일 때만): Neat > 배경색 > 검정
     $cardRatio = in_array($section?->card_ratio, ['wide', 'square', 'tall'], true) ? $section->card_ratio : 'wide';
+    $perView = in_array($section?->cards_per_view, ['2', '3', '4', 'slide'], true) ? $section->cards_per_view : '4';
     $neatConfig = $isDark ? trim((string) ($section?->neat_config ?? '')) : '';
     $bgColor = $isDark ? ($section?->bg_color ?: null) : null;
     $hasNeat = $neatConfig !== '';
@@ -37,7 +38,7 @@
         </x-site.section-head>
 
         @if($isCarousel)
-            <div class="feature-carousel" data-carousel-track="{{ $carouselKey }}">
+            <div class="feature-carousel feature-carousel--{{ $perView }}" data-carousel-track="{{ $carouselKey }}">
                 @foreach($features as $feature)
                     <x-site.card
                         :project="$feature->project"
