@@ -239,7 +239,7 @@ blockquote.block-quote { border-left:0; padding-left:0; }
 .section-top__actions { display:flex; gap:6px; }
 .section-top .label { margin:0; letter-spacing:var(--menu-tracking); text-transform:uppercase; }
 .section-top .label--normal { text-transform:none; }
-.section-top h2.label { font-size:var(--heading-regular); line-height:1.5; font-weight:400; }
+.section-top h2.label { font-size:var(--heading-regular); line-height:1.5; font-weight:500; }
 .section-top a.label { font-size:var(--menu-size); line-height:var(--menu-leading); }
 .section-description { margin-top:6px !important; color:var(--muted); font-size:14px; line-height:1.5; }
 .cards { display:grid; gap:52px var(--gutter); }
