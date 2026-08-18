@@ -84,6 +84,21 @@
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && overlay.dataset.open === 'true') setOpen(false); });
 })();
 
+// 헤더 스크롤 숨김/표시 (아래로 스크롤 → 숨김, 위로 → 표시)
+(() => {
+    const header = document.querySelector('.site-header');
+    if (!header) return;
+    let lastY = window.scrollY, ticking = false;
+    const onScroll = () => {
+        const y = window.scrollY;
+        if (y > lastY && y > header.offsetHeight) header.classList.add('is-hidden');
+        else header.classList.remove('is-hidden');
+        lastY = y <= 0 ? 0 : y;
+        ticking = false;
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, { passive: true });
+})();
+
 // 언어 전환 지구본 드롭다운
 (() => {
     const wrap = document.querySelector('[data-lang-switch]');
