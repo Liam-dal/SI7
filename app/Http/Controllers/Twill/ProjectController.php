@@ -90,7 +90,7 @@ class ProjectController extends BaseModuleController
             )
             ->addFieldset(
                 Fieldset::make()->title('Home settings')->fields([
-                    Checkbox::make()->name('featured')->label('대표 프로젝트로 표시'),
+                    Checkbox::make()->name('featured')->label('Feature on homepage'),
                     Medias::make()->name('home_slideshow')->label('Homepage slideshow')->max(1),
                     Medias::make()->name('feature_grid')->label('Feature grid')->max(1),
                 ])
