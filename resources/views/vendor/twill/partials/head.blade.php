@@ -35,17 +35,20 @@
     /* 설명(note)을 해당 입력 필드 바로 아래로.
        Twill 기본값은 note 를 라벨 우측(.input__note) 또는 버튼 위(.fileField__note,
        .media__note)에 position:absolute 로 얹어서, 문구가 길면 라벨·버튼과 겹친다. */
-    .input:has(> .input__label > .input__note) { display: flex; flex-direction: column; }
+    .input:has(> .input__label > .input__note) { display: flex; flex-wrap: wrap; align-items: baseline; }
     .input:has(> .input__label > .input__note) > .input__label { display: contents; }
-    .input:has(> .input__label > .input__note) > :not(.input__label) { margin-top: 10px; }
+    .input:has(> .input__label > .input__note) > :not(.input__label) { flex: 0 0 100%; margin-top: 10px; }
     .input > .input__label > .input__note {
         position: static !important;
         display: block !important;
         order: 99;
+        flex: 0 0 100%;
         margin-top: 8px;
         line-height: 1.45;
         white-space: normal;
     }
+    /* KO/EN 언어 뱃지는 라벨 옆에 원래 크기로 붙어 있어야 한다 (flex 로 늘어나면 안 됨) */
+    .input > .input__label > .input__lang { flex: 0 0 auto; }
     .fileField__note, .media__note {
         position: static !important;
         float: none !important;
