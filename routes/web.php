@@ -14,6 +14,7 @@ use App\Models\SiteSetting;
 use App\Models\HomepageFeature;
 use App\Models\Office;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/site.css', function () {
     return response()->file(resource_path('css/site.css'), ['Content-Type' => 'text/css; charset=UTF-8']);
@@ -133,16 +134,22 @@ Route::get('/contact', function () {
     ]);
 })->name('contact');
 
-// Safari 등 일부 브라우저는 <link rel="icon"> 과 별개로 루트의 /favicon.ico 를 직접 요청한다.
-// 빈 favicon.ico 를 두지 않는 대신, 업로드된 파비콘(PNG 변환)으로 넘겨 404 로 끝나지 않게 한다.
+// Safari 등 일부 브라우저는 <link rel="icon"> 과 별개로 루트의 /favicon.ico 를 직접 요청하고,
+// 이 요청에서는 리다이렉트를 따라가지 않는 경우가 있다. 그래서 업로드된 파비콘 원본을
+// 리다이렉트 없이 200 + image/png 로 그대로 내보낸다.
 Route::get('/favicon.ico', function () {
-    $settings = SiteSetting::query()->first();
+    $media = SiteSetting::query()->first()?->imageObject('favicon');
 
-    abort_unless($settings?->hasImage('favicon'), 404);
+    abort_unless($media, 404);
 
-    return redirect()->away(
-        $settings->image('favicon', 'default', ['fm' => 'png', 'w' => 64, 'h' => 64])
-    );
+    $disk = Storage::disk(config('twill.media_library.disk'));
+
+    abort_unless($disk->exists($media->uuid), 404);
+
+    return response($disk->get($media->uuid), 200, [
+        'Content-Type' => 'image/png',
+        'Cache-Control' => 'public, max-age=86400',
+    ]);
 })->name('favicon');
 
 Route::get('/download', function () {
