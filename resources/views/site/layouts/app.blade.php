@@ -24,8 +24,14 @@
         <meta name="twitter:image" content="{{ $ogImage }}">
     @endif
     @if($siteSettings?->hasImage('favicon'))
-        <link rel="icon" href="{{ $siteSettings->image('favicon') }}">
-        <link rel="apple-touch-icon" href="{{ $siteSettings->image('favicon') }}">
+        {{-- Glide 기본 출력이 webp라 그대로 두면 Safari가 파비콘을 렌더링하지 못한다.
+             파비콘만 png 로 강제하고 크기별 링크를 명시한다. --}}
+        @php
+            $faviconUrl = fn (int $size) => $siteSettings->image('favicon', 'default', ['fm' => 'png', 'w' => $size, 'h' => $size]);
+        @endphp
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ $faviconUrl(32) }}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{ $faviconUrl(192) }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ $faviconUrl(180) }}">
     @endif
 
     @include('site.partials.tokens')
