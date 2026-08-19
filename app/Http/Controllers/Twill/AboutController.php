@@ -30,6 +30,7 @@ class AboutController extends BaseModuleController
                 Fieldset::make()->title('Content')->fields([
                     BlockEditor::make()
                         ->label('Add block')
+                        ->withoutSeparator()
                         ->blocks(['heading_description', 'quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid', 'neat_gradient']),
                 ])
             );
