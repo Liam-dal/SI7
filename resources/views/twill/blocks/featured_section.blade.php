@@ -4,14 +4,14 @@
 
 <x-twill::input
     name="title"
-    label="섹션 제목"
+    label="Section title"
     :maxlength="120"
-    note="비워두면 'Featured work'로 표시됩니다."
+    note="Falls back to 'Featured work' when left empty."
 />
 
 <x-twill::input
     name="description"
-    label="섹션 설명 (선택)"
+    label="Section description (optional)"
     type="textarea"
     :rows="3"
     :maxlength="500"
@@ -19,58 +19,58 @@
 
 <x-twill::select
     name="layout_style"
-    label="표시 스타일 (템플릿)"
+    label="Layout style"
     :options="[
-        ['value' => 'carousel', 'label' => '캐러셀 (밝게) — 가로 슬라이드'],
-        ['value' => 'carousel_dark', 'label' => '캐러셀 (다크) — 검정 배경·흰 글씨 슬라이드'],
-        ['value' => 'grid_3', 'label' => '3열 그리드 — 균일한 3단'],
-        ['value' => 'grid_editorial', 'label' => '에디토리얼 그리드 — 첫 카드 크게'],
+        ['value' => 'carousel', 'label' => 'Carousel (light) — horizontal slides'],
+        ['value' => 'carousel_dark', 'label' => 'Carousel (dark) — black background, white text'],
+        ['value' => 'grid_3', 'label' => '3-column grid — even three columns'],
+        ['value' => 'grid_editorial', 'label' => 'Editorial grid — first card larger'],
     ]"
     default="carousel"
 />
 
 <x-twill::select
     name="cards_per_view"
-    label="한 화면에 보이는 카드 수 (캐러셀)"
+    label="Cards per view (carousel)"
     default="4"
     :options="[
-        ['value' => '2', 'label' => '2개'],
-        ['value' => '3', 'label' => '3개'],
-        ['value' => '4', 'label' => '4개'],
-        ['value' => 'slide', 'label' => '슬라이드 (1개 + 다음 살짝)'],
+        ['value' => '2', 'label' => '2 cards'],
+        ['value' => '3', 'label' => '3 cards'],
+        ['value' => '4', 'label' => '4 cards'],
+        ['value' => 'slide', 'label' => 'Slide (1 card + peek of the next)'],
     ]"
 />
 
 <x-twill::select
     name="card_ratio"
-    label="카드 이미지 비율"
+    label="Card image ratio"
     default="wide"
     :options="[
-        ['value' => 'wide', 'label' => '와이드 (1.65:1)'],
-        ['value' => 'square', 'label' => '정사각 (1:1)'],
-        ['value' => 'tall', 'label' => '세로 (4:5)'],
+        ['value' => 'wide', 'label' => 'Wide (1.65:1)'],
+        ['value' => 'square', 'label' => 'Square (1:1)'],
+        ['value' => 'tall', 'label' => 'Portrait (4:5)'],
     ]"
 />
 
 <x-twill::input
     name="bg_color"
-    label="배경색 (다크 스타일, 선택)"
+    label="Background colour (dark style, optional)"
     placeholder="#000000"
-    note="다크 캐러셀에서 검정 대신 쓸 배경색(헥사). 비우면 검정. 아래 Neat를 넣으면 Neat가 우선."
+    note="Hex colour used instead of black in the dark carousel. Leave empty for black. A Neat config below takes priority."
 />
 
 <x-twill::input
     name="neat_config"
-    label="Neat 그라디언트 설정 (JSON, 선택)"
+    label="Neat gradient config (JSON, optional)"
     type="textarea"
     :rows="6"
-    note="neat.firecms.co의 설정 객체 { ... }를 붙여넣으면 다크 캐러셀 배경에 애니메이션 그라디언트가 깔립니다."
+    note="Paste the config object { ... } from neat.firecms.co to put an animated gradient behind the dark carousel."
 />
 
 <x-twill::browser
     name="projects"
     module-name="projects"
-    label="프로젝트"
+    label="Projects"
     :max="24"
-    note="이 섹션에 표시할 프로젝트를 선택하고 드래그하여 순서를 바꿉니다."
+    note="Pick the projects shown in this section and drag to reorder."
 />

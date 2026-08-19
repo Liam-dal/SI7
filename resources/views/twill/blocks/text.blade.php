@@ -4,14 +4,14 @@
 
 <x-twill::input
     name="title"
-    label="소제목 (선택)"
+    label="Subheading (optional)"
     :translated="true"
 />
 
 <x-twill::wysiwyg
     name="text"
-    label="본문"
-    placeholder="내용을 입력하세요"
+    label="Body"
+    placeholder="Enter your text"
     :toolbar-options="[
         'bold',
         'italic',

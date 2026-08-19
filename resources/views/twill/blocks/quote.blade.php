@@ -12,11 +12,11 @@
 
 <x-twill::select
     name="align"
-    label="위치"
+    label="Alignment"
     default="left"
     :options="[
-        ['value' => 'left', 'label' => '왼쪽'],
-        ['value' => 'right', 'label' => '오른쪽'],
+        ['value' => 'left', 'label' => 'Left'],
+        ['value' => 'right', 'label' => 'Right'],
     ]"
-    note="2칼럼 기준으로 왼쪽/오른쪽에 배치합니다."
+    note="Places the quote in the left or right column of a two-column layout."
 />

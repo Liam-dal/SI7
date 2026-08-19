@@ -4,12 +4,12 @@
 
 <x-twill::medias
     name="image"
-    label="이미지"
+    label="Images"
     :max="20"
-    note="여러 장을 선택하면 본문에서 한 묶음으로 표시됩니다."
+    note="Selecting several images shows them as one group in the body."
 />
 
 <x-twill::input
     name="caption"
-    label="이미지 설명 (선택)"
+    label="Caption (optional)"
 />

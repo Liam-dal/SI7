@@ -6,15 +6,15 @@
 
 <x-twill::select
     name="ratio"
-    label="비율"
+    label="Ratio"
     default="default"
     :options="[
-        ['value' => 'default', 'label' => '원본 비율'],
-        ['value' => 'square', 'label' => '정사각 (1:1)'],
-        ['value' => 'wide', 'label' => '와이드 (1.72:1)'],
-        ['value' => 'hero', 'label' => '히어로 (1.85:1)'],
+        ['value' => 'default', 'label' => 'Original ratio'],
+        ['value' => 'square', 'label' => 'Square (1:1)'],
+        ['value' => 'wide', 'label' => 'Wide (1.72:1)'],
+        ['value' => 'hero', 'label' => 'Hero (1.85:1)'],
     ]"
-    note="위 이미지의 크롭 탭에서 같은 비율을 잘라주세요. 화면에는 여기서 고른 비율이 출력됩니다."
+    note="Crop the image above to the same ratio in its Crop tab. The ratio chosen here is what the site renders."
 />
 
 <x-twill::input name="caption" label="Caption (optional)" :translated="true" />
