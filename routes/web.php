@@ -133,6 +133,18 @@ Route::get('/contact', function () {
     ]);
 })->name('contact');
 
+// Safari 등 일부 브라우저는 <link rel="icon"> 과 별개로 루트의 /favicon.ico 를 직접 요청한다.
+// 빈 favicon.ico 를 두지 않는 대신, 업로드된 파비콘(PNG 변환)으로 넘겨 404 로 끝나지 않게 한다.
+Route::get('/favicon.ico', function () {
+    $settings = SiteSetting::query()->first();
+
+    abort_unless($settings?->hasImage('favicon'), 404);
+
+    return redirect()->away(
+        $settings->image('favicon', 'default', ['fm' => 'png', 'w' => 64, 'h' => 64])
+    );
+})->name('favicon');
+
 Route::get('/download', function () {
     return view('site.downloads', [
         'downloads' => Download::query()->with('files')->where('published', true)->orderBy('position')->get(),
