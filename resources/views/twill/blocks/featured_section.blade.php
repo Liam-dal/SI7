@@ -1,6 +1,6 @@
-@twillBlockTitle('Featured 섹션')
+@twillBlockTitle('Featured section')
 @twillBlockIcon('text')
-@twillBlockGroup('app')
+@twillBlockGroup('Content')
 
 <x-twill::input
     name="title"

@@ -1,6 +1,6 @@
-@twillBlockTitle('이미지')
+@twillBlockTitle('Image')
 @twillBlockIcon('image')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::medias
     name="image"

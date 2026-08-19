@@ -52,7 +52,7 @@ class ProjectController extends BaseModuleController
                     Checkbox::make()->name('video_autoplay')->label('Autoplay'),
                     Checkbox::make()->name('video_autoloop')->label('Autoloop'),
                     BlockEditor::make()
-                        ->label('프로젝트 본문')
+                        ->label('Add block')
                         ->blocks(['quote', 'video', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid']),
                 ])
             )

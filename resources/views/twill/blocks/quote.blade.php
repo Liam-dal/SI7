@@ -1,6 +1,6 @@
 @twillBlockTitle('Quote')
 @twillBlockIcon('text')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::wysiwyg
     name="quote"

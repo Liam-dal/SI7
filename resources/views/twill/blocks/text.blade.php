@@ -1,6 +1,6 @@
-@twillBlockTitle('텍스트')
+@twillBlockTitle('Text')
 @twillBlockIcon('text')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::input
     name="title"

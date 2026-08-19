@@ -1,6 +1,6 @@
 @twillBlockTitle('Full width image')
 @twillBlockIcon('image')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::medias name="image" label="Image" :max="1" />
 

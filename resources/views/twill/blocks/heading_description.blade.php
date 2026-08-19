@@ -1,6 +1,6 @@
-@twillBlockTitle('제목 + 설명')
+@twillBlockTitle('Heading + description')
 @twillBlockIcon('text')
-@twillBlockGroup('app')
+@twillBlockGroup('Content')
 
 <x-twill::input
     name="heading"

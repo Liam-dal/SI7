@@ -1,6 +1,6 @@
 @twillBlockTitle('Flexible image grid')
 @twillBlockIcon('image')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::select
     name="columns"

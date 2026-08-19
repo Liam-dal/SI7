@@ -1,6 +1,6 @@
-@twillBlockTitle('영상')
+@twillBlockTitle('Video')
 @twillBlockIcon('video')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::files
     name="video"

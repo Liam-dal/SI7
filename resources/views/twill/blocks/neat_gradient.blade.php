@@ -1,6 +1,6 @@
-@twillBlockTitle('Neat 그라디언트')
+@twillBlockTitle('Neat gradient')
 @twillBlockIcon('image')
-@twillBlockGroup('프로젝트 본문')
+@twillBlockGroup('Content')
 
 <x-twill::input
     name="config"

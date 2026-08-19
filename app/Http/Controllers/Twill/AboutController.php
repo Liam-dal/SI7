@@ -29,7 +29,7 @@ class AboutController extends BaseModuleController
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
                     BlockEditor::make()
-                        ->label('추가 콘텐츠')
+                        ->label('Add block')
                         ->blocks(['heading_description', 'quote', 'full_width_image', 'fixed_image_grid', 'flexible_image_grid', 'neat_gradient']),
                 ])
             );

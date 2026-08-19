@@ -38,7 +38,7 @@ class HomepageController extends BaseModuleController
             ->add(
                 BlockEditor::make()
                     ->name('default')
-                    ->label('홈 Featured 섹션')
+                    ->label('Add section')
                     ->blocks(['featured_section'])
             );
     }
