@@ -134,9 +134,10 @@ Route::get('/contact', function () {
     ]);
 })->name('contact');
 
-// Safari 등 일부 브라우저는 <link rel="icon"> 과 별개로 루트의 /favicon.ico 를 직접 요청하고,
-// 이 요청에서는 리다이렉트를 따라가지 않는 경우가 있다. 그래서 업로드된 파비콘 원본을
-// 리다이렉트 없이 200 + image/png 로 그대로 내보낸다.
+// Safari 등 일부 브라우저는 <link rel="icon"> 과 별개로 루트의 /favicon.ico 를 직접 요청한다.
+// 실제로는 public/favicon.ico (진짜 ICO 컨테이너, 16/32/48px)를 nginx 가 먼저 서빙하므로
+// 이 라우트는 그 파일이 없을 때만 동작하는 폴백이다.
+// ⚠️ 관리자에서 파비콘 이미지를 교체하면 public/favicon.ico 도 다시 만들어야 한다.
 Route::get('/favicon.ico', function () {
     $media = SiteSetting::query()->first()?->imageObject('favicon');
 
