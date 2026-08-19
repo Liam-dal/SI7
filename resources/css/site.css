@@ -413,3 +413,13 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 
 @media (max-width:1023px) { .offices { grid-template-columns:minmax(0,1fr); gap:72px; } }
 @media (max-width:767px) { .offices { margin-top:64px; }.office__body { grid-template-columns:minmax(0,1fr); gap:24px; } }
+
+/* 본문 영상 블록. 업로드 영상은 원본 비율을 유지하고(레터박스 방지),
+   임베드(.video-embed)만 기존 16:9 규칙을 그대로 쓴다. */
+.block-video { margin:2rem 0; }
+.block-video .video-file { width:100%; background:var(--image-bg); }
+.block-video .video-file__el { display:block; width:100%; height:auto; }
+.block-video figcaption { max-width:var(--measure); margin-top:12px; color:var(--muted); font-size:var(--caption-size); line-height:var(--caption-leading); }
+.block-video--measure { max-width:var(--measure); }
+.component-project .project-content > .block-video--full { width:100%; max-width:none; }
+.guide-article__body > .block-video { grid-column:1 / -1; }
