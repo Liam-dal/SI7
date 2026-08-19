@@ -26,15 +26,15 @@ class OfficeController extends BaseModuleController
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
                     Input::make()->name('short_description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(4)->maxlength(500),
-                    Medias::make()->name('office')->label('Office images')->max(12)->minWidth(1500)->note('여러 장의 이미지를 추가할 수 있습니다.'),
+                    Medias::make()->name('office')->label('Office images')->max(12)->minWidth(1500)->note('You can add multiple images.'),
                     Input::make()->name('email')->label('Email')->type(Input::TYPE_EMAIL),
-                    Input::make()->name('phone')->label('Phone number')->note('국가번호, 공백, 하이픈을 포함해 자유롭게 입력할 수 있습니다.'),
+                    Input::make()->name('phone')->label('Phone number')->note('Free-form — country code, spaces and hyphens are all fine.'),
                     Input::make()->name('street')->label('Street'),
                     Input::make()->name('city')->label('City'),
                     Input::make()->name('zipcode')->label('Zipcode'),
                     Input::make()->name('country')->label('Country'),
                     Input::make()->name('directions_url')->label('Directions URL')->type(Input::TYPE_URL),
-                    Select::make()->name('timezone')->label('Timezone')->placeholder('시간대 선택')->searchable()->clearable()->options(
+                    Select::make()->name('timezone')->label('Timezone')->placeholder('Select a timezone')->searchable()->clearable()->options(
                         fn () => Options::fromArray(
                             collect(timezone_identifiers_list())->mapWithKeys(
                                 fn (string $timezone) => [$timezone => $timezone]

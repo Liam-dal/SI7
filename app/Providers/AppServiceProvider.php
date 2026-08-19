@@ -114,7 +114,7 @@ class AppServiceProvider extends ServiceProvider
         );
         TwillNavigation::addLink(
             NavigationLink::make()
-                ->forSingleton('about')
+                ->forModule('people')
                 ->title('About')
                 ->setChildren([
                     NavigationLink::make()->forModule('people')->title('People'),

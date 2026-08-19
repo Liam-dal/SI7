@@ -24,13 +24,13 @@ class HomepageController extends BaseModuleController
     {
         return parent::getForm($model)
             ->addFieldset(
-                Fieldset::make()->title('인터랙티브 히어로')->fields([
-                    Checkbox::make()->name('hero_builder')->label('인터랙티브 히어로 사용 (We design [Discipline] for [Sector])')
-                        ->note('켜면 홈 최상단이 "We design ___ for ___" 문장 빌더 + 배경 슬라이드쇼로 바뀝니다. 끄면 기본 히어로가 표시됩니다.'),
-                    Select::make()->name('hero_default_category_id')->label('기본 Discipline (We design ___ )')->placeholder('미선택 — 전체(everything)')->clearable()->options(
+                Fieldset::make()->title('Interactive hero')->fields([
+                    Checkbox::make()->name('hero_builder')->label('Use interactive hero (We design [Discipline] for [Sector])')
+                        ->note('When on, the top of the homepage becomes a "We design ___ for ___" sentence builder with a background slideshow. When off, the default hero is shown.'),
+                    Select::make()->name('hero_default_category_id')->label('Default discipline (We design ___ )')->placeholder('None — everything')->clearable()->options(
                         fn () => Options::fromArray(\App\Models\Category::query()->where('published', true)->orderBy('position')->pluck('title', 'id')->all())
                     ),
-                    Select::make()->name('hero_default_sector_id')->label('기본 Sector ( for ___ )')->placeholder('미선택 — 전체(everyone)')->clearable()->options(
+                    Select::make()->name('hero_default_sector_id')->label('Default sector ( for ___ )')->placeholder('None — everyone')->clearable()->options(
                         fn () => Options::fromArray(\App\Models\Sector::query()->where('published', true)->orderBy('position')->pluck('title', 'id')->all())
                     ),
                 ])
@@ -39,6 +39,7 @@ class HomepageController extends BaseModuleController
                 BlockEditor::make()
                     ->name('default')
                     ->label('Add section')
+                    ->withoutSeparator()
                     ->blocks(['featured_section'])
             );
     }

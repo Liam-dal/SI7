@@ -37,12 +37,12 @@ class HomepageFeatureSectionController extends BaseModuleController
             ->add(Input::make()->name('title')->label('Feature title')->maxlength(120))
             ->add(Input::make()->name('description')->label('Feature description')->type(Input::TYPE_TEXTAREA)->rows(4)->maxlength(500))
             ->add(
-                Select::make()->name('layout_style')->label('표시 스타일')
+                Select::make()->name('layout_style')->label('Layout style')
                     ->options(Options::fromArray([
-                        'carousel' => '캐러셀 (밝게) — 가로 슬라이드',
-                        'carousel_dark' => '캐러셀 (다크) — 검정 배경·흰 글씨 슬라이드',
-                        'grid_3' => '3열 그리드 — 균일한 3단',
-                        'grid_editorial' => '에디토리얼 그리드 — 첫 카드 크게',
+                        'carousel' => 'Carousel (light) — horizontal slides',
+                        'carousel_dark' => 'Carousel (dark) — black background, white text',
+                        'grid_3' => '3-column grid — even three columns',
+                        'grid_editorial' => 'Editorial grid — first card larger',
                     ]))
                     ->default('carousel')
             );

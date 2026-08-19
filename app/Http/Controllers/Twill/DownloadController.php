@@ -29,11 +29,11 @@ class DownloadController extends BaseModuleController
     public function getForm(TwillModelContract $model): Form
     {
         return parent::getForm($model)
-            ->add(Input::make()->name('tag')->label('태그 (선택)')->maxlength(80)->note('예: Company, Certificate, Press kit'))
-            ->add(Input::make()->name('description')->label('파일 설명 (선택)')->maxlength(500))
-            ->add(Files::make()->name('document')->label('다운로드 파일')->filesizeMax(512)->note('사업자등록증, 회사 소개서, PDF, 영상(mp4) 등 한 파일을 올리세요. 최대 512MB.'))
-            ->add(Checkbox::make()->name('require_password')->label('비밀번호 요구')->note('켜면 이 파일은 비밀번호를 입력해야 다운로드됩니다.'))
-            ->add(Input::make()->name('download_password')->label('다운로드 비밀번호')->note('위 "비밀번호 요구"를 켠 경우에만 사용돼요. 방문자에게 공유할 비밀번호를 입력하세요.'));
+            ->add(Input::make()->name('tag')->label('Tag (optional)')->maxlength(80)->note('e.g. Company, Certificate, Press kit'))
+            ->add(Input::make()->name('description')->label('File description (optional)')->maxlength(500))
+            ->add(Files::make()->name('document')->label('Download file')->filesizeMax(512)->note('Upload a single file — business registration, company profile, PDF, video (mp4), etc. Max 512MB.'))
+            ->add(Checkbox::make()->name('require_password')->label('Require password')->note('When on, visitors must enter a password to download this file.'))
+            ->add(Input::make()->name('download_password')->label('Download password')->note('Used only when "Require password" above is on. Enter the password you will share with visitors.'));
     }
 
     /**
@@ -44,11 +44,11 @@ class DownloadController extends BaseModuleController
         $table = parent::additionalIndexTableColumns();
 
         $table->add(
-            Text::make()->field('tag')->title('태그')
+            Text::make()->field('tag')->title('Tag')
         );
 
         $table->add(
-            Text::make()->field('description')->title('설명')
+            Text::make()->field('description')->title('Description')
         );
 
         return $table;

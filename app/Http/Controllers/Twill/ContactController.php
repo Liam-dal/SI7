@@ -28,17 +28,17 @@ class ContactController extends BaseModuleController
     public function getForm(TwillModelContract $model): Form
     {
         return parent::getForm($model)
-            ->add(Input::make()->name('description')->label('연락 안내')->maxlength(500))
-            ->add(Input::make()->name('email')->label('이메일')->type('email'))
-            ->add(Input::make()->name('phone')->label('전화번호 (선택)'))
-            ->add(Input::make()->name('location')->label('활동 지역 (선택)'))
-            ->add(Input::make()->name('availability')->label('협업 가능 상태'))
-            ->add(Medias::make()->name('contact_primary')->label('첫 번째 이미지 묶음')->max(6))
-            ->add(Medias::make()->name('contact_secondary')->label('두 번째 이미지 묶음')->max(6))
-            ->add(Input::make()->name('meeting_url')->label('미팅 예약 링크')->type('url'))
-            ->add(Input::make()->name('instagram_url')->label('Instagram 링크')->type('url'))
-            ->add(Input::make()->name('linkedin_url')->label('LinkedIn 링크')->type('url'))
-            ->add(Input::make()->name('behance_url')->label('Behance 링크')->type('url'));
+            ->add(Input::make()->name('description')->label('Contact intro')->maxlength(500))
+            ->add(Input::make()->name('email')->label('Email')->type('email'))
+            ->add(Input::make()->name('phone')->label('Phone (optional)'))
+            ->add(Input::make()->name('location')->label('Location (optional)'))
+            ->add(Input::make()->name('availability')->label('Availability'))
+            ->add(Medias::make()->name('contact_primary')->label('First image set')->max(6))
+            ->add(Medias::make()->name('contact_secondary')->label('Second image set')->max(6))
+            ->add(Input::make()->name('meeting_url')->label('Meeting booking URL')->type('url'))
+            ->add(Input::make()->name('instagram_url')->label('Instagram URL')->type('url'))
+            ->add(Input::make()->name('linkedin_url')->label('LinkedIn URL')->type('url'))
+            ->add(Input::make()->name('behance_url')->label('Behance URL')->type('url'));
     }
 
     /**

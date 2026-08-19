@@ -66,7 +66,6 @@ class SiteSetting extends Model
         'homepage_eyebrow',
         'homepage_title',
         'homepage_description',
-        'homepage_regular_grid',
         'home_hero_builder',
         'home_hero_default_category_id',
         'home_hero_default_sector_id',

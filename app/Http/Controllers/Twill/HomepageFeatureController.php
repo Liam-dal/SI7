@@ -31,9 +31,9 @@ class HomepageFeatureController extends BaseModuleController
             ))
             ->add(Select::make()->name('section')->label('Feature section')->options(
                 Options::fromArray([
-                    'main' => '메인 피처 프로젝트 (캐러셀)',
-                    'secondary' => '보조 피처 프로젝트',
-                    'additional' => '추가 피처 프로젝트',
+                    'main' => 'Main feature projects (carousel)',
+                    'secondary' => 'Secondary feature projects',
+                    'additional' => 'Additional feature projects',
                 ])
             ))
             ->add(Input::make()->name('title')->label('Feature title')->maxlength(180))
@@ -46,9 +46,9 @@ class HomepageFeatureController extends BaseModuleController
             ->add(Text::make()->field('title')->title('Feature title')->linkToEdit()->sortable())
             ->add(Text::make()->field('section')->title('Section')->customRender(
                 fn (HomepageFeature $feature) => match ($feature->section) {
-                    'main' => '메인 캐러셀',
-                    'secondary' => '보조 피처',
-                    'additional' => '추가 피처',
+                    'main' => 'Main carousel',
+                    'secondary' => 'Secondary features',
+                    'additional' => 'Additional features',
                     default => $feature->section,
                 }
             ))

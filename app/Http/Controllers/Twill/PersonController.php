@@ -37,14 +37,14 @@ class PersonController extends BaseModuleController
                 Fieldset::make()->title('Content')->fields([
                     Input::make()->name('first_name')->label('First name'),
                     Input::make()->name('last_name')->label('Last name'),
-                    Select::make()->name('team_role_id')->label('Role')->placeholder('역할 선택')->clearable()->options(
+                    Select::make()->name('team_role_id')->label('Role')->placeholder('Select a role')->clearable()->options(
                         fn () => Options::fromArray(TeamRole::query()->where('published', true)->orderBy('position')->pluck('title', 'id')->all())
                     ),
                     Wysiwyg::make()->name('biography')->label('Biography')->limitHeight(),
-                    Select::make()->name('start_year')->label('Start year')->placeholder('연도 선택')->clearable()->options(
+                    Select::make()->name('start_year')->label('Start year')->placeholder('Select a year')->clearable()->options(
                         fn () => Options::fromArray(collect(range((int) now()->format('Y'), 1950))->mapWithKeys(fn (int $year) => [$year => (string) $year])->all())
                     ),
-                    Select::make()->name('office_id')->label('Office')->placeholder('오피스 선택')->clearable()->options(
+                    Select::make()->name('office_id')->label('Office')->placeholder('Select an office')->clearable()->options(
                         fn () => Options::fromArray(\App\Models\Office::query()->where('published', true)->orderBy('title')->pluck('title', 'id')->all())
                     ),
                     Medias::make()->name('main')->label('Main (Profile image)')->max(1),
@@ -60,16 +60,16 @@ class PersonController extends BaseModuleController
     public function getIndexTableColumns(): TableColumns
     {
         return TableColumns::make()
-            ->add(PublishStatus::make()->title('공개')->optional())
+            ->add(PublishStatus::make()->title('Published')->optional())
             ->add(
                 Image::make()
                     ->field('main')
-                    ->title('사진')
+                    ->title('Photo')
                     ->role('main')
                     ->crop('default')
                     ->mediaParams(['w' => 80, 'h' => 80, 'fit' => 'crop'])
             )
-            ->add(Text::make()->field('title')->title('이름')->linkToEdit()->sortable())
+            ->add(Text::make()->field('title')->title('Name')->linkToEdit()->sortable())
             ->add(Relation::make()->field('title')->title('Role')->relation('teamRole')->optional());
     }
 }

@@ -30,14 +30,14 @@ class GuideController extends BaseModuleController
         return parent::getForm($model)
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
-                    Input::make()->name('headline')->label('제목 (표시용)')->maxlength(200)
+                    Input::make()->name('headline')->label('Headline (displayed)')->maxlength(200)
                         ->translatable()
-                        ->note('사이트 목록·상세에 실제로 보이는 제목입니다 (한/영 전환 가능). 상단의 Title 칸은 URL(permalink) 전용이니 영문으로 입력하세요.'),
+                        ->note('The title actually shown in listings and on the detail page (switchable KO/EN). The Title field above is used only for the URL (permalink), so enter it in English.'),
                     Input::make()->name('category')->label('Category')->maxlength(60)
-                        ->note('예: Ideas, News, Report, Clients — 목록에서 타이틀 위에 표시됩니다.'),
+                        ->note('e.g. Ideas, News, Report, Clients — shown above the title in listings.'),
                     Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(3)->maxlength(500)
                         ->translatable()
-                        ->note('목록과 상세 상단에 표시되는 요약입니다.'),
+                        ->note('Summary shown in listings and at the top of the detail page.'),
                     Medias::make()->name('cover')->label('Cover')->max(1),
                     DatePicker::make()->name('publication_date')->label('Publication date')->withoutTime(),
                     BlockEditor::make()
@@ -54,20 +54,20 @@ class GuideController extends BaseModuleController
         $table = TableColumns::make();
 
         $table->add(
-            Image::make()->field('cover')->title('커버')->role('cover')->crop('default')
+            Image::make()->field('cover')->title('Cover')->role('cover')->crop('default')
                 ->mediaParams(['w' => 80, 'h' => 80, 'fit' => 'crop'])
         );
 
-        $table->add(Text::make()->field('headline')->title('제목')->linkToEdit()->sortable());
+        $table->add(Text::make()->field('headline')->title('Title')->linkToEdit()->sortable());
 
         $table->add(
-            Text::make()->field('publication_date')->title('발행일')->sortable()
+            Text::make()->field('publication_date')->title('Publication date')->sortable()
                 ->customRender(fn (TwillModelContract $guide): string => $guide->publication_date
                     ? $guide->publication_date->format('Y-m-d')
                     : '—')
         );
 
-        $table->add(PublishStatus::make()->title('공개')->optional());
+        $table->add(PublishStatus::make()->title('Published')->optional());
 
         return $table;
     }

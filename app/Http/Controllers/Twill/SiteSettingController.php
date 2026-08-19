@@ -8,11 +8,9 @@ use A17\Twill\Services\Listings\TableColumns;
 use A17\Twill\Services\Forms\Fields\Checkbox;
 use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Fields\Medias;
-use A17\Twill\Services\Forms\Fields\Select;
 use A17\Twill\Services\Forms\Fields\Wysiwyg;
 use A17\Twill\Services\Forms\Fieldset;
 use A17\Twill\Services\Forms\Form;
-use A17\Twill\Services\Forms\Options;
 use A17\Twill\Http\Controllers\Admin\SingletonModuleController as BaseModuleController;
 
 class SiteSettingController extends BaseModuleController
@@ -34,10 +32,10 @@ class SiteSettingController extends BaseModuleController
     {
         return parent::getForm($model)
             ->addFieldset(
-                Fieldset::make()->title('사이트 · 브라우저 · 소셜')->fields([
-                    Input::make()->name('site_name')->label('사이트명 (브라우저 탭)')->note('브라우저 탭 제목에 표시됩니다. 하위 페이지는 "페이지명 — 사이트명"으로 표시됩니다.'),
-                    Medias::make()->name('favicon')->label('파비콘')->max(1)->note('브라우저 탭 아이콘. 정사각형 PNG 권장 (예: 512×512).'),
-                    Medias::make()->name('og_image')->label('OG 이미지 (소셜 공유)')->max(1)->note('링크 공유 시 표시되는 대표 이미지. 1200×630 권장.'),
+                Fieldset::make()->title('Site & browser')->fields([
+                    Input::make()->name('site_name')->label('Site name (browser tab)')->note('Shown in the browser tab. Sub pages appear as "Page name — Site name".'),
+                    Medias::make()->name('favicon')->label('Favicon')->max(1)->note('Browser tab icon. Square PNG recommended (e.g. 512×512).'),
+                    Medias::make()->name('og_image')->label('OG image (social sharing)')->max(1)->note('Preview image shown when the link is shared. 1200×630 recommended.'),
                 ])
             )
             ->addFieldset(
@@ -53,12 +51,6 @@ class SiteSettingController extends BaseModuleController
                     Input::make()->name('homepage_eyebrow')->label('Main hero eyebrow')->translatable(),
                     Input::make()->name('homepage_title')->label('Main hero title')->translatable(),
                     Wysiwyg::make()->name('homepage_description')->label('Main hero description')->limitHeight()->translatable(),
-                    Select::make()->name('homepage_regular_grid')->label('일반 프로젝트 목록 레이아웃')->options(
-                        Options::fromArray([
-                            'editorial' => '에디토리얼 — 첫 카드 크게, 나머지 2단',
-                            'grid_3' => '스탠다드 — 균일한 3단 그리드',
-                        ])
-                    )->default('editorial'),
                 ])
             )
             ->addFieldset(
@@ -88,22 +80,26 @@ class SiteSettingController extends BaseModuleController
                 ])
             )
             ->addFieldset(
-                Fieldset::make()->title('Contact & Downloads')->fields([
+                Fieldset::make()->title('Contact')->fields([
                     Input::make()->name('contact_page_title')->label('Contact title')->translatable(),
                     Wysiwyg::make()->name('contact_page_description')->label('Contact description')->limitHeight()->translatable(),
+                ])
+            )
+            ->addFieldset(
+                Fieldset::make()->title('Downloads')->fields([
                     Input::make()->name('downloads_page_title')->label('Downloads title')->translatable(),
                     Wysiwyg::make()->name('downloads_page_description')->label('Downloads description')->limitHeight()->translatable(),
                 ])
             )
             ->addFieldset(
                 Fieldset::make()->title('Identity & Social')->fields([
-                    Input::make()->name('logo_text')->label('헤더 로고 텍스트'),
-                    Medias::make()->name('logo')->label('헤더 로고 이미지 (SVG 또는 PNG)')->max(1),
-                    Input::make()->name('footer_text')->label('푸터 소개 문구')->maxlength(500)->translatable(),
-                    Input::make()->name('copyright_text')->label('저작권 문구')->translatable(),
-                    Input::make()->name('instagram_url')->label('Instagram 링크')->type('url'),
-                    Input::make()->name('linkedin_url')->label('LinkedIn 링크')->type('url'),
-                    Input::make()->name('behance_url')->label('Behance 링크')->type('url'),
+                    Input::make()->name('logo_text')->label('Header logo text'),
+                    Medias::make()->name('logo')->label('Header logo image (SVG or PNG)')->max(1),
+                    Input::make()->name('footer_text')->label('Footer intro text')->maxlength(500)->translatable(),
+                    Input::make()->name('copyright_text')->label('Copyright text')->translatable(),
+                    Input::make()->name('instagram_url')->label('Instagram URL')->type('url'),
+                    Input::make()->name('linkedin_url')->label('LinkedIn URL')->type('url'),
+                    Input::make()->name('behance_url')->label('Behance URL')->type('url'),
                 ])
             );
     }
@@ -116,7 +112,7 @@ class SiteSettingController extends BaseModuleController
         $table = parent::additionalIndexTableColumns();
 
         $table->add(
-            Text::make()->field('logo_text')->title('로고')
+            Text::make()->field('logo_text')->title('Logo')
         );
 
         return $table;
