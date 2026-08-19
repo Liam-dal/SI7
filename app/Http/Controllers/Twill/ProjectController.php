@@ -74,6 +74,8 @@ class ProjectController extends BaseModuleController
                         )
                     ),
                     Input::make()->name('tags')->label('Tags')->note('Separate with commas.'),
+                    Checkbox::make()->name('featured')->label('Prioritise in "Up next"')
+                        ->note('Pushes this project to the front of the "Up next" list shown at the bottom of other project pages. Homepage features are chosen in the Homepage editor.'),
                 ])
             )
             ->addFieldset(
@@ -86,13 +88,6 @@ class ProjectController extends BaseModuleController
                 Fieldset::make()->title('Related content')->fields([
                     Browser::make()->name('people')->label('People')->modules([\App\Models\Person::class])->max(100),
                     Browser::make()->name('offices')->label('Offices')->modules([\App\Models\Office::class])->max(10),
-                ])
-            )
-            ->addFieldset(
-                Fieldset::make()->title('Home settings')->fields([
-                    Checkbox::make()->name('featured')->label('Feature on homepage'),
-                    Medias::make()->name('home_slideshow')->label('Homepage slideshow')->max(1),
-                    Medias::make()->name('feature_grid')->label('Feature grid')->max(1),
                 ])
             );
     }
