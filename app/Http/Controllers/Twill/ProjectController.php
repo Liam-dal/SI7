@@ -44,8 +44,8 @@ class ProjectController extends BaseModuleController
         return parent::getForm($model)
             ->addFieldset(
                 Fieldset::make()->title('Content')->fields([
-                    Input::make()->name('subtitle')->label('Subtitle')->note('홈 피처와 프로젝트 카드에 표시되는 짧은 문구입니다.'),
-                    Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(4)->maxlength(500)->note('프로젝트 상세 상단과 카드에 표시되는 요약입니다.'),
+                    Input::make()->name('subtitle')->label('Subtitle')->note('Short line shown on homepage features and project cards.'),
+                    Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(4)->maxlength(500)->note('Summary shown at the top of the project detail page and on cards.'),
                     Wysiwyg::make()->name('case_study_text')->label('Case study text')->limitHeight(),
                     Medias::make()->name('cover')->label('Cover')->max(1),
                     Input::make()->name('video_url')->label('Youtube or Vimeo video URL')->type('url'),
@@ -66,14 +66,14 @@ class ProjectController extends BaseModuleController
                         fn () => Options::fromArray(\App\Models\Category::query()->where('published', true)->orderBy('title')->pluck('title', 'id')->all())
                     ),
                     Input::make()->name('client')->label('Client name'),
-                    Select::make()->name('project_completed_at')->label('Year')->placeholder('연도 선택')->clearable()->options(
+                    Select::make()->name('project_completed_at')->label('Year')->placeholder('Select a year')->clearable()->options(
                         fn () => Options::fromArray(
                             collect(range((int) now()->format('Y'), 1950))
                                 ->mapWithKeys(fn (int $year) => ["{$year}-01-01" => (string) $year])
                                 ->all()
                         )
                     ),
-                    Input::make()->name('tags')->label('Tags')->note('쉼표로 구분해 입력하세요.'),
+                    Input::make()->name('tags')->label('Tags')->note('Separate with commas.'),
                 ])
             )
             ->addFieldset(
@@ -105,30 +105,30 @@ class ProjectController extends BaseModuleController
         $table = TableColumns::make();
 
         $table->add(
-            PublishStatus::make()->title('공개')->optional()
+            PublishStatus::make()->title('Published')->optional()
         );
 
         $table->add(
             Image::make()
                 ->field('cover')
-                ->title('이미지')
+                ->title('Image')
                 ->role('cover')
                 ->crop('default')
                 ->mediaParams(['w' => 80, 'h' => 80, 'fit' => 'crop'])
         );
 
         $table->add(
-            Text::make()->field('title')->title('제목')->linkToEdit()->sortable()
+            Text::make()->field('title')->title('Title')->linkToEdit()->sortable()
         );
 
         $table->add(
-            Text::make()->field('client')->title('클라이언트')->optional()
+            Text::make()->field('client')->title('Client')->optional()
         );
 
         $table->add(
             Text::make()
                 ->field('project_completed_at')
-                ->title('연도')
+                ->title('Year')
                 ->customRender(function (TwillModelContract $project): string {
                     return $project->project_completed_at
                         ? \Illuminate\Support\Carbon::parse($project->project_completed_at)->format('Y')
@@ -138,7 +138,7 @@ class ProjectController extends BaseModuleController
         );
 
         $table->add(
-            Relation::make()->field('title')->title('카테고리')->relation('categories')
+            Relation::make()->field('title')->title('Categories')->relation('categories')
         );
 
         return $table;
