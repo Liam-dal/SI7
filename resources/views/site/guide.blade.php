@@ -44,7 +44,7 @@
             <x-site.media-grid layout="3">
                 @foreach($relatedGuides as $guide)
                     <x-site.article-card
-                        :href="route('guides.show', $guide->slug ?: $guide->id)"
+                        :href="route('guides.show', $guide->public_slug)"
                         :media="$guide"
                         :category="$guide->category"
                         :title="$guide->headline"

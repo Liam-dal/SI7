@@ -106,12 +106,14 @@ Route::get('/people/{identifier}', function (string $identifier) {
 
 Route::get('/guides', function () {
     return view('site.guides', [
-        'guides' => Guide::query()->where('published', true)
+        // public_slug 가 슬러그 행을 읽으므로 미리 로드해 N+1 을 피한다.
+        'guides' => Guide::query()->with('slugs')->where('published', true)
             ->orderByDesc('publication_date')->orderBy('position')->get(),
     ]);
 })->name('guides');
 
 Route::get('/guides/{identifier}', function (string $identifier) {
+    // forSlug 는 Guide 모델에서 로케일 무관으로 재정의됨(로케일 접두어 없는 URL 구조와 맞춤).
     // 슬러그 우선 조회 후 숫자 ID로 폴백 — 한글 제목이 "7" 같은 숫자형 슬러그가 되는 경우도 안전하게 처리.
     $item = Guide::query()->forSlug($identifier)->where('published', true)->first();
 

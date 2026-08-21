@@ -10,6 +10,7 @@ use A17\Twill\Models\Behaviors\HasPosition;
 use A17\Twill\Models\Behaviors\HasTranslation;
 use A17\Twill\Models\Behaviors\Sortable;
 use A17\Twill\Models\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Guide extends Model implements Sortable
 {
@@ -49,4 +50,31 @@ class Guide extends Model implements Sortable
             ]],
         ],
     ];
+
+    // 사이트 URL 에는 로케일 접두어가 없다(세션 기반 ko/en 전환). permalink 도 번역하지
+    // 않는다(slugAttributes = ['title']). 그런데 Twill 은 translatable 모델의 슬러그를
+    // 로케일별 행으로 저장하고, 각 행의 active 를 그 로케일 "번역"의 active 로 채운다
+    // (HasSlug::getSlugParams). 그래서 한쪽 언어 번역을 비워두면 그 로케일의 슬러그 행이
+    // active=0 이 되고, 기본 scopeForSlug 는 현재 로케일만 보므로 404 가 난다.
+    // 링크 생성(getSlug)은 translatable.fallback_locale 로 폴백하는데 조회에는 폴백이
+    // 없어서 "목록에는 뜨는데 누르면 404" 가 됐다. 조회도 로케일 무관으로 맞춘다.
+    // (title 이 번역되지 않으므로 두 로케일 행의 슬러그 문자열은 항상 동일하다.)
+    public function scopeForSlug(Builder $query, string $slug): Builder
+    {
+        return $query->whereHas('slugs', function ($query) use ($slug): void {
+            $query->where('slug', $slug)->where('active', true);
+        })->with(['slugs'])->orderBy('id');
+    }
+
+    // 목록·관련글 링크가 쓰는 슬러그. 위 scopeForSlug 와 같은 규칙(로케일 무관, 활성 슬러그)
+    // 으로 골라야 링크와 조회가 어긋나지 않는다. 슬러그가 아예 없으면 숫자 ID 로 떨어진다
+    // (한글 제목은 Str::slug 가 전부 버려서 슬러그가 비는 경우가 있다).
+    public function getPublicSlugAttribute(): string
+    {
+        $slug = $this->getActiveSlug()
+            ?? $this->getFallbackActiveSlug()
+            ?? $this->slugs->firstWhere('active', true);
+
+        return $slug->slug ?? (string) $this->getKey();
+    }
 }
