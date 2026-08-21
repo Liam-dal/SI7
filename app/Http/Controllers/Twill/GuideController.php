@@ -23,6 +23,9 @@ class GuideController extends BaseModuleController
     {
         $this->setPermalinkBase('guides');
         $this->enableSkipCreateModal();
+        // 사이트 라우트(/guides/{slug})에 로케일 접두어가 없으므로,
+        // 관리자 permalink에서도 {ko}/{en} 언어 분기를 제거해 단일 주소로 표시한다.
+        $this->withoutLanguageInPermalink();
     }
 
     public function getForm(TwillModelContract $model): Form
