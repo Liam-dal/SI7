@@ -59,6 +59,8 @@
 
     <div class="guide-article__body prose">{!! $item->renderBlocks() !!}</div>
 
+    @include('site.partials.guide-toc')
+
     @if(($relatedGuides ?? collect())->isNotEmpty())
         <section class="guide-article__related">
             <x-site.section-head title="Up next" action="View all ↗" :action-href="route('guides')" />

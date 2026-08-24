@@ -330,6 +330,21 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .guide-article__body .block-heading-desc__body { max-width:none; }
 /* 본문 인라인 제목은 블록 대제목보다 작게 (계층 정리) */
 .guide-article__body .prose h2 { font-size:var(--heading-small); margin:36px 0 12px; }
+/* 떠 있는 섹션 인디케이터. 평소엔 짧은 선만, 현재 섹션은 길고 진하게,
+   개별 항목에 마우스를 올리면 그 섹션 제목이 왼쪽으로 펼쳐진다. */
+.guide-article__body h2 { scroll-margin-top:96px; }
+.guide-toc { position:fixed; top:50%; right:clamp(16px,3vw,56px); z-index:15; transform:translateY(-50%); display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+.guide-toc[hidden] { display:none; }
+.guide-toc__item { display:flex; align-items:center; justify-content:flex-end; gap:10px; padding:5px 0; color:var(--muted); text-decoration:none; }
+.guide-toc__line { display:block; flex:none; width:18px; height:1px; background:currentColor; opacity:.45; transition:width .22s ease, opacity .22s ease, background-color .22s ease; }
+.guide-toc__item.is-active { color:var(--text); }
+.guide-toc__item.is-active .guide-toc__line { width:34px; opacity:1; }
+.guide-toc__item:hover .guide-toc__line, .guide-toc__item:focus-visible .guide-toc__line { opacity:1; }
+.guide-toc__label { max-width:0; overflow:hidden; white-space:nowrap; opacity:0; color:var(--text); font-size:var(--caption-size); line-height:1.2; transition:max-width .22s ease, opacity .22s ease; }
+.guide-toc__item:hover .guide-toc__label, .guide-toc__item:focus-visible .guide-toc__label { max-width:min(240px,22vw); opacity:1; }
+@media (prefers-reduced-motion:reduce) { .guide-toc__line, .guide-toc__label { transition:none; } }
+/* 좁은 화면에는 본문 옆 여백이 없고 hover 도 없으므로 숨긴다. */
+@media (max-width:1023px) { .guide-toc { display:none; } }
 .guide-article__body .prose h3 { font-size:var(--heading-xsmall); margin:28px 0 10px; }
 .guide-article__body .prose h4 { margin-bottom:16px; }
 .guide-article__body .prose p { margin-bottom:16px; }
