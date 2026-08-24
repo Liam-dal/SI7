@@ -6,7 +6,7 @@
 @endphp
 
 <footer class="site-footer">
-    <div class="site-footer__mark" data-liquid-logo data-speed="0.3" data-liquid="0.07" data-edge="0.4">
+    <div class="site-footer__mark" data-liquid-logo data-speed="0.15" data-liquid="0.07" data-edge="0.4">
         {{-- WebGL2 가 없거나 모션 최소화 설정이면 이 SVG 가 그대로 남는다. --}}
         <img class="site-footer__mark-fallback" src="{{ $footerLogo }}" alt="SI7" data-liquid-fallback>
         <canvas class="site-footer__mark-canvas" data-map="{{ $footerLogoMap }}" aria-hidden="true"></canvas>
