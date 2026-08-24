@@ -1,10 +1,17 @@
 @php
-    $menu = [
-        ['label' => 'Projects', 'url' => route('projects'), 'active' => request()->routeIs('projects*')],
-        ['label' => 'About', 'url' => route('about'), 'active' => request()->routeIs('about') || request()->routeIs('people.show')],
-        ['label' => 'Downloads', 'url' => route('downloads'), 'active' => request()->routeIs('downloads')],
-        ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact')],
-    ];
+    // 항목별 노출 여부는 관리자 > Site settings > Header menu 에서 켜고 끈다.
+    // 설정 행이 아직 없을 때는 기존 기본값(Guides 제외 전부 노출)을 따른다.
+    $menuEnabled = fn (string $field, bool $default) => $siteSettings && array_key_exists($field, $siteSettings->getAttributes())
+        ? (bool) $siteSettings->{$field}
+        : $default;
+
+    $menu = collect([
+        ['label' => 'Projects', 'url' => route('projects'), 'active' => request()->routeIs('projects*'), 'show' => $menuEnabled('menu_projects_enabled', true)],
+        ['label' => 'About', 'url' => route('about'), 'active' => request()->routeIs('about') || request()->routeIs('people.show'), 'show' => $menuEnabled('menu_about_enabled', true)],
+        ['label' => 'Guides', 'url' => route('guides'), 'active' => request()->routeIs('guides*'), 'show' => $menuEnabled('menu_guides_enabled', false)],
+        ['label' => 'Downloads', 'url' => route('downloads'), 'active' => request()->routeIs('downloads'), 'show' => $menuEnabled('menu_downloads_enabled', true)],
+        ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact'), 'show' => $menuEnabled('menu_contact_enabled', true)],
+    ])->filter(fn ($link) => $link['show'])->values();
 
     // 로고: 관리자에 이미지가 붙어 있으면 그걸, 없으면 리포에 번들된 SVG를 사용.
     // (Twill은 SVG를 이미지 필드에 저장하지 못해 관리자 업로드가 안 붙으므로 기본 로고를 코드로 보장)

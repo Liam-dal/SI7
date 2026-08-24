@@ -69,6 +69,11 @@ class SiteSetting extends Model
         'home_hero_builder',
         'home_hero_default_category_id',
         'home_hero_default_sector_id',
+        'menu_projects_enabled',
+        'menu_about_enabled',
+        'menu_guides_enabled',
+        'menu_downloads_enabled',
+        'menu_contact_enabled',
         'projects_page_title',
         'projects_page_description',
         'projects_sectors_title',
@@ -101,6 +106,14 @@ class SiteSetting extends Model
         'body_small_size', 'body_small_line_height', 'body_small_tracking',
         'paragraph_size', 'paragraph_line_height', 'paragraph_tracking',
         'caption_size', 'caption_line_height', 'caption_tracking',
+    ];
+
+    protected $casts = [
+        'menu_projects_enabled' => 'boolean',
+        'menu_about_enabled' => 'boolean',
+        'menu_guides_enabled' => 'boolean',
+        'menu_downloads_enabled' => 'boolean',
+        'menu_contact_enabled' => 'boolean',
     ];
     
 }

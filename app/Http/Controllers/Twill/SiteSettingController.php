@@ -92,6 +92,15 @@ class SiteSettingController extends BaseModuleController
                 ])
             )
             ->addFieldset(
+                Fieldset::make()->title('Header menu')->fields([
+                    Checkbox::make()->name('menu_projects_enabled')->label('Projects')->note('Off 로 두면 헤더(데스크톱·모바일) 메뉴에서 숨겨집니다. 페이지 자체는 URL 로 계속 접근할 수 있습니다.'),
+                    Checkbox::make()->name('menu_about_enabled')->label('About'),
+                    Checkbox::make()->name('menu_guides_enabled')->label('Guides'),
+                    Checkbox::make()->name('menu_downloads_enabled')->label('Downloads'),
+                    Checkbox::make()->name('menu_contact_enabled')->label('Contact'),
+                ])
+            )
+            ->addFieldset(
                 Fieldset::make()->title('Identity & Social')->fields([
                     Input::make()->name('logo_text')->label('Header logo text'),
                     Medias::make()->name('logo')->label('Header logo image (SVG or PNG)')->max(1),
