@@ -46,6 +46,7 @@
         --rule-strong: var(--text);
         --surface: #F2F2F2;
         --image-bg: #E4E4E4;
+        --badge: #EAEAEA;
         --space-0: 0px;
         --space-1: 4px;
         --space-2: 6px;

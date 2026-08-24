@@ -95,14 +95,16 @@ class Project extends Model implements Sortable
         return $this->belongsToMany(Category::class)->withPivot('position')->orderByPivot('position');
     }
 
+    // 동적 프로퍼티로 읽어야 eager load 된 관계를 재사용한다.
+    // ->sectors()->pluck() 는 매번 새 쿼리를 날려 카드 목록에서 N+1 이 된다.
     public function getSectorIdsAttribute(): array
     {
-        return $this->sectors()->pluck('id')->map(fn ($id) => (string) $id)->all();
+        return $this->sectors->pluck('id')->map(fn ($id) => (string) $id)->all();
     }
 
     public function getCategoryIdsAttribute(): array
     {
-        return $this->categories()->pluck('id')->map(fn ($id) => (string) $id)->all();
+        return $this->categories->pluck('id')->map(fn ($id) => (string) $id)->all();
     }
 
     public function sectors(): BelongsToMany

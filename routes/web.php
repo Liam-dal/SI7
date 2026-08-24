@@ -41,6 +41,8 @@ Route::get('/', function () {
         ->map(function ($block) use ($asFeature) {
             $features = $block->getRelated('projects')
                 ->filter(fn (Project $project) => $project->published)
+                // 카드 호버 뱃지가 쓰는 분류 — 미리 로드해 카드마다 쿼리가 나가지 않게 한다.
+                ->load(['categories', 'sectors'])
                 ->map($asFeature)
                 ->values();
 
@@ -99,7 +101,7 @@ Route::get('/people/{identifier}', function (string $identifier) {
 
     abort_if(! $item, 404);
 
-    $relatedProjects = $item->projects()->where('published', true)->get();
+    $relatedProjects = $item->projects()->where('published', true)->with(['categories', 'sectors'])->get();
 
     return view('site.person', compact('item', 'relatedProjects'));
 })->name('people.show');
@@ -189,6 +191,7 @@ Route::get('/projects', function (\Illuminate\Http\Request $request) {
     return view('site.projects', [
         'projects' => Project::query()
             ->where('published', true)
+            ->with(['categories', 'sectors'])
             ->orderByDesc('project_completed_at')
             ->orderBy('position')
             ->get(),
@@ -212,6 +215,7 @@ Route::get('/projects/{identifier}', function (string $identifier) {
     $relatedProjects = Project::query()
         ->where('published', true)
         ->whereKeyNot($item->id)
+        ->with(['categories', 'sectors'])
         ->when($categoryIds->isNotEmpty(), fn ($query) => $query->whereHas('categories', fn ($categoryQuery) => $categoryQuery->whereIn('categories.id', $categoryIds)))
         ->orderByDesc('featured')
         ->orderBy('position')
@@ -222,6 +226,7 @@ Route::get('/projects/{identifier}', function (string $identifier) {
         $fallbackProjects = Project::query()
             ->where('published', true)
             ->whereKeyNot($item->id)
+            ->with(['categories', 'sectors'])
             ->whereNotIn('id', $relatedProjects->pluck('id'))
             ->orderByDesc('featured')
             ->orderBy('position')
