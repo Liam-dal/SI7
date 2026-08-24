@@ -127,7 +127,7 @@
               class="safari-mockup__ink"
             />
           </g>
-          @if($src)<image
+          @if($src && $slot->isEmpty())<image
             width="1200"
             height="700"
             x="1"
@@ -154,4 +154,11 @@
           </clipPath>
         </defs>
       </svg>
+
+    @if($slot->isNotEmpty())
+        {{-- SVG <image> 는 srcset 을 못 쓴다. 화면 영역에 실제 <img> 를 겹쳐 두면
+             프로젝트의 반응형 이미지 파이프라인(Glide + srcset)을 그대로 쓸 수 있다.
+             좌표는 viewBox(1203×753) 안의 화면 영역(x1 y52 w1200 h700)을 % 로 옮긴 값. --}}
+        <span class="safari-mockup__screen-slot">{{ $slot }}</span>
+    @endif
 </span>
