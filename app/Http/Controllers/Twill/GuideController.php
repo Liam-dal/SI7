@@ -9,6 +9,7 @@ use A17\Twill\Services\Listings\Columns\Text;
 use A17\Twill\Services\Listings\TableColumns;
 use A17\Twill\Services\Forms\Fields\BlockEditor;
 use A17\Twill\Services\Forms\Fields\DatePicker;
+use A17\Twill\Services\Forms\Fields\Files;
 use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Fields\Medias;
 use A17\Twill\Services\Forms\Fieldset;
@@ -42,6 +43,8 @@ class GuideController extends BaseModuleController
                         ->translatable()
                         ->note('Summary shown in listings and at the top of the detail page.'),
                     Medias::make()->name('cover')->label('Cover')->max(1),
+                    Files::make()->name('cover_video')->label('Cover video (optional)')->max(1)->filesizeMax(10)
+                        ->note('Plays in place of the cover image on the detail page only — listings keep using the image. Muted, looping, no controls, and it pauses when scrolled out of view. mp4 (H.264) or webm, max 10MB, roughly 1.65:1 (close to 16:9) — other ratios are centre-cropped. The cover image above is still used as the poster frame and as the fallback, so keep it filled in.'),
                     DatePicker::make()->name('publication_date')->label('Publication date')->withoutTime(),
                     BlockEditor::make()
                         ->label('Add block')

@@ -23,7 +23,28 @@
         @endif
     </header>
 
-    @if($item->hasImage('cover'))
+    @php
+        // 커버 영상이 붙어 있으면 커버 이미지 자리에서 대신 재생한다(상세 페이지 한정).
+        // 이미지는 포스터 프레임 겸 폴백으로 계속 쓰인다.
+        $coverVideo = $item->cover_video_url;
+        $coverPoster = $item->hasImage('cover') ? $item->image('cover', 'default') : null;
+    @endphp
+
+    @if($coverVideo)
+        <figure class="guide-article__hero">
+            <x-site.video
+                class="guide-article__hero-video"
+                :file="$coverVideo"
+                :poster="$coverPoster"
+                :autoplay="true"
+                :loop="true"
+                :controls="false"
+                :title="$item->headline"
+            />
+        </figure>
+
+        @include('site.partials.video-viewport')
+    @elseif($item->hasImage('cover'))
         <figure class="guide-article__hero">
             <x-site.image
                 :media="$item"

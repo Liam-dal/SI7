@@ -316,6 +316,9 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .guide-article__lead { max-width:none; margin:var(--space-9) 0 0; font-size:var(--paragraph-size); line-height:var(--prose-leading); text-wrap:pretty; }
 .guide-article__hero { margin:40px 0 0; }
 .guide-article__hero .media { display:block; width:100%; }
+/* 커버 영상은 커버 이미지와 같은 1.65 박스를 채운다(다른 비율은 가운데 크롭). */
+.guide-article__hero-video { aspect-ratio:1.65; overflow:hidden; border-radius:var(--card-radius); }
+.guide-article__hero-video .video-file__el { height:100%; object-fit:cover; }
 .guide-article__body { margin-top:40px; display:grid; grid-template-columns:1fr var(--guide-col) 1fr; }
 .guide-article__body > * { grid-column:2; min-width:0; }
 .guide-article__body > .block-full-image,

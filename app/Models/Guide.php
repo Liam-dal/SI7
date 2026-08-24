@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use A17\Twill\Models\Behaviors\HasBlocks;
+use A17\Twill\Models\Behaviors\HasFiles;
 use A17\Twill\Models\Behaviors\HasSlug;
 use A17\Twill\Models\Behaviors\HasMedias;
 use A17\Twill\Models\Behaviors\HasRevisions;
@@ -10,11 +11,12 @@ use A17\Twill\Models\Behaviors\HasPosition;
 use A17\Twill\Models\Behaviors\HasTranslation;
 use A17\Twill\Models\Behaviors\Sortable;
 use A17\Twill\Models\Model;
+use A17\Twill\Services\FileLibrary\FileService;
 use Illuminate\Database\Eloquent\Builder;
 
 class Guide extends Model implements Sortable
 {
-    use HasBlocks, HasSlug, HasMedias, HasRevisions, HasPosition, HasTranslation;
+    use HasBlocks, HasSlug, HasMedias, HasFiles, HasRevisions, HasPosition, HasTranslation;
 
     protected $fillable = [
         'published',
@@ -42,6 +44,9 @@ class Guide extends Model implements Sortable
         'title',
     ];
 
+    // 상세 페이지 커버 자리에 재생할 짧은 영상(선택). 목록에는 쓰지 않는다.
+    public array $filesParams = ['cover_video'];
+
     public array $mediasParams = [
         'cover' => [
             'default' => [[
@@ -50,6 +55,15 @@ class Guide extends Model implements Sortable
             ]],
         ],
     ];
+
+    // 커버 영상 URL. 파일은 Twill 이 로케일별 행으로 저장하지만 영상은 언어와 무관하므로
+    // 현재 로케일 → 아무 로케일 순으로 찾는다(Download 라우트와 같은 규칙).
+    public function getCoverVideoUrlAttribute(): ?string
+    {
+        $file = $this->fileObject('cover_video') ?: $this->files->firstWhere('pivot.role', 'cover_video');
+
+        return $file ? FileService::getUrl($file->uuid) : null;
+    }
 
     // 사이트 URL 에는 로케일 접두어가 없다(세션 기반 ko/en 전환). permalink 도 번역하지
     // 않는다(slugAttributes = ['title']). 그런데 Twill 은 translatable 모델의 슬러그를
