@@ -450,3 +450,10 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .block-video--measure { max-width:var(--measure); }
 .component-project .project-content > .block-video--full { width:100%; max-width:none; }
 .guide-article__body > .block-video { grid-column:1 / -1; }
+/* Safari 목업 (Inspira UI 포팅). 원본 Tailwind 유틸을 옮긴 것 — 다크 변형은 사이트에 다크 모드가 없어 생략. */
+.safari-mockup { display:block; width:100%; }
+.safari-mockup svg { display:block; width:100%; height:auto; }
+.safari-mockup__chrome { fill:#E5E5E5; }
+.safari-mockup__screen { fill:#FFFFFF; }
+.safari-mockup__glyph { mix-blend-mode:luminosity; }
+.safari-mockup__ink { fill:#A3A3A3; }
