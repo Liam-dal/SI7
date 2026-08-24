@@ -9,7 +9,6 @@
     'sizes' => '(max-width: 767px) 100vw, 50vw',
     'heading' => 'h3',
     'dataCategories' => null,
-    'badgeLimit' => 4,
 ])
 
 @php
@@ -19,14 +18,12 @@
     $categoryIds = $dataCategories ?? implode(',', $project->category_ids ?? []);
 
     // 뱃지 = 관리자에서 프로젝트에 연결한 Category 다음 Sector 순서.
-    // 운영 데이터에 최대 9개까지 붙은 프로젝트가 있어서, 카드 밖으로 흘러넘치지 않게
-    // badgeLimit 까지만 보여주고 나머지는 +N 으로 접는다.
+    // 몇 개가 한 줄에 들어가는지는 렌더된 폭에 달려 있어 서버에서 못 정한다.
+    // 전부 내보내고 card-badges 스크립트가 첫 줄에 안 들어가는 것들을 접어 +N 으로 바꾼다.
     $badges = $project->categories->pluck('title')
         ->concat($project->sectors->pluck('title'))
         ->filter()
         ->values();
-    $hiddenBadgeCount = max(0, $badges->count() - $badgeLimit);
-    $badges = $badges->take($badgeLimit);
 @endphp
 
 <a {{ $attributes->class('card') }} href="{{ route('projects.show', $project->slug ?: $project->id) }}" data-project-card data-categories="{{ $categoryIds }}">
@@ -40,13 +37,13 @@
     @if($badges->isNotEmpty())
         {{-- aria-hidden: 링크 이름이 "프로젝트명 + 설명 + 태그 전부"로 길어지는 걸 막는다.
              시각적으로만 보조하는 정보라 스크린리더에는 노출하지 않는다. --}}
-        <span class="card__badges" aria-hidden="true">
+        <span class="card__badges" aria-hidden="true" data-card-badges>
             @foreach($badges as $i => $badge)
                 <span class="card__badge" style="--i:{{ $i }}">{{ $badge }}</span>
             @endforeach
-            @if($hiddenBadgeCount)
-                <span class="card__badge" style="--i:{{ $badges->count() }}">+{{ $hiddenBadgeCount }}</span>
-            @endif
+            <span class="card__badge" data-badge-more hidden></span>
         </span>
     @endif
 </a>
+
+@include('site.partials.card-badges')
