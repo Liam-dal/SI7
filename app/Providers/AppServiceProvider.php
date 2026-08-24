@@ -89,7 +89,7 @@ class AppServiceProvider extends ServiceProvider
         // OG/소셜 이미지는 호환성 위해 jpg 유지(social_default_params 건드리지 않음).
         config()->set('twill.glide.default_params', [
             'fm' => 'webp',
-            'q' => '80',
+            'q' => '85',
             'fit' => 'max',
         ]);
 

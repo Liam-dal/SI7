@@ -45,6 +45,17 @@
     note="Enter a hex code (e.g. #FFFFFF, #000000). Leave empty for a transparent background."
 />
 
+<x-twill::select
+    name="zoom"
+    label="Click to zoom"
+    default="on"
+    :options="[
+        ['value' => 'on', 'label' => 'On (click an image to open it large)'],
+        ['value' => 'off', 'label' => 'Off (images are not clickable)'],
+    ]"
+    note="Set per block, so one grid can zoom while another stays static."
+/>
+
 <x-twill::medias
     name="images"
     label="Images"

@@ -21,8 +21,6 @@
 
     // Fit: 원본(비크롭)을 박스에 contain → 전체가 보이고 여백은 배경색. Crop: 비율 크롭으로 채움.
     $imgCrop = $fit === 'fit' ? 'default' : $crop;
-    $display = $block->images('images', $imgCrop, ['w' => 900]);
-    $full = $block->images('images', 'default', ['w' => 1800]); // 라이트박스용 큰 버전(원본 비율)
 
     // 칼럼: fixed 는 2/3(기본 3, `--N`), flexible 은 auto/2/3(기본 auto, `--cols-N`).
     $colsInput = (string) $block->input('columns');
@@ -33,6 +31,23 @@
         $cols = in_array($colsInput, ['2', '3'], true) ? $colsInput : '3';
         $colClass = "{$base}--{$cols}";
     }
+
+    // 표시 폭은 칼럼 수에 맞춰 결정 — 칼럼이 적을수록 한 장이 커지므로 레티나에서 더 넓은 소스가 필요.
+    // (전 그리드를 일괄로 키우면 20장짜리 그리드의 페이지 용량만 불어난다.)
+    $displayWidth = match ($cols) {
+        '2' => 1400,
+        '3' => 1000,
+        default => 1200,
+    };
+
+    $display = $block->images('images', $imgCrop, ['w' => $displayWidth]);
+    $full = $block->images('images', 'default', ['w' => 2560]); // 라이트박스용 큰 버전(원본 비율)
+
+    // 클릭 확대(라이트박스) 사용 여부 — 블록 편집기의 'Click to zoom' 선택.
+    // 이 필드가 생기기 전에 저장된 블록은 값이 없으므로, 기존 동작(항상 확대 가능)을 유지한다.
+    $zoom = $block->input('zoom');
+    $zoom = is_array($zoom) ? ($zoom[0] ?? null) : $zoom;
+    $zoomEnabled = blank($zoom) ? true : $zoom !== 'off';
 @endphp
 
 @if($block->hasImage('images', 'default'))
@@ -41,12 +56,14 @@
             <img
                 src="{{ $src }}"
                 alt="{{ $block->imageAltText('images') }}"
-                class="gallery-img"
+                @class(['gallery-img' => $zoomEnabled])
                 loading="lazy"
-                data-lightbox-src="{{ $full[$i] ?? $src }}"
+                @if($zoomEnabled) data-lightbox-src="{{ $full[$i] ?? $src }}" @endif
                 @if($fit === 'fit' && $bg) style="background-color: {{ $bg }}" @endif
             >
         @endforeach
     </div>
-    @include('site.partials.lightbox')
+    @if($zoomEnabled)
+        @include('site.partials.lightbox')
+    @endif
 @endif

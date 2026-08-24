@@ -1,6 +1,6 @@
 @php
     $crop = $crop ?? 'default';
-    $widths = $widths ?? [640, 960, 1440, 1920];
+    $widths = $widths ?? [640, 960, 1440, 1920, 2560];
     $sizes = $sizes ?? '100vw';
     $image = $model->imageAsArray($role, $crop, ['w' => end($widths)]);
     // 기존에 업로드된 이미지는 새 크롭 레코드가 없을 수 있으므로,
