@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "php",
+      "runtimeArgs": [
+        "-d",
+        "memory_limit=512M",
+        "artisan",
+        "serve",
+        "--port=8000"
+      ],
+      "port": 8000
+    }
+  ]
+}
