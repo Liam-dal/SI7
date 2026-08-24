@@ -5,13 +5,21 @@
         ? (bool) $siteSettings->{$field}
         : $default;
 
+    // Contact 는 헤더에서 필 버튼으로 따로 나가므로(디자인) 가운데 메뉴 목록과 분리한다.
+    // 모바일 오버레이에서는 예전처럼 다른 항목들과 같은 링크로 이어 붙인다.
     $menu = collect([
         ['label' => 'Projects', 'url' => route('projects'), 'active' => request()->routeIs('projects*'), 'show' => $menuEnabled('menu_projects_enabled', true)],
         ['label' => 'About', 'url' => route('about'), 'active' => request()->routeIs('about') || request()->routeIs('people.show'), 'show' => $menuEnabled('menu_about_enabled', true)],
         ['label' => 'Guides', 'url' => route('guides'), 'active' => request()->routeIs('guides*'), 'show' => $menuEnabled('menu_guides_enabled', false)],
         ['label' => 'Downloads', 'url' => route('downloads'), 'active' => request()->routeIs('downloads'), 'show' => $menuEnabled('menu_downloads_enabled', true)],
-        ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact'), 'show' => $menuEnabled('menu_contact_enabled', true)],
     ])->filter(fn ($link) => $link['show'])->values();
+
+    $contact = $menuEnabled('menu_contact_enabled', true)
+        ? ['label' => 'Contact', 'url' => route('contact'), 'active' => request()->routeIs('contact')]
+        : null;
+
+    // concat 은 새 컬렉션을 돌려준다 — push 면 $menu 가 변형돼 가운데 메뉴에도 Contact 가 들어간다.
+    $mobileMenu = $contact ? $menu->concat([$contact]) : $menu;
 
     // 로고: 관리자에 이미지가 붙어 있으면 그걸, 없으면 리포에 번들된 SVG를 사용.
     // (Twill은 SVG를 이미지 필드에 저장하지 못해 관리자 업로드가 안 붙으므로 기본 로고를 코드로 보장)
@@ -24,32 +32,12 @@
 
 <a class="skip-link" href="#content">본문으로 건너뛰기</a>
 
-<header class="site-header">
-    <a class="site-logo" href="{{ route('home') }}" aria-label="홈">
-        @if($logoUrl)
-            <img src="{{ $logoUrl }}" alt="{{ $logoAlt }}">
-        @else
-            {{ $logoAlt }}
-        @endif
-    </a>
-    <nav class="site-nav" aria-label="주요 메뉴">
-        @foreach($menu as $link)
-            <a href="{{ $link['url'] }}" @if($link['active']) aria-current="page" @endif>{{ $link['label'] }}</a>
-        @endforeach
-        <div class="lang-switch" data-lang-switch>
-            <button class="lang-switch__toggle" type="button" data-lang-toggle aria-haspopup="true" aria-expanded="false" aria-label="언어 선택 ({{ strtoupper(app()->getLocale()) }})">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9 9 0 1 0 0-18m0 18a9 9 0 1 1 0-18m0 18c2.761 0 3.941-5.163 3.941-9S14.761 3 12 3m0 18c-2.761 0-3.941-5.163-3.941-9S9.239 3 12 3M3.5 9h17m-17 6h17"/>
-                </svg>
-            </button>
-            <div class="lang-switch__menu" data-lang-menu hidden>
-                <a href="{{ route('locale.switch', 'ko') }}" @if(app()->getLocale() === 'ko') class="is-on" aria-current="true" @endif>KO</a>
-                <a href="{{ route('locale.switch', 'en') }}" @if(app()->getLocale() === 'en') class="is-on" aria-current="true" @endif>EN</a>
-            </div>
-        </div>
-    </nav>
-    <button class="nav-toggle" type="button" data-nav-open aria-expanded="false" aria-controls="mobile-nav">Menu</button>
-</header>
+<x-site.header
+    :menu="$menu"
+    :contact="$contact"
+    :logo-url="$logoUrl"
+    :logo-alt="$logoAlt"
+/>
 
 <div class="nav-overlay" id="mobile-nav" data-open="false" aria-hidden="true">
     <header>
@@ -63,7 +51,7 @@
         <button class="nav-toggle" type="button" data-nav-close>Close</button>
     </header>
     <nav aria-label="모바일 메뉴">
-        @foreach($menu as $link)
+        @foreach($mobileMenu as $link)
             <a href="{{ $link['url'] }}" @if($link['active']) aria-current="page" @endif>{{ $link['label'] }}</a>
         @endforeach
         <span class="lang-switch lang-switch--mobile" aria-label="언어">
