@@ -463,12 +463,12 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 /* 블랙 풋터 + 큰 SI7 마크(리퀴드 셰이더). 헤더·본문과 달리 배경은 화면 끝까지 채우고,
    안쪽 내용만 같은 1792px 폭에 맞춘다. */
 .site-footer { display:block; max-width:none; margin-inline:0; padding:72px var(--page-pad) 40px; border-top:0; background:#000; color:#fff; }
-.site-footer__body { display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px; max-width:1792px; margin:56px auto 0; }
+.site-footer__body { display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px; max-width:1760px; margin:56px auto 0; }
 .site-footer nav a { color:#fff; text-decoration:none; }
 .site-footer nav a:hover { text-decoration:underline; text-underline-offset:3px; }
 /* 셰이더 캔버스는 정사각(1000×1000)에 로고를 가운데 배치한다 — 위아래 빈 공간을 잘라내
    가로로 긴 마크만 보이게 한다. */
-.site-footer__mark { position:relative; display:block; width:100%; max-width:900px; margin:0 auto; aspect-ratio:2.05 / 1; overflow:hidden; }
+.site-footer__mark { position:relative; display:block; width:min(900px, 100%); margin:0 auto 0 max(0px, calc((100% - 1760px) / 2)); aspect-ratio:2.05 / 1; overflow:hidden; }
 .site-footer__mark-canvas, .site-footer__mark-fallback { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:block; }
 .site-footer__mark-canvas { width:100%; aspect-ratio:1; height:auto; }
 .site-footer__mark-fallback { width:100%; height:auto; filter:invert(1); }
