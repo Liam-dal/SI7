@@ -323,10 +323,17 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .guide-article__title { margin:0; font-size:clamp(2rem, 6.4vw, 4rem); font-weight:500; line-height:1.12; letter-spacing:-0.015em; text-wrap:balance; }
 .guide-article__meta { margin:var(--space-7) 0 0; color:var(--muted); font-size:var(--body-small-size); letter-spacing:var(--menu-tracking); }
 .guide-article__lead { max-width:none; margin:var(--space-9) 0 0; font-size:var(--paragraph-size); line-height:var(--prose-leading); text-wrap:pretty; }
+/* 커버는 폭이 아니라 높이로 고정한다 — 1.65 비율로 두면 넓은 화면에서 뷰포트 높이의
+   90%를 넘겨(1440×900 기준 1393×844) 본문이 첫 화면 밖으로 통째로 밀린다.
+   svh 를 먼저 쓰는 이유: 모바일에서 vh 는 주소창이 접힐 때 값이 바뀌어 커버 높이가 튄다.
+   66vw 상한을 같이 두는 이유: 좁은 화면에서는 50vh 가 폭보다 커져 가로 사진이 세로 박스에
+   담긴다(375×812 에서 351×406). 폭 기준 상한을 걸어야 항상 가로로 남는다. */
+:root { --guide-hero-h: clamp(280px, 50vh, 560px); }
+@supports (height: 1svh) { :root { --guide-hero-h: clamp(280px, 50svh, 560px); } }
 .guide-article__hero { margin:40px 0 0; }
-.guide-article__hero .media { display:block; width:100%; }
-/* 커버 영상은 커버 이미지와 같은 1.65 박스를 채운다(다른 비율은 가운데 크롭). */
-.guide-article__hero-video { aspect-ratio:1.65; overflow:hidden; border-radius:var(--card-radius); }
+.guide-article__hero .media { display:block; width:100%; height:min(var(--guide-hero-h), 66vw); aspect-ratio:auto; }
+/* 커버 영상도 같은 높이여야 이미지 커버가 붙은 글과 높이가 어긋나지 않는다(다른 비율은 가운데 크롭). */
+.guide-article__hero-video { height:min(var(--guide-hero-h), 66vw); aspect-ratio:auto; overflow:hidden; border-radius:var(--card-radius); }
 .guide-article__hero-video .video-file__el { height:100%; object-fit:cover; }
 .guide-article__body { margin-top:40px; display:grid; grid-template-columns:1fr var(--guide-col) 1fr; }
 .guide-article__body > * { grid-column:2; min-width:0; }
