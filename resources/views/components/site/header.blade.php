@@ -31,10 +31,10 @@
             <a class="site-cta" href="{{ $contact['url'] }}" @if($contact['active']) aria-current="page" @endif>{{ $contact['label'] }}</a>
         @endif
 
-        {{-- 지구본은 Figma 에서 Contact 필과 같은 높이의 정사각 회색 버튼 — KO/EN 드롭다운. --}}
+        {{-- 지구본은 Figma 에서 30px 정사각 회색 버튼 안에 16px 아이콘 — KO/EN 드롭다운. --}}
         <div class="lang-switch" data-lang-switch>
             <button class="lang-switch__toggle" type="button" data-lang-toggle aria-haspopup="true" aria-expanded="false" aria-label="언어 선택 ({{ strtoupper(app()->getLocale()) }})">
-                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
                     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9 9 0 1 0 0-18m0 18a9 9 0 1 1 0-18m0 18c2.761 0 3.941-5.163 3.941-9S14.761 3 12 3m0 18c-2.761 0-3.941-5.163-3.941-9S9.239 3 12 3M3.5 9h17m-17 6h17"/>
                 </svg>
             </button>
