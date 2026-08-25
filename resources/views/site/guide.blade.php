@@ -6,8 +6,8 @@
 @section('content')
 <article class="page page--standard component-guide guide-article">
     <header class="guide-article__header">
-        @if($item->category)
-            <p class="guide-article__eyebrow">{{ $item->category }}</p>
+        @if($item->guideCategory)
+            <p class="guide-article__eyebrow">{{ $item->guideCategory->title }}</p>
         @endif
 
         <h1 class="guide-article__title">{{ $item->headline }}</h1>
@@ -69,7 +69,7 @@
                     <x-site.article-card
                         :href="route('guides.show', $guide->public_slug)"
                         :media="$guide"
-                        :category="$guide->category"
+                        :category="$guide->guideCategory?->title"
                         :title="$guide->headline"
                     />
                 @endforeach

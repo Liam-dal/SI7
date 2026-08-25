@@ -16,7 +16,7 @@
     @else
         @php
             $items = $guides->map(fn ($g) => [
-                'category' => $g->category,
+                'category' => $g->guideCategory?->title,
                 'title' => $g->headline,
                 'href' => route('guides.show', $g->public_slug),
                 'cover' => $g->hasImage('cover') ? $g : null,

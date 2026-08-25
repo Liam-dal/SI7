@@ -19,3 +19,4 @@ TwillRoutes::module('downloads');
 TwillRoutes::singleton('siteSetting');
 
 TwillRoutes::module('guides');
+TwillRoutes::module('guideCategories');

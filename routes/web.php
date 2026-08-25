@@ -109,7 +109,7 @@ Route::get('/people/{identifier}', function (string $identifier) {
 Route::get('/guides', function () {
     return view('site.guides', [
         // public_slug 가 슬러그 행을 읽으므로 미리 로드해 N+1 을 피한다.
-        'guides' => Guide::query()->with('slugs')->where('published', true)
+        'guides' => Guide::query()->with(['slugs', 'guideCategory'])->where('published', true)
             ->orderByDesc('publication_date')->orderBy('position')->get(),
     ]);
 })->name('guides');
@@ -125,7 +125,7 @@ Route::get('/guides/{identifier}', function (string $identifier) {
 
     abort_if(! $item, 404);
 
-    $relatedGuides = Guide::query()->where('published', true)->whereKeyNot($item->id)
+    $relatedGuides = Guide::query()->with('guideCategory')->where('published', true)->whereKeyNot($item->id)
         ->orderByDesc('publication_date')->orderBy('position')->take(3)->get();
 
     return view('site.guide', compact('item', 'relatedGuides'));

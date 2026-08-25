@@ -13,6 +13,7 @@ use A17\Twill\Models\Behaviors\Sortable;
 use A17\Twill\Models\Model;
 use A17\Twill\Services\FileLibrary\FileService;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Guide extends Model implements Sortable
 {
@@ -22,7 +23,7 @@ class Guide extends Model implements Sortable
         'published',
         'title',
         'headline',
-        'category',
+        'guide_category_id',
         'description',
         'publication_date',
         'position',
@@ -43,6 +44,12 @@ class Guide extends Model implements Sortable
     public $slugAttributes = [
         'title',
     ];
+
+    // 카테고리는 하나만 붙는다 — 제목 위 eyebrow 한 줄로만 쓰이기 때문(Sector 는 다대다).
+    public function guideCategory(): BelongsTo
+    {
+        return $this->belongsTo(GuideCategory::class);
+    }
 
     // 상세 페이지 커버 자리에 재생할 짧은 영상(선택). 목록에는 쓰지 않는다.
     public array $filesParams = ['cover_video'];

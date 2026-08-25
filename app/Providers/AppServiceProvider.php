@@ -123,7 +123,15 @@ class AppServiceProvider extends ServiceProvider
                 ])
                 ->doNotAddSelfAsFirstChild()
         );
-        TwillNavigation::addLink(NavigationLink::make()->forModule('guides')->title('Guide'));
+        TwillNavigation::addLink(
+            NavigationLink::make()
+                ->forModule('guides')
+                ->title('Guide')
+                ->setChildren([
+                    NavigationLink::make()->forModule('guides')->title('Articles'),
+                    NavigationLink::make()->forModule('guideCategories')->title('Categories'),
+                ])
+        );
         TwillNavigation::addLink(
             NavigationLink::make()
                 ->forSingleton('contact')

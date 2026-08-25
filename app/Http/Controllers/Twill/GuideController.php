@@ -12,6 +12,8 @@ use A17\Twill\Services\Forms\Fields\DatePicker;
 use A17\Twill\Services\Forms\Fields\Files;
 use A17\Twill\Services\Forms\Fields\Input;
 use A17\Twill\Services\Forms\Fields\Medias;
+use A17\Twill\Services\Forms\Fields\Select;
+use A17\Twill\Services\Forms\Options;
 use A17\Twill\Services\Forms\Fieldset;
 use A17\Twill\Services\Forms\Form;
 use A17\Twill\Http\Controllers\Admin\ModuleController as BaseModuleController;
@@ -37,8 +39,11 @@ class GuideController extends BaseModuleController
                     Input::make()->name('headline')->label('Headline (displayed)')->maxlength(200)
                         ->translatable()
                         ->note('The title actually shown in listings and on the detail page (switchable KO/EN). The Title field above is used only for the URL (permalink), so enter it in English.'),
-                    Input::make()->name('category')->label('Category')->maxlength(60)
-                        ->note('e.g. Ideas, News, Report, Clients — shown above the title in listings.'),
+                    Select::make()->name('guide_category_id')->label('Category')->searchable()->clearable()
+                        ->options(
+                            fn () => Options::fromArray(\App\Models\GuideCategory::query()->where('published', true)->orderBy('position')->orderBy('title')->pluck('title', 'id')->all())
+                        )
+                        ->note('Shown above the title in listings and on the detail page. Manage the list under Guide > Categories.'),
                     Input::make()->name('description')->label('Short description')->type(Input::TYPE_TEXTAREA)->rows(3)->maxlength(500)
                         ->translatable()
                         ->note('Summary shown in listings and at the top of the detail page.'),
@@ -65,6 +70,12 @@ class GuideController extends BaseModuleController
         );
 
         $table->add(Text::make()->field('headline')->title('Title')->linkToEdit()->sortable());
+
+        // 관계 컬럼이라 field 로는 못 읽는다 — customRender 로 제목을 꺼낸다.
+        $table->add(
+            Text::make()->field('guide_category_id')->title('Category')
+                ->customRender(fn (TwillModelContract $guide): string => $guide->guideCategory?->title ?: '—')
+        );
 
         $table->add(
             Text::make()->field('publication_date')->title('Publication date')->sortable()
