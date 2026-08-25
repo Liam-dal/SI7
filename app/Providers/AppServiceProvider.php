@@ -127,12 +127,11 @@ class AppServiceProvider extends ServiceProvider
             NavigationLink::make()
                 ->forModule('guides')
                 ->title('Guide')
+                // 첫 탭(Guide = 글 목록)은 Twill 이 부모를 자동으로 첫 자식에 넣어 만든다.
+                // Projects 와 같은 구성이라 여기서 guides 를 다시 명시하면 탭이 둘로 겹친다.
                 ->setChildren([
                     NavigationLink::make()->forModule('guideCategories')->title('Categories'),
                 ])
-                // 상단 Guide 링크가 이미 글 목록으로 가므로 같은 곳을 가리키는 탭은 두지 않는다.
-                // 이 옵션을 빼면 Twill 이 부모를 첫 자식으로 자동 추가해 탭이 하나 더 생긴다.
-                ->doNotAddSelfAsFirstChild()
         );
         TwillNavigation::addLink(
             NavigationLink::make()
