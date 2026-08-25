@@ -43,11 +43,17 @@
     @stack('styles')
 </head>
 <body>
-    @include('site.partials.chrome')
-    <main id="content">
-        @yield('content')
-    </main>
-    @include('site.partials.footer')
+    {{-- .site-shell 은 불투명 배경으로 site-signature 위를 덮으며 지나간다. 스페이서가 그만큼
+         문서를 늘려 두기 때문에 스크롤 끝에서 아래 깔린 패널이 드러난다. --}}
+    <div class="site-shell">
+        @include('site.partials.chrome')
+        <main id="content">
+            @yield('content')
+        </main>
+        @include('site.partials.footer')
+    </div>
+    <div class="site-signature__spacer" aria-hidden="true"></div>
+    @include('site.partials.site-signature')
     @stack('scripts')
 </body>
 </html>

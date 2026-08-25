@@ -460,19 +460,29 @@ main:has(.design-hero), .page--home:has(.design-hero) { padding-top:0; }
 .safari-mockup__screen { fill:#FFFFFF; }
 .safari-mockup__glyph { mix-blend-mode:luminosity; }
 .safari-mockup__ink { fill:#A3A3A3; }
-/* 블랙 풋터 + 큰 SI7 마크(리퀴드 셰이더). 헤더·본문과 달리 배경은 화면 끝까지 채우고,
-   안쪽 내용만 같은 1792px 폭에 맞춘다. */
-.site-footer { display:block; max-width:none; margin-inline:0; padding:72px var(--page-pad) 40px; border-top:0; background:#000; color:#fff; }
-.site-footer__body { display:flex; flex-wrap:wrap; justify-content:space-between; gap:24px; max-width:1760px; margin:56px auto 0; }
-.site-footer nav a { color:#fff; text-decoration:none; }
-.site-footer nav a:hover { text-decoration:underline; text-underline-offset:3px; }
+/* 풋터 — 규칙선 아래 저작권과 연락 링크 한 줄 (Figma si7-homepage 32:91).
+   폭·좌우 거터·위 여백은 헤더/본문과 공유하는 기본 규칙을 그대로 쓴다. */
+.site-footer { display:block; padding-block:var(--page-pad); border-top:1px solid var(--surface); background:var(--page-bg); color:var(--text); }
+.site-footer__row { display:flex; align-items:center; gap:10px; padding-block:2px; overflow:hidden; font-size:var(--caption-size); line-height:var(--caption-leading); word-break:break-word; }
+.site-footer__row > p, .site-footer__row > a { flex:1 1 0; min-width:0; max-width:none; margin:0; }
+.site-footer__contact { color:inherit; text-align:right; text-decoration:underline; text-decoration-style:solid; text-underline-position:from-font; }
+
+/* 사이트 시그니처 — 뷰포트 바닥에 고정된 검정 패널 (Figma si7-homepage 32:126). 스크롤을
+   따라 움직이지 않는다. 불투명한 .site-shell 이 그 위를 덮고 지나가다가 스페이서 높이만큼
+   빠지면서 드러나는 구조라, 스크롤 계산 없이 z 축 레이어링만으로 동작한다.
+   마크는 Figma 기준 패널 폭의 52%, 안쪽 여백은 페이지 거터와 같은 값이다. */
+:root { --signature-mark-w: min(900px, 52vw); --signature-h: calc(var(--signature-mark-w) / 2 + 2 * var(--page-pad)); }
+.site-shell { position:relative; z-index:1; background:var(--page-bg); }
+.site-signature__spacer { height:var(--signature-h); }
+.site-signature { position:fixed; right:0; bottom:0; left:0; z-index:0; height:var(--signature-h); padding:var(--page-pad); background:#000; overflow:hidden; }
+.site-signature__inner { max-width:1760px; height:100%; margin-inline:auto; }
 /* 셰이더 캔버스는 정사각(1000×1000)에 로고를 가운데 배치한다 — 위아래 빈 공간을 잘라내
    가로로 긴 마크만 보이게 한다. */
-.site-footer__mark { position:relative; display:block; width:min(900px, 100%); margin:0 auto 0 max(0px, calc((100% - 1760px) / 2)); aspect-ratio:2.05 / 1; overflow:hidden; }
-.site-footer__mark-canvas, .site-footer__mark-fallback { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:block; }
-.site-footer__mark-canvas { width:100%; aspect-ratio:1; height:auto; }
-.site-footer__mark-fallback { width:100%; height:auto; filter:invert(1); }
+.site-signature__mark { position:relative; display:block; width:var(--signature-mark-w); aspect-ratio:2 / 1; overflow:hidden; }
+.site-signature__mark-canvas, .site-signature__mark-fallback { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); display:block; }
+.site-signature__mark-canvas { width:100%; aspect-ratio:1; height:auto; }
+.site-signature__mark-fallback { width:100%; height:auto; filter:invert(1); }
 /* [hidden] 의 기본 display:none 은 위 display:block 에 진다 — 명시하지 않으면 셰이더가
    뜬 뒤에도 흰 폴백 로고가 남아 글리프 가장자리로 삐져나온다(테두리처럼 보임). */
-.site-footer__mark-fallback[hidden] { display:none; }
-@media (max-width:767px) { .site-footer { padding-top:48px; } .site-footer__body { margin-top:32px; } }
+.site-signature__mark-fallback[hidden] { display:none; }
+@media (max-width:767px) { :root { --signature-mark-w: calc(100vw - 2 * var(--page-pad)); } }

@@ -1,28 +1,8 @@
-@php
-    // 풋터 로고는 리포에 번들된 SI7 마크 고정 — 리퀴드 셰이더가 이 로고에서 미리 구운
-    // 거리장 맵(logo-liquid.png)을 텍스처로 쓰기 때문에 관리자 업로드 로고와 짝이 맞지 않는다.
-    $footerLogo = asset('img/logo.svg');
-    $footerLogoMap = asset('img/logo-liquid.png');
-@endphp
-
+{{-- Figma: si7-homepage 32:91 — 규칙선 아래 저작권과 연락 링크만 있는 한 줄 풋터.
+     큰 SI7 마크는 풋터 정보가 아니라 페이지 끝 브랜드 사인이라 site-signature 로 분리했다. --}}
 <footer class="site-footer">
-    <div class="site-footer__mark" data-liquid-logo data-speed="0.15" data-liquid="0.07" data-edge="0.4">
-        {{-- WebGL2 가 없거나 모션 최소화 설정이면 이 SVG 가 그대로 남는다. --}}
-        <img class="site-footer__mark-fallback" src="{{ $footerLogo }}" alt="SI7" data-liquid-fallback>
-        <canvas class="site-footer__mark-canvas" data-map="{{ $footerLogoMap }}" aria-hidden="true"></canvas>
-    </div>
-
-    <div class="site-footer__body">
-        <div>
-            @if($siteSettings?->footer_text)<p>{{ $siteSettings->footer_text }}</p>@endif
-            <p>{{ $siteSettings?->copyright_text ?: '© ' . now()->year }}</p>
-        </div>
-        <nav aria-label="소셜 링크">
-            @if($siteSettings?->instagram_url)<a href="{{ $siteSettings->instagram_url }}" target="_blank" rel="noreferrer">Instagram ↗</a>@endif
-            @if($siteSettings?->linkedin_url)<a href="{{ $siteSettings->linkedin_url }}" target="_blank" rel="noreferrer">LinkedIn ↗</a>@endif
-            @if($siteSettings?->behance_url)<a href="{{ $siteSettings->behance_url }}" target="_blank" rel="noreferrer">Behance ↗</a>@endif
-        </nav>
+    <div class="site-footer__row">
+        <p>{{ $siteSettings?->copyright_text ?: '© ' . now()->year . ' SI7' }}</p>
+        <a class="site-footer__contact" href="{{ route('contact') }}">Get in touch</a>
     </div>
 </footer>
-
-@include('site.partials.liquid-logo')
