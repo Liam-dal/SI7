@@ -191,10 +191,17 @@ blockquote.block-quote { border-left:0; padding-left:0; }
 .feature-band .feature-band__inner { position:relative; z-index:1; }
 
 /* Homepage main hero. */
-.page--home .page-head { margin:0 0 var(--section-space); }
+
 /* Matches the Figma "Main Head" text width (1018px frame less its 16px padding). The narrower
    --measure was set when this head was 24px and now forces the subhead to wrap. */
 .page--home :is(.page-head__title,.page-head__lead) { max-width:986px; }
+/* Figma "Main Head" carries its own 96px top padding (spacing/space-13). The page-level
+   padding belongs to the design-hero, so drop it when the text head is what renders —
+   otherwise the two stack up. Figma has no mobile spec; 64px keeps the site's own
+   desktop-to-mobile compression. */
+.page--home:has(> .page-head) { padding-top:0; }
+.page--home .page-head { margin:0 0 var(--section-space); padding-top:var(--space-13); }
+@media (max-width:767px) { .page--home .page-head { padding-top:var(--space-11); } }
 
 /* Contact office component. */
 .offices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-13) var(--gutter); margin:var(--space-12) 0 0; padding:0; list-style:none; }
