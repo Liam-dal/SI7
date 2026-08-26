@@ -14,6 +14,7 @@
         --page-title-2-size: 64px; /* Figma pageHead title / font-size/heading-large */
         --heading-1: clamp(24px, 2vw, 32px);
         --heading-large: clamp(30px, 3.2vw, 36px);
+        --heading-medium: clamp(30px, 3.4vw, 48px); /* Figma font-size/heading-medium = 48 */
         --heading-regular: clamp(26px, 2.8vw, 32px);
         --heading-small: clamp(24px, 2.4vw, 28px);
         --heading-xsmall: clamp(20px, 2vw, 24px);
