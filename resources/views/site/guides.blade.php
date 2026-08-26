@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="page page--standard component-guides">
-    <x-site.page-head align="stack" :title="$pageTitle" :description="$pageDescription" />
+    <x-site.page-head layout="split" :title="$pageTitle" :description="$pageDescription" />
 
     @if($guides->isEmpty())
         <p class="empty">아직 등록된 글이 없습니다.</p>

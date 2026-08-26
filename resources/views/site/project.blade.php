@@ -6,7 +6,7 @@
 @section('content')
 <div class="page page--standard component-project" data-project-about>
     <x-site.page-head
-        align="split"
+        layout="split"
         :title="$item->title"
     />
 

@@ -11,14 +11,14 @@
         --page-title-size: {{ $siteSettings?->page_title_size ?? 140 }}px;
         --page-title-leading: 1.25;
         --page-title-tracking: {{ $siteSettings?->page_title_tracking ?? -0.015 }}em;
-        --page-title-2-size: 80px;
+        --page-title-2-size: 64px; /* Figma pageHead title / font-size/heading-large */
         --heading-1: clamp(24px, 2vw, 32px);
         --heading-large: clamp(30px, 3.2vw, 36px);
         --heading-regular: clamp(26px, 2.8vw, 32px);
         --heading-small: clamp(24px, 2.4vw, 28px);
         --heading-xsmall: clamp(20px, 2vw, 24px);
-        --page-title-stack-size: clamp(2.8rem, 5vw, var(--page-title-2-size));
-        --page-lead-size: var(--body-size);
+        --page-title-split-size: clamp(2.8rem, 5vw, var(--page-title-2-size));
+        --page-lead-size: var(--body-medium-size); /* Figma pageHead lead / font-size/body-regular = 16 */
         --prose-leading: 1.5;
         --prose-leading-loose: 1.75;
         --menu-size: 16px;

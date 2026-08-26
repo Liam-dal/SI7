@@ -48,9 +48,9 @@ class SiteSettingController extends BaseModuleController
             )
             ->addFieldset(
                 Fieldset::make()->title('Homepage')->fields([
-                    Input::make()->name('homepage_eyebrow')->label('Main hero eyebrow')->translatable(),
-                    Input::make()->name('homepage_title')->label('Main hero title')->translatable(),
-                    Wysiwyg::make()->name('homepage_description')->label('Main hero description')->limitHeight()->translatable(),
+                    Input::make()->name('homepage_eyebrow')->label('Main page head kicker')->note('Small line above the title. Optional.')->translatable(),
+                    Input::make()->name('homepage_title')->label('Main page head title')->note('First line, in full contrast.')->translatable(),
+                    Wysiwyg::make()->name('homepage_description')->label('Main page head subhead')->note('Second line, shown muted at the same size as the title.')->limitHeight()->translatable(),
                 ])
             )
             ->addFieldset(

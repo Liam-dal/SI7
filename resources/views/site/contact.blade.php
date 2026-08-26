@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="page page--standard component-contact" id="contact">
-    <x-site.page-head align="stack" :title="$pageTitle" :description="$pageDescription" />
+    <x-site.page-head layout="split" :title="$pageTitle" :description="$pageDescription" />
 
     @if($offices->isNotEmpty())
         <ul class="offices">

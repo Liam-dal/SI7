@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="page page--standard page--projects">
-    <x-site.page-head :title="$pageTitle" :description="$pageDescription" align="stack" />
+    <x-site.page-head :title="$pageTitle" :description="$pageDescription" layout="split" />
     @if($categories->isNotEmpty())
         <x-site.filters :items="$categories" :selected="$selectedCategoryId" class="work-filters" />
     @endif

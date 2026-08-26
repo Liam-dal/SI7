@@ -1,20 +1,16 @@
-@props(['title' => null, 'description' => null, 'kicker' => null, 'align' => 'stack'])
+@props(['title' => null, 'description' => null, 'kicker' => null, 'layout' => 'split'])
 
-<header {{ $attributes->class(['page-head', 'page-head--' . $align]) }}>
-    @if($align === 'split')
-        <div>
-            @if($kicker)<p class="page-head__kicker">{{ $kicker }}</p>@endif
-            @if($title)<h1 class="page-head__title">{{ $title }}</h1>@endif
-        </div>
-        @if($description)<p class="page-head__summary">{{ strip_tags($description) }}</p>@endif
-    @elseif($align === 'muted')
-        @if($title)<h1 class="page-head__title page-head__title--muted">{{ $title }}</h1>@endif
-        @if($description)<h2 class="page-head__title page-head__description">{{ strip_tags($description) }}</h2>@endif
-    @else
-        <div class="page-head__primary">
-            @if($kicker)<p class="page-head__kicker">{{ $kicker }}</p>@endif
-            @if($title)<h1 class="page-head__title">{{ $title }}</h1>@endif
-        </div>
-        @if($description)<p class="page-head__lead">{{ strip_tags($description) }}</p>@endif
-    @endif
+@php
+    // Wysiwyg fields save a cleared value as markup ("<p></p>"), which is truthy but renders
+    // blank — judge emptiness by the text that survives strip_tags, not the raw value.
+    $lead = trim(strip_tags((string) $description));
+    $layout = in_array($layout, ['stack', 'split'], true) ? $layout : 'split';
+@endphp
+
+<header {{ $attributes->class(['page-head', 'page-head--' . $layout]) }}>
+    <div class="page-head__primary">
+        @if($kicker)<p class="page-head__kicker">{{ $kicker }}</p>@endif
+        @if($title)<h1 class="page-head__title">{!! nl2br(e($title)) !!}</h1>@endif
+    </div>
+    @if($lead !== '')<p class="page-head__lead">{{ $lead }}</p>@endif
 </header>

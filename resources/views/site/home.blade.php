@@ -5,13 +5,15 @@
     $heroEyebrow = $siteSettings?->homepage_eyebrow;
     $heroTitle = $siteSettings?->homepage_title;
     $heroDescription = $siteSettings?->homepage_description;
+    // A cleared Wysiwyg still stores markup, so measure the text, not the raw field.
+    $heroHasText = filled($heroEyebrow) || filled($heroTitle) || filled(trim(strip_tags((string) $heroDescription)));
 @endphp
 
 <div class="page page--home">
     @if($heroBuilder ?? null)
         <x-site.design-hero :data="$heroBuilder" />
-    @elseif(filled($heroEyebrow) || filled($heroTitle) || filled($heroDescription))
-        <x-site.main-hero :eyebrow="$heroEyebrow" :title="$heroTitle" :description="$heroDescription" />
+    @elseif($heroHasText)
+        <x-site.page-head layout="stack" :kicker="$heroEyebrow" :title="$heroTitle" :description="$heroDescription" />
     @endif
 
     @foreach($featureBands as $band)

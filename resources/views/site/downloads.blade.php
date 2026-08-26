@@ -9,7 +9,7 @@
 
 @section('content')
 <div class="page page--standard component-downloads">
-    <x-site.page-head :title="$pageTitle" :description="$pageDescription" align="stack" />
+    <x-site.page-head :title="$pageTitle" :description="$pageDescription" layout="split" />
     <div class="download-layout">
         <div aria-hidden="true"></div>
         <div>
