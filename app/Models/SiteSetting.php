@@ -15,7 +15,7 @@ class SiteSetting extends Model
     // URL·색상·크기 토큰·site_name·logo_text 등은 번역하지 않음.
     public $translatedAttributes = [
         'seo_title_prefix', 'seo_title_suffix', 'seo_description_prefix', 'seo_description_suffix',
-        'homepage_eyebrow', 'homepage_title', 'homepage_description',
+        'homepage_eyebrow', 'homepage_title', 'homepage_headline_words', 'homepage_description',
         'projects_page_title', 'projects_page_description',
         'projects_sectors_title', 'projects_sectors_description',
         'projects_disciplines_title', 'projects_disciplines_description',
@@ -65,6 +65,7 @@ class SiteSetting extends Model
         'seo_description_suffix',
         'homepage_eyebrow',
         'homepage_title',
+        'homepage_headline_words',
         'homepage_description',
         'home_hero_builder',
         'home_hero_default_category_id',

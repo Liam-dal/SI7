@@ -50,6 +50,7 @@ class SiteSettingController extends BaseModuleController
                 Fieldset::make()->title('Homepage')->fields([
                     Input::make()->name('homepage_eyebrow')->label('Main page head kicker')->note('Small line above the title. Optional.')->translatable(),
                     Input::make()->name('homepage_title')->label('Main page head title')->note('First line, in full contrast.')->translatable(),
+                    Input::make()->name('homepage_headline_words')->label('Main page head morphing words')->note('Optional. Comma-separated words — the title morphs between them (e.g. "사용자 환경, 브랜드, 영상, 기술"). Needs at least two. Leave empty to show the static title above.')->translatable(),
                     Wysiwyg::make()->name('homepage_description')->label('Main page head subhead')->note('Second line, shown muted at the same size as the title.')->limitHeight()->translatable(),
                 ])
             )

@@ -5,15 +5,24 @@
     $heroEyebrow = $siteSettings?->homepage_eyebrow;
     $heroTitle = $siteSettings?->homepage_title;
     $heroDescription = $siteSettings?->homepage_description;
+    // Comma- or newline-separated in Settings. Two or more words switch the headline to the
+    // morphing variant (Figma "Main Head" Layout=animation); otherwise the static title runs.
+    $heroWords = collect(preg_split('/[,\n]/', (string) $siteSettings?->homepage_headline_words))
+        ->map(fn ($word) => trim($word))
+        ->filter()
+        ->values()
+        ->all();
+    $heroLayout = count($heroWords) >= 2 ? 'animation' : 'stack';
     // A cleared Wysiwyg still stores markup, so measure the text, not the raw field.
-    $heroHasText = filled($heroEyebrow) || filled($heroTitle) || filled(trim(strip_tags((string) $heroDescription)));
+    $heroHasText = filled($heroEyebrow) || filled($heroTitle) || count($heroWords) >= 2
+        || filled(trim(strip_tags((string) $heroDescription)));
 @endphp
 
 <div class="page page--home">
     @if($heroBuilder ?? null)
         <x-site.design-hero :data="$heroBuilder" />
     @elseif($heroHasText)
-        <x-site.page-head layout="stack" :kicker="$heroEyebrow" :title="$heroTitle" :description="$heroDescription" />
+        <x-site.page-head :layout="$heroLayout" :kicker="$heroEyebrow" :title="$heroTitle" :description="$heroDescription" :words="$heroWords" />
     @endif
 
     @foreach($featureBands as $band)
