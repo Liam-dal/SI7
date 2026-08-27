@@ -41,7 +41,6 @@
 </style></head><body>
 
 <h1>1 · Neat gradient</h1>
-<p class="note">스쿱 박스를 <code>border-radius: 50% / 37.5%</code>로 잘라 그 안에서만 그라디언트가 돕니다.</p>
 <div class="row">
   <div class="col"><h2>light</h2><div class="logo "><svg width="950" height="488" viewBox="0 0 950 488" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M119.422 196.388H185.56V454.932C185.56 473.194 170.755 488 152.491 488C134.228 488 119.422 473.194 119.422 454.932V196.388Z" fill="#CCCCCC" mask="url(#stick-outside-scoop)"/>
@@ -150,7 +149,6 @@
 <hr>
 
 <h1>2 · Liquid logo</h1>
-<p class="note">사이트 풋터가 쓰는 WebGL2 셰이더를 그대로 재사용했습니다. 셰이더가 알파를 직접 만들어서 CSS 클리핑이 필요 없습니다.</p>
 <div class="row">
   <div class="col"><h2>light</h2><div class="logo "><svg width="950" height="488" viewBox="0 0 950 488" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M119.422 196.388H185.56V454.932C185.56 473.194 170.755 488 152.491 488C134.228 488 119.422 473.194 119.422 454.932V196.388Z" fill="#CCCCCC" mask="url(#stick-outside-scoop)"/>
@@ -259,7 +257,6 @@
 <hr>
 
 <h1>3 · Liquid glass</h1>
-<p class="note">SVG 변위 필터를 <code>backdrop-filter</code>로 씌운 렌즈입니다. 뒤의 닷이 움직이며 굴절됩니다. <strong>Chromium 전용</strong> — Safari는 미지원, Firefox는 부분 지원입니다.</p>
 <div class="row">
   <div class="col"><h2>light</h2><div class="stage "><div class="dots"></div><div class="logo"><svg width="950" height="488" viewBox="0 0 950 488" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M119.422 196.388H185.56V454.932C185.56 473.194 170.755 488 152.491 488C134.228 488 119.422 473.194 119.422 454.932V196.388Z" fill="#CCCCCC" mask="url(#stick-outside-scoop)"/>
@@ -330,12 +327,11 @@
 </defs>
 </svg><div class="glass-scoop" id="g2"></div></div></div></div>
 </div>
-<p class="note" id="support" style="margin-top:18px"></p>
+<p class="note" id="support" style="margin-top:18px">3 · 4번은 Chrome에서 동작합니다. Safari 불가, Firefox 부분 지원.</p>
 
 <hr>
 
 <h1>4 · Liquid glass + 그라디언트</h1>
-<p class="note">3번과 같은 렌즈 위에 원본 SVG의 스쿱 그라디언트(<code>#94FFC0</code> 96% → <code>#FFA7FB</code>)를 얹었습니다. 굴절이 비쳐 보이도록 레이어 전체에 <code>opacity</code>를 줍니다.</p>
 <div class="row">
   <div class="col"><h2>light</h2><div class="stage "><div class="dots"></div><div class="logo"><svg width="950" height="488" viewBox="0 0 950 488" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M119.422 196.388H185.56V454.932C185.56 473.194 170.755 488 152.491 488C134.228 488 119.422 473.194 119.422 454.932V196.388Z" fill="#CCCCCC" mask="url(#stick-outside-scoop)"/>
@@ -429,8 +425,6 @@
     const r = liquidGlass(document.getElementById(id));
     supported = supported && r.supported;
   }
-  document.getElementById('support').textContent =
-    supported ? 'backdrop-filter: url(#…) 지원됨 — 이 브라우저에서 정상 동작합니다.'
-              : '이 브라우저는 SVG backdrop-filter를 지원하지 않습니다 (Safari / Firefox).';
+  if (!supported) console.warn('SVG backdrop-filter unsupported in this browser — sections 3 and 4 will not render.');
 </script>
 </body></html>
