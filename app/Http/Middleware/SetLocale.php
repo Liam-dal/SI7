@@ -10,7 +10,7 @@ class SetLocale
     public function handle(Request $request, Closure $next)
     {
         // 관리자(Twill)는 자체 로케일 처리를 하므로 건드리지 않음.
-        if ($request->is('admin', 'admin/*')) {
+        if ($request->is($admin = config('twill.admin_app_path'), $admin.'/*')) {
             return $next($request);
         }
 

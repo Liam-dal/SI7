@@ -33,7 +33,7 @@ class ResizeUploadedImages
 
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->isMethod('post') || ! $request->is('admin/media-library/medias')) {
+        if (! $request->isMethod('post') || ! $request->is(config('twill.admin_app_path').'/media-library/medias')) {
             return $next($request);
         }
 
